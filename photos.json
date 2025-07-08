@@ -1,0 +1,49 @@
+{
+  "albums": [
+    {
+      "id": "random-picture",
+      "title": "Random Picture",
+      "cover": "./foto/me_and_band.jpg",
+      "description": "Kumpulan foto acak dari berbagai momen.",
+      "photos": [
+        { "url": "./foto/sd.jpg", "title": "Masa SD" },
+        { "url": "./foto/smp.jpg", "title": "Masa SMP" },
+        { "url": "./foto/high_school.jpg", "title": "Masa SMA" },
+        { "url": "./foto/high_school2.JPG", "title": "Masa SMA 2" },
+        { "url": "./foto/me_and_family.jpg", "title": "Bersama Keluarga" },
+        { "url": "./foto/me_and_band.jpg", "title": "Nge-band" },
+        { "url": "./foto/me_cajon.jpg", "title": "Main Cajon" },
+        { "url": "./foto/me_botak1.jpg", "title": "Botak Core" },
+        { "url": "./foto/me_retret.JPG", "title": "Retret" },
+        { "url": "./foto/me_magangaguscom.JPG", "title": "Magang" },
+        {
+          "url": "./foto/friends_cjwi.jpg",
+          "title": "Rekan Kerja di PT. CJWI"
+        },
+        { "url": "./foto/natal.jpg", "title": "Acara Natal" },
+        { "url": "./foto/metriel.jpg", "title": "🛵" },
+        { "url": "./foto/me1.jpg", "title": "Nganu" },
+        { "url": "./foto/pepople_krengseng1.jpg", "title": "Warga" },
+        { "url": "./foto/people_krengseng.jpg", "title": "Warga 2" }
+      ]
+    },
+    {
+      "id": "kegiatan-karang-taruna",
+      "title": "Kegiatan Karang Taruna",
+      "cover": "./foto/foto-karang-taruna/angkringan.jpeg",
+      "description": "Dokumentasi kegiatan bersama karang taruna.",
+      "photos": [
+        {
+          "url": "./foto/foto-karang-taruna/angkringan.jpeg",
+          "title": "Angkringan"
+        },
+        { "url": "./foto/foto-karang-taruna/wisata.jpeg", "title": "Wisata" },
+        {
+          "url": "./foto/foto-karang-taruna/tari.jpeg",
+          "title": "Penampilan Tari Tradisional"
+        },
+        { "url": "./foto/foto-karang-taruna/tari.JPG", "title": "Latihan Tari" }
+      ]
+    }
+  ]
+}
