@@ -157,12 +157,12 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 100px 0;
+  margin: 100px;
   padding: 20px 0;
 }
 
 .logo-image img {
-  max-width: 300px;
+  max-width: 600px;
   width: 100%;
   height: auto;
   margin: 20px 0;
