@@ -24,97 +24,71 @@
   <body>
     <div id="particles-js"></div>
 
-    <header>
-      <div class="header-container">
-        <div class="logo">
-          <h1>Website Pribadi</h1>
-        </div>
-        <nav>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="galeri.html" class="active">Galeri & Artikel</a></li>
-            <li><a href="kegiatan.html">Reading</a></li>
-            <li><a href="informasi.html">Tweets & Note Series</a></li>
-            <li><a href="kontak.html">Kontak</a></li>
-          </ul>
-        </nav>
-        <div class="social-media">
-          <a href="https://www.instagram.com/usernameanda" target="_blank"
-            ><i class="fab fa-instagram"></i
-          ></a>
-          <a href="https://github.com/usernameanda" target="_blank"
-            ><i class="fab fa-github"></i
-          ></a>
-          <a href="mailto:emailanda@example.com"
-            ><i class="fas fa-envelope"></i
-          ></a>
-        </div>
-        <button id="menu-toggle" class="menu-toggle" aria-label="Buka Menu">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-    </header>
+    <header id="header-placeholder"></header>
 
     <main>
       <div class="container">
-        <h2>Galeri & Artikel</h2>
-        <p style="margin-bottom: 40px">
+        <h2 class="animate-on-scroll">Galeri & Artikel</h2>
+        <p class="animate-on-scroll" style="margin-bottom: 40px">
           Kumpulan momen visual dan tulisan yang saya dokumentasikan.
         </p>
 
         <hr class="separator" />
 
-        <h3>Dokumentasi Foto</h3>
-        <div class="album-item">
-          <a
-            href="./foto/foto-karang-taruna/halal1.png"
-            data-lightbox="album-17agustus"
-            data-title="halal-bihalal"
-            class="album-cover"
-          >
-            <img
-              src="./foto/foto-karang-taruna/halal2_girl.png"
-              alt="Album Lomba 17 Agustus"
-            />
-            <div class="album-info">
-              <h4>foto kumpul-kumpul</h4>
-              <p>10++ Foto</p>
-            </div>
-          </a>
-          <a
-            href="./foto/foto-karang-taruna/angkringan.jpeg"
-            data-lightbox="album-17agustus"
-            data-title="angkringan"
-          ></a>
-          <a
-            href="./foto/foto-karang-taruna/wisata.jpeg"
-            data-lightbox="album-17agustus"
-            data-title="angkringan"
-          ></a>
-        </div>
-        <div class="album-item">
-          <a
-            href="./foto/foto-karang-taruna/tari.jpeg"
-            data-lightbox="album-tari"
-            data-title="album-tari"
-            class="album-cover"
-          >
-            <img src="./foto/foto-karang-taruna/tari.jpeg" alt="album tari" />
-            <div class="album-info">
-              <h4>tari</h4>
-              <p>10++ Foto</p>
-            </div>
-          </a>
-          <a
-            href="./foto/foto-karang-taruna/tari.JPG"
-            data-lightbox="album-tari"
-            data-title="album-tari"
-          ></a>
+        <h3 class="animate-on-scroll">Dokumentasi Foto</h3>
+        <div class="album-grid">
+          <div class="album-item animate-on-scroll">
+            <a
+              href="./foto/foto-karang-taruna/halal1.png"
+              data-lightbox="album-17agustus"
+              data-title="halal-bihalal"
+              class="album-cover"
+            >
+              <img
+                src="./foto/foto-karang-taruna/halal2_girl.png"
+                alt="Album Kumpul-kumpul"
+              />
+              <div class="album-info">
+                <h4>Foto Kumpul-Kumpul</h4>
+                <p>Lihat Album</p>
+              </div>
+            </a>
+            <a
+              href="./foto/foto-karang-taruna/angkringan.jpeg"
+              data-lightbox="album-17agustus"
+              data-title="Angkringan"
+            ></a>
+            <a
+              href="./foto/foto-karang-taruna/wisata.jpeg"
+              data-lightbox="album-17agustus"
+              data-title="Wisata"
+            ></a>
+          </div>
+          <div class="album-item animate-on-scroll">
+            <a
+              href="./foto/foto-karang-taruna/tari.jpeg"
+              data-lightbox="album-tari"
+              data-title="Tari Tradisional"
+              class="album-cover"
+            >
+              <img src="./foto/foto-karang-taruna/tari.jpeg" alt="Album Tari" />
+              <div class="album-info">
+                <h4>Tari</h4>
+                <p>Lihat Album</p>
+              </div>
+            </a>
+            <a
+              href="./foto/foto-karang-taruna/tari.JPG"
+              data-lightbox="album-tari"
+              data-title="Penampilan Tari"
+            ></a>
+          </div>
         </div>
 
-        <h3>Artikel</h3>
-        <div class="artikel-judul-list">
+        <hr class="separator" />
+
+        <h3 class="animate-on-scroll">Artikel</h3>
+        <div class="artikel-judul-list animate-on-scroll">
           <ul>
             <li>
               <a href="kegiatan-17agustus.html">Judul Artikel Pertama Saya</a>
@@ -123,34 +97,17 @@
             <li><a href="#">Catatan Tentang Proses Kreatif</a></li>
           </ul>
         </div>
-        <a href="kegiatan.html" class="kegiatan-tombol">Lihat Semua Artikel</a>
+        <a href="kegiatan.html" class="kegiatan-tombol animate-on-scroll"
+          >Lihat Semua Artikel</a
+        >
       </div>
     </main>
 
-    <footer>
-      <div class="footer-social-media">
-        <a
-          href="https://www.instagram.com/usernameanda"
-          target="_blank"
-          aria-label="Instagram"
-          ><i class="fab fa-instagram"></i
-        ></a>
-        <a
-          href="https://github.com/usernameanda"
-          target="_blank"
-          aria-label="GitHub"
-          ><i class="fab fa-github"></i
-        ></a>
-        <a href="mailto:emailanda@example.com" aria-label="Email"
-          ><i class="fas fa-envelope"></i
-        ></a>
-      </div>
-      <p>&copy; 2025 Website Pribadi. All Rights Reserved.</p>
-    </footer>
+    <footer id="footer-placeholder"></footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/script.js" defer></script>
   </body>
 </html>

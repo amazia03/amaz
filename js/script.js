@@ -1,236 +1,157 @@
+// Salin dan tempel kode ini ke js/script.js (ganti semua isinya)
+document.addEventListener("DOMContentLoaded", function () {
+  // =========================================
+  // 1. DINAMISASI HEADER & FOOTER
+  // =========================================
+  const loadComponent = (id, url, callback) => {
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) throw new Error(`Could not load ${url}`);
+        return response.text();
+      })
+      .then((data) => {
+        const element = document.getElementById(id);
+        if (element) element.innerHTML = data;
+        if (callback) callback();
+      })
+      .catch((error) => console.error(error));
+  };
+
+  // Memuat Header, lalu menjalankan skrip menu & link aktif setelahnya
+  loadComponent("header-placeholder", "header.html", () => {
+    initializeMenu();
+    setActiveNavLink();
+  });
+
+  // Memuat Footer
+  loadComponent("footer-placeholder", "footer.html");
+
+  // =========================================
+  // 2. FUNGSI UNTUK NAVIGASI AKTIF
+  // =========================================
+  const setActiveNavLink = () => {
+    // Mengambil nama file dari URL, misal: "about.html"
+    const currentPage = window.location.pathname.split("/").pop();
+    const navLinks = document.querySelectorAll("header nav ul li a");
+    navLinks.forEach((link) => {
+      const linkPage = link.getAttribute("href");
+      // Menandai link yang cocok atau link "index.html" jika di halaman utama
+      if (
+        linkPage === currentPage ||
+        (currentPage === "" && linkPage === "index.html")
+      ) {
+        link.classList.add("active");
+      }
+    });
+  };
+
+  // =========================================
+  // 3. SCRIPT UNTUK MENU RESPONSIVE (HAMBURGER)
+  // =========================================
+  const initializeMenu = () => {
+    const menuToggle = document.getElementById("menu-toggle");
+    const nav = document.querySelector("header nav");
+
+    if (menuToggle && nav) {
+      menuToggle.addEventListener("click", function () {
+        nav.classList.toggle("active");
+        const icon = menuToggle.querySelector("i");
+        // Mengganti ikon antara bars dan times (X)
+        icon.classList.toggle("fa-bars");
+        icon.classList.toggle("fa-times");
+      });
+    }
+  };
+
+  // =========================================
+  // 4. SCRIPT UNTUK ANIMASI ON-SCROLL
+  // =========================================
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  const elementsToAnimate = document.querySelectorAll(".animate-on-scroll");
+  elementsToAnimate.forEach((el) => observer.observe(el));
+
+  // =========================================
+  // 5. SCRIPT UNTUK FITUR SORTING
+  // =========================================
+  function sortItems(containerSelector, itemSelector, sorterId) {
+    const sorter = document.getElementById(sorterId);
+    const container = document.querySelector(containerSelector);
+
+    if (!sorter || !container) return; // Keluar jika elemen tidak ada
+
+    sorter.addEventListener("change", function () {
+      const sortOrder = this.value;
+      const items = Array.from(container.querySelectorAll(itemSelector));
+
+      items.sort((a, b) => {
+        const dateA = new Date(a.dataset.tanggal);
+        const dateB = new Date(b.dataset.tanggal);
+        return sortOrder === "terbaru" ? dateB - dateA : dateA - dateB;
+      });
+
+      container.innerHTML = "";
+      items.forEach((item) => container.appendChild(item));
+    });
+  }
+
+  // Menerapkan fungsi sorting ke halaman yang relevan
+  sortItems(".kegiatan-list", ".kegiatan-item", "kegiatan-sorter");
+  sortItems(".info-list", ".info-item", "info-sorter");
+}); // Akhir dari DOMContentLoaded
+
+// =========================================
+// KONFIGURASI TSPARTICLES (LATAR BELAKANG)
+// Tetap di luar karena tidak perlu menunggu DOM dinamis
+// =========================================
 tsParticles.load("particles-js", {
   particles: {
-    number: {
-      value: 80, // GANTI ANGKA INI untuk menambah/mengurangi jumlah bintang
-      density: {
-        enable: true,
-        value_area: 800,
-      },
-    },
-    color: {
-      value: "#ffffff", // Warna partikel
-    },
-    shape: {
-      type: "circle", // Bentuk partikel
-    },
+    number: { value: 80, density: { enable: true, value_area: 800 } },
+    color: { value: "#ffffff" },
+    shape: { type: "circle" },
     opacity: {
       value: 0.5,
       random: true,
-      anim: {
-        enable: true,
-        speed: 1,
-        opacity_min: 0.1,
-        sync: false,
-      },
+      anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false },
     },
-    size: {
-      value: 2, // Ukuran partikel
-      random: true,
-      anim: {
-        enable: false,
-      },
-    },
+    size: { value: 2, random: true },
     line_linked: {
       enable: true,
       distance: 150,
-      color: "#ffffff", // Warna garis antar partikel
+      color: "#ffffff",
       opacity: 0.4,
       width: 1,
     },
     move: {
       enable: true,
-      speed: 1, // GANTI ANGKA INI untuk kecepatan gerak partikel
+      speed: 1,
       direction: "none",
       random: false,
       straight: false,
       out_mode: "out",
-      bounce: false,
-      attract: {
-        enable: false,
-        rotateX: 600,
-        rotateY: 1200,
-      },
     },
   },
   interactivity: {
     detect_on: "canvas",
     events: {
-      onhover: {
-        enable: true,
-        mode: "repulse", // Partikel akan menjauh saat kursor mendekat
-      },
-      onclick: {
-        enable: true,
-        mode: "push", // Menambah partikel baru saat diklik
-      },
+      onhover: { enable: true, mode: "repulse" },
+      onclick: { enable: true, mode: "push" },
       resize: true,
     },
     modes: {
-      repulse: {
-        distance: 100,
-        duration: 0.4,
-      },
-      push: {
-        particles_nb: 4,
-      },
+      repulse: { distance: 100, duration: 0.4 },
+      push: { particles_nb: 4 },
     },
   },
   retina_detect: true,
-});
-/* ========================================= */
-/* SCRIPT BARU & BENAR UNTUK MENU RESPONSIVE */
-/* ========================================= */
-document.addEventListener("DOMContentLoaded", function () {
-  const menuToggle = document.getElementById("menu-toggle");
-  const nav = document.querySelector("header nav");
-
-  // Cek apakah elemen ada untuk menghindari error
-  if (menuToggle && nav) {
-    menuToggle.addEventListener("click", function () {
-      // Toggle kelas 'active' pada navigasi
-      nav.classList.toggle("active");
-
-      // Ganti ikon hamburger menjadi 'X' saat menu terbuka
-      const icon = menuToggle.querySelector("i");
-      if (nav.classList.contains("active")) {
-        icon.classList.remove("fa-bars");
-        icon.classList.add("fa-times");
-      } else {
-        icon.classList.remove("fa-times");
-        icon.classList.add("fa-bars");
-      }
-    });
-  }
-});
-/* ========================================= */
-/* SCRIPT BARU UNTUK ANIMASI ON-SCROLL       */
-/* ========================================= */
-document.addEventListener("DOMContentLoaded", function () {
-  // Opsi untuk Intersection Observer
-  // threshold: 0.1 berarti callback akan berjalan saat 10% elemen terlihat
-  const observerOptions = {
-    threshold: 0.1,
-  };
-
-  // Callback function yang akan dijalankan saat elemen diamati
-  const observerCallback = (entries, observer) => {
-    entries.forEach((entry) => {
-      // Jika elemen masuk ke dalam viewport
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        // Setelah animasi berjalan, kita tidak perlu mengamatinya lagi
-        observer.unobserve(entry.target);
-      }
-    });
-  };
-
-  // Buat observer baru
-  const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-  // Pilih semua elemen yang ingin diberi animasi
-  // Anda bisa menambahkan lebih banyak selector di sini
-  const elementsToAnimate = document.querySelectorAll(
-    ".container h2, .container p, .container h3, .visi-misi-container, .struktur-container, .gallery-grid, .kegiatan-item, .info-item, .kontak-grid"
-  );
-
-  // Tambahkan kelas .animate-on-scroll dan mulai amati setiap elemen
-  elementsToAnimate.forEach((el) => {
-    el.classList.add("animate-on-scroll");
-    observer.observe(el);
-  });
-});
-/* ========================================= */
-/* SCRIPT BARU UNTUK FITUR SORTING           */
-/* ========================================= */
-document.addEventListener("DOMContentLoaded", function () {
-  // Fungsi umum untuk mengurutkan item
-  function sortItems(containerSelector, itemSelector, sorterId) {
-    const sorter = document.getElementById(sorterId);
-    const container = document.querySelector(containerSelector);
-
-    // Cek apakah elemen ada di halaman ini
-    if (!sorter || !container) {
-      return;
-    }
-
-    sorter.addEventListener("change", function () {
-      const sortOrder = this.value;
-      const items = Array.from(container.querySelectorAll(itemSelector));
-
-      items.sort(function (a, b) {
-        const dateA = new Date(a.getAttribute("data-tanggal"));
-        const dateB = new Date(b.getAttribute("data-tanggal"));
-
-        if (sortOrder === "terbaru") {
-          return dateB - dateA; // Urutkan dari tanggal terbaru ke terlama
-        } else {
-          return dateA - dateB; // Urutkan dari tanggal terlama ke terbaru
-        }
-      });
-
-      // Hapus item yang ada dari kontainer
-      container.innerHTML = "";
-
-      // Tambahkan kembali item yang sudah diurutkan
-      items.forEach(function (item) {
-        container.appendChild(item);
-      });
-    });
-  }
-
-  // Terapkan fungsi sorting pada halaman Kegiatan
-  sortItems(".kegiatan-list", ".kegiatan-item", "kegiatan-sorter");
-
-  // Terapkan fungsi sorting pada halaman Galeri (untuk video)
-  sortItems("#video-grid", ".video-item", "video-sorter");
-});
-/* ... (kode script yang sudah ada) ... */
-
-/* ========================================= */
-/* SCRIPT BARU UNTUK FITUR SORTING           */
-/* ========================================= */
-document.addEventListener("DOMContentLoaded", function () {
-  // Fungsi umum untuk mengurutkan item
-  function sortItems(containerSelector, itemSelector, sorterId) {
-    const sorter = document.getElementById(sorterId);
-    const container = document.querySelector(containerSelector);
-
-    // Cek apakah elemen ada di halaman ini
-    if (!sorter || !container) {
-      return;
-    }
-
-    sorter.addEventListener("change", function () {
-      const sortOrder = this.value;
-      const items = Array.from(container.querySelectorAll(itemSelector));
-
-      items.sort(function (a, b) {
-        const dateA = new Date(a.getAttribute("data-tanggal"));
-        const dateB = new Date(b.getAttribute("data-tanggal"));
-
-        if (sortOrder === "terbaru") {
-          return dateB - dateA; // Urutkan dari tanggal terbaru ke terlama
-        } else {
-          return dateA - dateB; // Urutkan dari tanggal terlama ke terbaru
-        }
-      });
-
-      // Hapus item yang ada dari kontainer
-      container.innerHTML = "";
-
-      // Tambahkan kembali item yang sudah diurutkan
-      items.forEach(function (item) {
-        container.appendChild(item);
-      });
-    });
-  }
-
-  // Terapkan fungsi sorting pada halaman Kegiatan (Reading)
-  sortItems(".kegiatan-list", ".kegiatan-item", "kegiatan-sorter");
-
-  // Terapkan fungsi sorting pada halaman Galeri (untuk video) - INI SUDAH TIDAK RELEVAN TAPI BIARKAN SAJA
-  sortItems("#video-grid", ".video-item", "video-sorter");
-
-  // BARU: Terapkan fungsi sorting pada halaman Informasi (Tweets & Note Series)
-  sortItems(".info-list", ".info-item", "info-sorter");
 });

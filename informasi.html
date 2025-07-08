@@ -19,48 +19,17 @@
   </head>
   <body>
     <div id="particles-js"></div>
-    <header>
-      <div class="header-container">
-        <div class="logo">
-          <h1>Website Pribadi</h1>
-        </div>
-        <nav>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="galeri.html">Galeri & Artikel</a></li>
-            <li><a href="kegiatan.html">Reading</a></li>
-            <li>
-              <a href="informasi.html" class="active">Tweets & Note Series</a>
-            </li>
-            <li><a href="kontak.html">Kontak</a></li>
-          </ul>
-        </nav>
-        <div class="social-media">
-          <a href="https://www.instagram.com/usernameanda" target="_blank"
-            ><i class="fab fa-instagram"></i
-          ></a>
-          <a href="https://github.com/usernameanda" target="_blank"
-            ><i class="fab fa-github"></i
-          ></a>
-          <a href="mailto:emailanda@example.com"
-            ><i class="fas fa-envelope"></i
-          ></a>
-        </div>
-        <button id="menu-toggle" class="menu-toggle" aria-label="Buka Menu">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-    </header>
+
+    <header id="header-placeholder"></header>
 
     <main>
       <div class="container">
-        <h2>Tweets & Note Series</h2>
-        <p style="margin-bottom: 40px">
+        <h2 class="animate-on-scroll">Tweets & Note Series</h2>
+        <p class="animate-on-scroll" style="margin-bottom: 40px">
           Kumpulan pemikiran singkat, catatan, dan update terbaru dari saya.
         </p>
 
-        <div class="sort-container">
+        <div class="sort-container animate-on-scroll">
           <label for="info-sorter">Urutkan berdasarkan:</label>
           <select id="info-sorter" class="sorter">
             <option value="terbaru">Terbaru ke Lama</option>
@@ -69,7 +38,7 @@
         </div>
 
         <div class="info-list">
-          <div class="info-item" data-tanggal="2025-07-07">
+          <div class="info-item animate-on-scroll" data-tanggal="2025-07-07">
             <div class="info-header">
               <h3>Tentang Proses Kreatif</h3>
               <span class="info-tag tag-penting">NOTE</span>
@@ -85,7 +54,7 @@
               </p>
             </div>
           </div>
-          <div class="info-item" data-tanggal="2025-07-06">
+          <div class="info-item animate-on-scroll" data-tanggal="2025-07-06">
             <div class="info-header">
               <h3>Rekomendasi Buku Minggu Ini</h3>
               <span class="info-tag tag-pengumuman">TWEET</span>
@@ -101,7 +70,7 @@
               </p>
             </div>
           </div>
-          <div class="info-item" data-tanggal="2025-07-05">
+          <div class="info-item animate-on-scroll" data-tanggal="2025-07-05">
             <div class="info-header">
               <h3>Perlunya Belajar Hal Baru</h3>
               <span class="info-tag tag-update">NOTE</span>
@@ -120,28 +89,9 @@
       </div>
     </main>
 
-    <footer>
-      <div class="footer-social-media">
-        <a
-          href="https://www.instagram.com/usernameanda"
-          target="_blank"
-          aria-label="Instagram"
-          ><i class="fab fa-instagram"></i
-        ></a>
-        <a
-          href="https://github.com/usernameanda"
-          target="_blank"
-          aria-label="GitHub"
-          ><i class="fab fa-github"></i
-        ></a>
-        <a href="mailto:emailanda@example.com" aria-label="Email"
-          ><i class="fas fa-envelope"></i
-        ></a>
-      </div>
-      <p>&copy; 2025 Website Pribadi. All Rights Reserved.</p>
-    </footer>
+    <footer id="footer-placeholder"></footer>
 
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/script.js" defer></script>
   </body>
 </html>
