@@ -24,61 +24,51 @@
 
     <main>
       <div class="container">
-        <h2>Reading</h2>
-        <p style="margin-bottom: 20px">
-          Jelajahi berbagai tulisan dan artikel yang telah saya buat.
+        <h2 class="animate-on-scroll">Daftar Artikel</h2>
+        <p class="animate-on-scroll" style="margin-bottom: 40px">
+          Kumpulan tulisan berdasarkan kategori. Klik kategori untuk melihat
+          daftar artikel.
         </p>
 
-        <div class="sort-container">
-          <label for="kegiatan-sorter">Urutkan berdasarkan:</label>
-          <select id="kegiatan-sorter" class="sorter">
-            <option value="terbaru">Terbaru ke Lama</option>
-            <option value="terlama">Lama ke Terbaru</option>
-          </select>
-        </div>
+        <div class="artikel-grup-container animate-on-scroll">
+          <details class="artikel-grup">
+            <summary>KERESAHAN</summary>
+            <ul>
+              <li><a href="#">Judul Artikel tentang Keresahan 1</a></li>
+              <li><a href="#">Judul Artikel tentang Keresahan 2</a></li>
+            </ul>
+          </details>
 
-        <div class="kegiatan-list">
-          <article class="kegiatan-item" data-tanggal="2024-08-17">
-            <div class="kegiatan-foto">
-              <img
-                src="https://via.placeholder.com/400x300.png?text=Thumbnail+Artikel+1"
-                alt="Judul Artikel Pertama"
-              />
-            </div>
-            <div class="kegiatan-konten">
-              <h3>Judul Artikel Pertama Saya</h3>
-              <p class="kegiatan-meta">
-                <i class="fas fa-calendar-alt"></i> 17 Agustus 2024
-              </p>
-              <p>
-                Ini adalah cuplikan dari tulisan pertama saya. Membahas tentang
-                topik yang menarik dan relevan dengan pengalaman pribadi...
-              </p>
-              <a href="kegiatan-17agustus.html" class="kegiatan-tombol"
-                >Baca Selengkapnya</a
-              >
-            </div>
-          </article>
+          <details class="artikel-grup">
+            <summary>SUMMARY BOOKS</summary>
+            <ul>
+              <li><a href="#">Ringkasan Buku "Atomic Habits"</a></li>
+              <li><a href="#">Ringkasan Buku "Sapiens"</a></li>
+            </ul>
+          </details>
 
-          <article class="kegiatan-item" data-tanggal="2024-06-22">
-            <div class="kegiatan-foto">
-              <img
-                src="https://via.placeholder.com/400x300.png?text=Thumbnail+Artikel+2"
-                alt="Judul Artikel Kedua"
-              />
-            </div>
-            <div class="kegiatan-konten">
-              <h3>Refleksi di Tengah Hujan</h3>
-              <p class="kegiatan-meta">
-                <i class="fas fa-calendar-alt"></i> 22 Juni 2024
-              </p>
-              <p>
-                Sebuah catatan singkat tentang pemikiran yang muncul saat sore
-                hari, ditemani oleh rintik hujan dan secangkir kopi...
-              </p>
-              <a href="#" class="kegiatan-tombol">Baca Selengkapnya</a>
-            </div>
-          </article>
+          <details class="artikel-grup">
+            <summary>SCIENCE</summary>
+            <ul>
+              <li><a href="#">Memahami Konsep Entropi</a></li>
+              <li><a href="#">Keajaiban Evolusi Biologi</a></li>
+            </ul>
+          </details>
+
+          <details class="artikel-grup">
+            <summary>HISTORY</summary>
+            <ul>
+              <li><a href="#">Sejarah Singkat Peradaban Manusia</a></li>
+            </ul>
+          </details>
+
+          <details class="artikel-grup">
+            <summary>PHILOSOPHY</summary>
+            <ul>
+              <li><a href="#">Pengantar Filsafat Stoikisme</a></li>
+              <li><a href="#">Apa itu Eksistensialisme?</a></li>
+            </ul>
+          </details>
         </div>
       </div>
     </main>
@@ -86,6 +76,6 @@
     <footer id="footer-placeholder"></footer>
 
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/script.js" defer></script>
   </body>
 </html>
