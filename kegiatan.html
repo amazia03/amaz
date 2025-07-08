@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Website Pribadi - Home</title>
+    <title>Reading - Website Pribadi</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,10 +27,10 @@
         </div>
         <nav>
           <ul>
-            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="galeri.html">Galeri & Artikel</a></li>
-            <li><a href="kegiatan.html">Reading</a></li>
+            <li><a href="kegiatan.html" class="active">Reading</a></li>
             <li><a href="informasi.html">Tweets & Note Series</a></li>
             <li><a href="kontak.html">Kontak</a></li>
           </ul>
@@ -52,36 +52,64 @@
       </div>
     </header>
 
-    <div
-      class="logo-image"
-      style="
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 100px 0;
-        padding: 20px 0;
-      "
-    >
-      <img
-        src="./foto/logo-transparn.png"
-        alt="Logo Website Pribadi"
-        style="
-          max-width: 300px;
-          width: 100%;
-          height: auto;
-          margin: 20px 0;
-          display: block;
-        "
-      />
-    </div>
-
     <main>
       <div class="container">
-        <h2>Selamat Datang di Website Pribadi Saya</h2>
-        <p>
-          Ini adalah tempat di mana saya berbagi tulisan, galeri foto, dan
-          pemikiran. Mari terhubung dan berkarya bersama.
+        <h2>Reading</h2>
+        <p style="margin-bottom: 20px">
+          Jelajahi berbagai tulisan dan artikel yang telah saya buat.
         </p>
+
+        <div class="sort-container">
+          <label for="kegiatan-sorter">Urutkan berdasarkan:</label>
+          <select id="kegiatan-sorter" class="sorter">
+            <option value="terbaru">Terbaru ke Lama</option>
+            <option value="terlama">Lama ke Terbaru</option>
+          </select>
+        </div>
+
+        <div class="kegiatan-list">
+          <article class="kegiatan-item" data-tanggal="2024-08-17">
+            <div class="kegiatan-foto">
+              <img
+                src="https://via.placeholder.com/400x300.png?text=Thumbnail+Artikel+1"
+                alt="Judul Artikel Pertama"
+              />
+            </div>
+            <div class="kegiatan-konten">
+              <h3>Judul Artikel Pertama Saya</h3>
+              <p class="kegiatan-meta">
+                <i class="fas fa-calendar-alt"></i> 17 Agustus 2024
+              </p>
+              <p>
+                Ini adalah cuplikan dari tulisan pertama saya. Membahas tentang
+                topik yang menarik dan relevan dengan pengalaman pribadi...
+              </p>
+              <a href="kegiatan-17agustus.html" class="kegiatan-tombol"
+                >Baca Selengkapnya</a
+              >
+            </div>
+          </article>
+
+          <article class="kegiatan-item" data-tanggal="2024-06-22">
+            <div class="kegiatan-foto">
+              <img
+                src="https://via.placeholder.com/400x300.png?text=Thumbnail+Artikel+2"
+                alt="Judul Artikel Kedua"
+              />
+            </div>
+            <div class="kegiatan-konten">
+              <h3>Refleksi di Tengah Hujan</h3>
+              <p class="kegiatan-meta">
+                <i class="fas fa-calendar-alt"></i> 22 Juni 2024
+              </p>
+              <p>
+                Sebuah catatan singkat tentang pemikiran yang muncul saat sore
+                hari, ditemani oleh rintik hujan dan secangkir kopi...
+              </p>
+              <a href="#" class="kegiatan-tombol">Baca Selengkapnya</a>
+            </div>
+          </article>
+        </div>
       </div>
     </main>
 
@@ -105,7 +133,6 @@
       </div>
       <p>&copy; 2025 Website Pribadi. All Rights Reserved.</p>
     </footer>
-
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <script src="js/script.js"></script>
   </body>

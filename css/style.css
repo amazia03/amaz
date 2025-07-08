@@ -765,3 +765,40 @@ select.sorter:focus {
 .album-item > a:not(.album-cover) {
   display: none;
 }
+/* ========================================= */
+/* CSS BARU UNTUK HALAMAN KONTAK (SIMPLE)  */
+/* ========================================= */
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-top: 50px;
+  flex-wrap: wrap; /* Agar responsif di layar kecil */
+}
+
+.contact-link-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #ffffff;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.contact-link-item:hover {
+  color: #00aaff;
+  transform: translateY(-5px);
+}
+
+.contact-link-item i {
+  font-size: 3em; /* Ukuran ikon besar */
+  margin-bottom: 15px;
+}
+
+.contact-link-item span {
+  font-size: 1.2em;
+  font-style: normal;
+  font-weight: bold;
+}
