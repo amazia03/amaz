@@ -1,0 +1,65 @@
+{
+  "kategori": [
+    {
+      "nama": "KERESAHAN",
+      "artikel": [
+        {
+          "judul": "about humans",
+          "url": "artikel/keresahan/keresahan-manusia-0.html"
+        },
+        {
+          "judul": "Judul Artikel tentang Keresahan 2",
+          "url": "#"
+        }
+      ]
+    },
+    {
+      "nama": "SUMMARY BOOKS",
+      "artikel": [
+        {
+          "judul": "Ringkasan Buku 'Atomic Habits'",
+          "url": "#"
+        },
+        {
+          "judul": "Ringkasan Buku 'Sapiens'",
+          "url": "#"
+        }
+      ]
+    },
+    {
+      "nama": "SCIENCE",
+      "artikel": [
+        {
+          "judul": "Judul Artikel Pertama Saya (Contoh)",
+          "url": "kegiatan-17agustus.html"
+        },
+        {
+          "judul": "Penjelasan Sederhana tentang Entropi",
+          "url": "#"
+        }
+      ]
+    },
+    {
+      "nama": "HISTORY",
+      "artikel": [
+        {
+          "judul": "Sejarah Singkat Perang Dunia II",
+          "url": "#"
+        }
+      ]
+    },
+    {
+      "nama": "PHILOSOPHY",
+      "artikel": [
+        {
+          "judul": "Pengantar Filsafat Stoikisme",
+          "url": "#"
+        },
+        {
+          "judul": "Refleksi di Tengah Hujan (Contoh)",
+          "url": "#"
+        }
+      ]
+    }
+  ]
+}

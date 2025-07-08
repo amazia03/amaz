@@ -20,11 +20,10 @@
       /* CSS untuk grup artikel yang bisa dilipat (accordion) */
       .artikel-grup {
         text-align: left;
-        margin-bottom: 15px; /* Mengurangi jarak antar grup */
-        border-bottom: 1px solid var(--border-color); /* Garis pemisah tipis */
+        margin-bottom: 15px;
+        border-bottom: 1px solid var(--border-color);
         padding-bottom: 15px;
       }
-
       .kategori-judul {
         font-size: 1.8em;
         color: var(--primary-color);
@@ -37,20 +36,16 @@
         font-style: normal;
         transition: color 0.3s ease;
       }
-
       .kategori-judul:hover {
-        color: #00caff; /* Warna saat cursor di atasnya */
+        color: #00caff;
       }
-
       .kategori-judul .icon {
         font-size: 0.8em;
         transition: transform 0.3s ease;
       }
-
       .kategori-judul.aktif .icon {
         transform: rotate(45deg);
       }
-
       .artikel-judul-list {
         padding-left: 10px;
         margin-top: 15px;
@@ -58,7 +53,6 @@
         overflow: hidden;
         transition: max-height 0.5s ease-out;
       }
-
       .artikel-judul-list ul {
         list-style: none;
         padding-left: 0;
@@ -97,73 +91,7 @@
           kategori untuk melihat daftar judul.
         </p>
 
-        <div class="artikel-grup animate-on-scroll">
-          <h3 class="kategori-judul">
-            <span>KERESAHAN</span>
-            <i class="fas fa-plus icon"></i>
-          </h3>
-          <div class="artikel-judul-list">
-            <ul>
-              <li><a href="#">Judul Artikel tentang Keresahan 1</a></li>
-              <li><a href="#">Judul Artikel tentang Keresahan 2</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="artikel-grup animate-on-scroll">
-          <h3 class="kategori-judul">
-            <span>SUMMARY BOOKS</span>
-            <i class="fas fa-plus icon"></i>
-          </h3>
-          <div class="artikel-judul-list">
-            <ul>
-              <li><a href="#">Ringkasan Buku "Atomic Habits"</a></li>
-              <li><a href="#">Ringkasan Buku "Sapiens"</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="artikel-grup animate-on-scroll">
-          <h3 class="kategori-judul">
-            <span>SCIENCE</span>
-            <i class="fas fa-plus icon"></i>
-          </h3>
-          <div class="artikel-judul-list">
-            <ul>
-              <li>
-                <a href="kegiatan-17agustus.html"
-                  >Judul Artikel Pertama Saya (Contoh)</a
-                >
-              </li>
-              <li><a href="#">Penjelasan Sederhana tentang Entropi</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="artikel-grup animate-on-scroll">
-          <h3 class="kategori-judul">
-            <span>HISTORY</span>
-            <i class="fas fa-plus icon"></i>
-          </h3>
-          <div class="artikel-judul-list">
-            <ul>
-              <li><a href="#">Sejarah Singkat Perang Dunia II</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="artikel-grup animate-on-scroll">
-          <h3 class="kategori-judul">
-            <span>PHILOSOPHY</span>
-            <i class="fas fa-plus icon"></i>
-          </h3>
-          <div class="artikel-judul-list">
-            <ul>
-              <li><a href="#">Pengantar Filsafat Stoikisme</a></li>
-              <li><a href="#">Refleksi di Tengah Hujan (Contoh)</a></li>
-            </ul>
-          </div>
-        </div>
+        <div id="kategori-container" class="animate-on-scroll"></div>
       </div>
     </main>
 
@@ -172,33 +100,73 @@
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <script src="js/script.js" defer></script>
     <script>
-      // Script khusus untuk halaman ini agar kategori bisa dilipat
       document.addEventListener("DOMContentLoaded", function () {
-        const kategoriJudul = document.querySelectorAll(".kategori-judul");
+        // Fungsi untuk memuat data dari file JSON
+        fetch("articles.json")
+          .then((response) => response.json())
+          .then((data) => {
+            const container = document.getElementById("kategori-container");
+            container.innerHTML = ""; // Kosongkan kontainer
 
-        kategoriJudul.forEach((judul) => {
-          judul.addEventListener("click", function () {
-            // Toggle kelas 'aktif' pada judul yang diklik
-            this.classList.toggle("aktif");
+            // Loop melalui setiap kategori dari file JSON
+            data.kategori.forEach((kategori) => {
+              // Buat elemen untuk setiap grup
+              const grup = document.createElement("div");
+              grup.className = "artikel-grup";
 
-            // Ambil konten (daftar artikel) yang berhubungan
-            const konten = this.nextElementSibling;
-            const icon = this.querySelector(".icon");
+              let artikelHTML = "";
+              // Loop melalui setiap artikel dalam kategori
+              kategori.artikel.forEach((artikel) => {
+                artikelHTML += `<li><a href="${artikel.url}">${artikel.judul}</a></li>`;
+              });
 
-            // Cek apakah konten sedang terbuka atau tertutup
-            if (konten.style.maxHeight) {
-              // Jika terbuka, tutup
-              konten.style.maxHeight = null;
-              icon.classList.remove("fa-minus");
-              icon.classList.add("fa-plus");
-            } else {
-              // Jika tertutup, buka dengan mengatur maxHeight sesuai ukuran kontennya
-              konten.style.maxHeight = konten.scrollHeight + "px";
-              icon.classList.remove("fa-plus");
-              icon.classList.add("fa-minus");
-            }
+              // Buat struktur HTML lengkap untuk grup
+              grup.innerHTML = `
+                <h3 class="kategori-judul">
+                  <span>${kategori.nama}</span>
+                  <i class="fas fa-plus icon"></i>
+                </h3>
+                <div class="artikel-judul-list">
+                  <ul>
+                    ${artikelHTML}
+                  </ul>
+                </div>
+              `;
+
+              container.appendChild(grup);
+            });
+
+            // Setelah semua HTML dibuat, tambahkan event listener untuk accordion
+            setupAccordion();
+          })
+          .catch((error) => {
+            console.error("Error memuat data artikel:", error);
+            document.getElementById("kategori-container").innerHTML =
+              "<p>Gagal memuat daftar artikel.</p>";
           });
-        });
+
+        // Fungsi untuk mengaktifkan accordion
+        function setupAccordion() {
+          const kategoriJudul = document.querySelectorAll(".kategori-judul");
+
+          kategoriJudul.forEach((judul) => {
+            judul.addEventListener("click", function () {
+              this.classList.toggle("aktif");
+              const konten = this.nextElementSibling;
+              const icon = this.querySelector(".icon");
+
+              if (konten.style.maxHeight) {
+                konten.style.maxHeight = null;
+                icon.classList.remove("fa-minus");
+                icon.classList.add("fa-plus");
+              } else {
+                konten.style.maxHeight = konten.scrollHeight + "px";
+                icon.classList.remove("fa-plus");
+                icon.classList.add("fa-minus");
+              }
+            });
+          });
+        }
       });
     </script>
   </body>
