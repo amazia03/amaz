@@ -805,3 +805,41 @@ select.sorter:focus {
   font-style: normal;
   font-weight: bold;
 }
+/* ========================================= */
+/* CSS BARU UNTUK DAFTAR JUDUL ARTIKEL     */
+/* ========================================= */
+
+.artikel-judul-list {
+  text-align: left; /* Membuat semua konten di dalamnya rata kiri */
+  max-width: 800px;
+  margin: 20px auto; /* Posisi di tengah */
+}
+
+.artikel-judul-list ul {
+  list-style: none; /* Menghilangkan bullet points */
+  padding-left: 0;
+}
+
+.artikel-judul-list li {
+  background-color: #111;
+  border-left: 3px solid #00aaff; /* Garis aksen di kiri */
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.artikel-judul-list li:hover {
+  background-color: #222; /* Warna latar berubah saat di-hover */
+}
+
+.artikel-judul-list li a {
+  display: block;
+  padding: 15px 20px;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 1.2em;
+  font-style: normal;
+}
+
+.artikel-judul-list li a:visited {
+  color: #ffffff; /* Pastikan warna tetap putih */
+}
