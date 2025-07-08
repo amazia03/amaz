@@ -778,12 +778,15 @@ select.sorter:focus {
   flex-wrap: wrap; /* Agar responsif di layar kecil */
 }
 
-.contact-link-item {
+/* UBAH MENJADI SEPERTI INI */
+.contact-link-item,
+.contact-link-item:visited {
+  /* Tambahkan selector :visited */
   display: flex;
   flex-direction: column;
   align-items: center;
   text-decoration: none;
-  color: #ffffff;
+  color: #ffffff; /* Pastikan warna tetap putih meski sudah dikunjungi */
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
