@@ -110,6 +110,28 @@
       "tanggal": "2020-12-15",
       "meta_info": "15 Desember 2020",
       "konten_html": "<p>Semesta ini berjalan tidak dengan mengikuti karepe raimu</p>"
+    },
+    {
+      "id": "ryu-hasan-8",
+      "judul": "ryu hasan",
+      "tag": {
+        "teks": "Twets",
+        "kelas": "tag-penting"
+      },
+      "tanggal": "2019-12-15",
+      "meta_info": "15 Desember 2019",
+      "konten_html": "<p>Tidak ada cara yg benar atau cara yg salah dalam menjalani depresi, semua mengalir begitu saja tak bisa dibendung Kalo dengan menjilat setir mobil bisa membuat merasa lebih nyaman ya lakukan saja</p>"
+    },
+    {
+      "id": "naval-1",
+      "judul": "naval ravikant",
+      "tag": {
+        "teks": "Twets",
+        "kelas": "tag-penting"
+      },
+      "tanggal": "2020-10-30",
+      "meta_info": "30 Oktober 2020",
+      "konten_html": "<p>“Anda menghabiskan waktu untuk menghemat uang, padahal seharusnya Anda membelanjakan uang untuk menghemat waktu.”</p>"
     }
   ]
 }
