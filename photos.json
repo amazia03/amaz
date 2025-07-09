@@ -29,9 +29,9 @@
     },
     {
       "id": "Books-Collection",
-      "title": "Books-Collection",
+      "title": "Books Collection",
       "cover": "./foto/books/libary-books.jpg",
-      "description": "Books-Collection",
+      "description": "Books Collection",
       "photos": [
         {
           "url": "./foto/foto-karang-taruna/angkringan.jpeg",
