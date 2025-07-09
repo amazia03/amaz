@@ -54,6 +54,28 @@
       "tanggal": "2020-03-27",
       "meta_info": "27 Maret 2020",
       "konten_html": "<p>Hanya karena Anda ingin hal itu benar, bukan berarti itu benar. Hanya karena miliaran orang percaya, bukan berarti mereka harus percaya. Dan hanya karena kebenaran itu menyakitkan, bukan berarti kebenaran itu tidak benar.</p>"
+    },
+    {
+      "id": "ryu-hasan-4",
+      "judul": "ryu hasan",
+      "tag": {
+        "teks": "Twets",
+        "kelas": "tag-penting"
+      },
+      "tanggal": "2020-07-13",
+      "meta_info": "13 Juli 2020",
+      "konten_html": "<p>Berapa banyak malapetaka yang diawali dengan “niat baik”?</p>"
+    },
+    {
+      "id": "ryu-hasan-4",
+      "judul": "ryu hasan",
+      "tag": {
+        "teks": "Twets",
+        "kelas": "tag-penting"
+      },
+      "tanggal": "2019-03-17",
+      "meta_info": "17 Maret 2019",
+      "konten_html": "<p>“Jika Anda pikir sihir adalah jawaban dari pertanyaan Anda, berarti Anda belum berusaha cukup keras.”</p>"
     }
   ]
 }
