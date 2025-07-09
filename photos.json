@@ -28,10 +28,10 @@
       ]
     },
     {
-      "id": "kegiatan-karang-taruna",
-      "title": "Kegiatan Karang Taruna",
-      "cover": "./foto/foto-karang-taruna/angkringan.jpeg",
-      "description": "Dokumentasi kegiatan bersama karang taruna.",
+      "id": "Books-Collection",
+      "title": "Books-Collection",
+      "cover": "./foto/books/libary-books.jpg",
+      "description": "Books-Collection",
       "photos": [
         {
           "url": "./foto/foto-karang-taruna/angkringan.jpeg",
