@@ -15,7 +15,7 @@
       "id": "ryu-hasan-20121206",
       "judul": "ryu hasan",
       "tag": {
-        "teks": "Tweets",
+        "teks": "Twets",
         "kelas": "tag-penting"
       },
       "tanggal": "2012-12-06",
@@ -23,10 +23,21 @@
       "konten_html": "<p>Ilmu pengetahuan yang baik adalah yang menyisakan pertanyaan, sebagai pijakan untuk berkembangan ilmu itu sendiri. Tidak pernah final...</p>"
     },
     {
+      "id": "ryu-hasan",
+      "judul": "ryu hasan",
+      "tag": {
+        "teks": "Twets",
+        "kelas": "tag-penting"
+      },
+      "tanggal": "2020-01-25",
+      "meta_info": "20 Januari 2020",
+      "konten_html": "<p>Ilmu pengetahuan mengajarkan Anda untuk membuka mata dan menghargai realitas di sekitar Anda. Takhayul mengajarkan Anda untuk menutup mata dan berpegang teguh pada fantasi di dalam diri Anda.</p>"
+    },
+    {
       "id": "truts-20200327",
       "judul": "truts",
       "tag": {
-        "teks": "Tweets",
+        "teks": "ryu hasan",
         "kelas": "tag-update"
       },
       "tanggal": "2020-03-27",
