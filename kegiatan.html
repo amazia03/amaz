@@ -124,99 +124,85 @@
     <script src="js/script.js" defer></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        let allCategories = []; // Simpan semua data kategori
+        let allCategories = [];
 
-        // Fungsi untuk memuat data dari file JSON
-        fetch("articles.json")
+        // GANTI SUMBER DATA: dari 'articles.json' menjadi alamat API
+        fetch("http://localhost:3000/api/articles")
           .then((response) => response.json())
           .then((data) => {
-            allCategories = data.kategori; // Simpan data asli
-            renderCategories(allCategories, ""); // Tampilkan semua kategori awal tanpa sorotan awal
+            allCategories = data.kategori;
+            renderCategories(allCategories, "");
             setupAccordion();
           })
           .catch((error) => {
-            console.error("Error memuat data artikel:", error);
+            console.error("Error memuat data artikel dari API:", error);
             document.getElementById("kategori-container").innerHTML =
-              "<p>Gagal memuat daftar artikel.</p>";
+              "<p style='color:red;'>Gagal terhubung ke server. Pastikan server backend Anda berjalan.</p>";
           });
 
-        // Fungsi untuk me-render kategori ke DOM dan menyorot teks
         function renderCategories(categories, searchTerm) {
+          // (Fungsi ini tidak perlu diubah, sama seperti sebelumnya)
           const container = document.getElementById("kategori-container");
-          container.innerHTML = ""; // Kosongkan kontainer
-
+          container.innerHTML = "";
           if (categories.length === 0) {
             container.innerHTML = "<p>Tidak ada hasil yang ditemukan.</p>";
             return;
           }
-
-          const regex = searchTerm ? new RegExp(searchTerm, "gi") : null; // Membuat regex jika ada searchTerm
-
+          const regex = searchTerm ? new RegExp(searchTerm, "gi") : null;
           categories.forEach((kategori) => {
             const grup = document.createElement("div");
             grup.className = "artikel-grup";
-
             let artikelHTML = "";
             kategori.artikel.forEach((artikel) => {
               const highlightedJudul = regex
                 ? artikel.judul.replace(
                     regex,
-                    '<span class="highlight">$&</span>'
+                    `<span class="highlight">$&</span>`
                   )
                 : artikel.judul;
               artikelHTML += `<li><a href="${artikel.url}">${highlightedJudul}</a></li>`;
             });
-
             const highlightedNamaKategori = regex
               ? kategori.nama.replace(
                   regex,
-                  '<span class="highlight">$&</span>'
+                  `<span class="highlight">$&</span>`
                 )
               : kategori.nama;
-
             grup.innerHTML = `
           <h3 class="kategori-judul">
             <span>${highlightedNamaKategori}</span>
             <i class="fas fa-plus icon"></i>
           </h3>
-          <div class="artikel-judul-list">
-            <ul>
-              ${artikelHTML}
-            </ul>
-          </div>
+          <div class="artikel-judul-list"><ul>${artikelHTML}</ul></div>
         `;
             container.appendChild(grup);
           });
           setupAccordion();
         }
 
-        // Fungsi untuk menyaring kategori dan artikel
         function filterContent(searchTerm) {
+          // (Fungsi ini tidak perlu diubah, sama seperti sebelumnya)
           const lowerCaseSearchTerm = searchTerm.toLowerCase();
-
           const filteredCategories = allCategories
             .map((kategori) => {
               const filteredArticles = kategori.artikel.filter((artikel) =>
                 artikel.judul.toLowerCase().includes(lowerCaseSearchTerm)
               );
-
               if (
                 kategori.nama.toLowerCase().includes(lowerCaseSearchTerm) ||
                 filteredArticles.length > 0
               ) {
                 if (kategori.nama.toLowerCase().includes(lowerCaseSearchTerm)) {
-                  return { ...kategori, artikel: kategori.artikel }; // Tampilkan semua artikel jika nama kategori cocok
+                  return { ...kategori, artikel: kategori.artikel };
                 }
                 return { ...kategori, artikel: filteredArticles };
               }
               return null;
             })
-            .filter(Boolean); // Hapus kategori yang null
-
-          renderCategories(filteredCategories, searchTerm); // Kirimkan searchTerm untuk penyorotan
+            .filter(Boolean);
+          renderCategories(filteredCategories, searchTerm);
         }
 
-        // Event listener untuk input pencarian
         const searchInput = document.getElementById("search-input");
         searchInput.addEventListener(
           "input",
@@ -225,15 +211,14 @@
           }, 300)
         );
 
-        // Fungsi untuk mengaktifkan accordion
         function setupAccordion() {
+          // (Fungsi ini tidak perlu diubah, sama seperti sebelumnya)
           const kategoriJudul = document.querySelectorAll(".kategori-judul");
           kategoriJudul.forEach((judul) => {
             judul.addEventListener("click", function () {
               this.classList.toggle("aktif");
               const konten = this.nextElementSibling;
               const icon = this.querySelector(".icon");
-
               if (konten.style.maxHeight) {
                 konten.style.maxHeight = null;
                 icon.classList.remove("fa-minus");

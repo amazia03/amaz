@@ -13,6 +13,7 @@
         { "url": "./foto/me_and_family.jpg", "title": "Bersama Keluarga" },
         { "url": "./foto/me_and_band.jpg", "title": "Nge-band" },
         { "url": "./foto/me_cajon.jpg", "title": "Main Cajon" },
+        { "url": "./foto/me-music.jpg", "title": "music" },
         { "url": "./foto/me_botak1.jpg", "title": "Botak Core" },
         { "url": "./foto/me_retret.JPG", "title": "Retret" },
         { "url": "./foto/me_magangaguscom.JPG", "title": "Magang" },
@@ -34,8 +35,8 @@
       "description": "Books Collection",
       "photos": [
         {
-          "url": "./foto/foto-karang-taruna/angkringan.jpeg",
-          "title": "Angkringan"
+          "url": "./foto/books/animal-farm.jpg",
+          "title": "animal farm"
         },
         { "url": "./foto/foto-karang-taruna/wisata.jpeg", "title": "Wisata" },
         {

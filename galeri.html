@@ -52,40 +52,32 @@
         const lightboxLinksContainer =
           document.getElementById("lightbox-links");
 
-        fetch("photos.json")
+        // GANTI SUMBER DATA: dari 'photos.json' menjadi alamat API
+        fetch("http://localhost:3000/api/albums")
           .then((response) => response.json())
           .then((data) => {
-            // Hapus elemen placeholder jika ada
             albumContainer.innerHTML = "";
-
             data.albums.forEach((album) => {
               if (album.photos && album.photos.length > 0) {
-                // --- 1. Buat Album Cover yang Terlihat ---
+                // Kode untuk membuat album tidak perlu diubah
                 const firstPhoto = album.photos[0];
-
                 const albumItem = document.createElement("div");
-                albumItem.className = "album-item animate-on-scroll"; // Class animasi ditambahkan di sini
-
+                albumItem.className = "album-item animate-on-scroll";
                 const albumLink = document.createElement("a");
                 albumLink.href = firstPhoto.url;
                 albumLink.setAttribute("data-lightbox", album.id);
                 albumLink.setAttribute("data-title", firstPhoto.title);
                 albumLink.className = "album-cover";
-
                 const albumImg = document.createElement("img");
                 albumImg.src = album.cover;
                 albumImg.alt = album.title;
-
                 const albumInfo = document.createElement("div");
                 albumInfo.className = "album-info";
                 albumInfo.innerHTML = `<h4>${album.title}</h4><p>Lihat Album (${album.photos.length} foto)</p>`;
-
                 albumLink.appendChild(albumImg);
                 albumLink.appendChild(albumInfo);
                 albumItem.appendChild(albumLink);
                 albumContainer.appendChild(albumItem);
-
-                // --- 2. Buat Link Tersembunyi untuk Foto Lainnya di Album ---
                 for (let i = 1; i < album.photos.length; i++) {
                   const photo = album.photos[i];
                   const hiddenLink = document.createElement("a");
@@ -96,19 +88,16 @@
                 }
               }
             });
-
-            // --- PERBAIKAN: Panggil fungsi animasi SETELAH semua album ditambahkan ---
             if (typeof window.initializeScrollAnimation === "function") {
               window.initializeScrollAnimation();
             }
-            // ---------------------------------------------------------------------
           })
           .catch((error) => {
-            console.error("Gagal memuat data album:", error);
-            albumContainer.innerHTML = "<p>Gagal memuat album foto.</p>";
+            console.error("Gagal memuat data album dari API:", error);
+            albumContainer.innerHTML =
+              "<p style='color:red;'>Gagal terhubung ke server. Pastikan server backend Anda berjalan.</p>";
           });
 
-        // Inisialisasi ulang opsi Lightbox jika perlu
         lightbox.option({
           resizeDuration: 200,
           wrapAround: true,
