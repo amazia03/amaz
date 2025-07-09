@@ -1,144 +1,142 @@
-// Salin dan tempel seluruh kode ini untuk menggantikan isi file backend/setupDatabase.js
-
 const sqlite3 = require("sqlite3").verbose();
 const fs = require("fs");
-const path = require("path");
 
-const DB_PATH = path.join(__dirname, "blog.db");
-const TWEETS_JSON_PATH = path.join(__dirname, "..", "informasi.json");
-const ARTICLES_JSON_PATH = path.join(__dirname, "..", "articles.json");
-const PHOTOS_JSON_PATH = path.join(__dirname, "..", "photos.json");
+// Path ke file database
+const dbPath = "./personal-blog.db";
 
-const db = new sqlite3.Database(DB_PATH, (err) => {
-  if (err) return console.error("Error membuka database:", err.message);
-  console.log("Terhubung ke database SQLite.");
-});
-
-function runMigrations(callback) {
-  db.serialize(() => {
-    console.log("Memulai proses pembuatan tabel...");
-    db.run(
-      `CREATE TABLE IF NOT EXISTS tweets (id TEXT PRIMARY KEY, judul TEXT, tag_teks TEXT, tag_kelas TEXT, tanggal DATE, meta_info TEXT, konten_html TEXT)`,
-      () => console.log("Tabel 'tweets' siap.")
-    );
-    db.run(
-      `CREATE TABLE IF NOT EXISTS articles (id INTEGER PRIMARY KEY AUTOINCREMENT, kategori TEXT, judul TEXT, url TEXT)`,
-      () => console.log("Tabel 'articles' siap.")
-    );
-    db.run(
-      `CREATE TABLE IF NOT EXISTS albums (id TEXT PRIMARY KEY, title TEXT, cover TEXT, description TEXT)`,
-      () => console.log("Tabel 'albums' siap.")
-    );
-    db.run(
-      `CREATE TABLE IF NOT EXISTS photos (id INTEGER PRIMARY KEY AUTOINCREMENT, album_id TEXT, url TEXT, title TEXT, FOREIGN KEY (album_id) REFERENCES albums(id))`,
-      () => {
-        console.log("Tabel 'photos' siap.");
-        callback(); // Panggil fungsi selanjutnya setelah semua tabel siap
-      }
-    );
-  });
-}
-
-function seedData() {
-  console.log("Memulai proses memasukkan data...");
-
-  let completedTasks = 0;
-  const totalTasks = 3; // Kita punya 3 jenis data untuk dimasukkan
-
-  function checkCompletion() {
-    completedTasks++;
-    if (completedTasks === totalTasks) {
-      console.log("\nSemua data berhasil dimasukkan!");
-      db.close((err) => {
-        if (err) return console.error("Error menutup database:", err.message);
-        console.log("Koneksi database ditutup dengan aman.");
-      });
-    }
+// Buat atau buka database
+const db = new sqlite3.Database(dbPath, (err) => {
+  if (err) {
+    console.error("Error opening database:", err.message);
+  } else {
+    console.log("Connected to the SQLite database.");
+    createTables();
   }
+});
 
-  // Hapus data lama sebelum memasukkan yang baru
-  db.run("DELETE FROM tweets");
-  db.run("DELETE FROM articles");
-  db.run("DELETE FROM albums");
-  db.run("DELETE FROM photos");
+// Fungsi untuk membuat tabel
+function createTables() {
+  // Tabel untuk artikel
+  db.run(
+    `CREATE TABLE IF NOT EXISTS articles (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        content TEXT NOT NULL,
+        author TEXT,
+        category TEXT,
+        tags TEXT,
+        date PUBLISHED
+    )`,
+    (err) => {
+      if (err) {
+        console.error("Error creating articles table:", err.message);
+      } else {
+        console.log("Articles table created or already exists.");
+        insertInitialArticles();
+      }
+    }
+  );
 
-  // Masukkan data Tweets
-  fs.readFile(TWEETS_JSON_PATH, "utf8", (err, data) => {
+  // Tabel untuk foto
+  db.run(
+    `CREATE TABLE IF NOT EXISTS photos (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        url TEXT NOT NULL,
+        caption TEXT,
+        category TEXT
+    )`,
+    (err) => {
+      if (err) {
+        console.error("Error creating photos table:", err.message);
+      } else {
+        console.log("Photos table created or already exists.");
+        insertInitialPhotos();
+      }
+    }
+  );
+}
+
+// Fungsi untuk memasukkan data awal artikel dari file JSON
+function insertInitialArticles() {
+  fs.readFile("../articles.json", "utf8", (err, data) => {
     if (err) {
-      console.error("Gagal membaca informasi.json");
-      checkCompletion();
+      console.error("Error reading articles.json:", err);
       return;
     }
-    const { informasi } = JSON.parse(data);
-    const stmt = db.prepare(
-      "INSERT INTO tweets (id, judul, tag_teks, tag_kelas, tanggal, meta_info, konten_html) VALUES (?, ?, ?, ?, ?, ?, ?)"
-    );
-    informasi.forEach((item) =>
-      stmt.run(
-        item.id,
-        item.judul,
-        item.tag.teks,
-        item.tag.kelas,
-        item.tanggal,
-        item.meta_info,
-        item.konten_html
-      )
-    );
-    stmt.finalize(() => {
-      console.log("-> Data tweets selesai.");
-      checkCompletion();
-    });
-  });
+    const articles = JSON.parse(data);
 
-  // Masukkan data Articles
-  fs.readFile(ARTICLES_JSON_PATH, "utf8", (err, data) => {
-    if (err) {
-      console.error("Gagal membaca articles.json");
-      checkCompletion();
-      return;
-    }
-    const { kategori } = JSON.parse(data);
-    const stmt = db.prepare(
-      "INSERT INTO articles (kategori, judul, url) VALUES (?, ?, ?)"
-    );
-    kategori.forEach((kat) =>
-      kat.artikel.forEach((art) => stmt.run(kat.nama, art.judul, art.url))
-    );
-    stmt.finalize(() => {
-      console.log("-> Data articles selesai.");
-      checkCompletion();
-    });
-  });
+    // Hapus data lama sebelum memasukkan yang baru
+    db.run("DELETE FROM articles", (deleteErr) => {
+      if (deleteErr) {
+        console.error("Error clearing articles table:", deleteErr.message);
+        return;
+      }
+      console.log("Old articles deleted.");
 
-  // Masukkan data Photos & Albums
-  fs.readFile(PHOTOS_JSON_PATH, "utf8", (err, data) => {
-    if (err) {
-      console.error("Gagal membaca photos.json");
-      checkCompletion();
-      return;
-    }
-    const { albums } = JSON.parse(data);
-    const albumStmt = db.prepare(
-      "INSERT INTO albums (id, title, cover, description) VALUES (?, ?, ?, ?)"
-    );
-    const photoStmt = db.prepare(
-      "INSERT INTO photos (album_id, url, title) VALUES (?, ?, ?)"
-    );
-    albums.forEach((album) => {
-      albumStmt.run(album.id, album.title, album.cover, album.description);
-      album.photos.forEach((photo) =>
-        photoStmt.run(album.id, photo.url, photo.title)
+      const stmt = db.prepare(
+        "INSERT INTO articles (title, content, author, category, tags, date) VALUES (?, ?, ?, ?, ?, ?)"
       );
-    });
-    albumStmt.finalize();
-    photoStmt.finalize(() => {
-      console.log("-> Data albums & photos selesai.");
-      checkCompletion();
+      articles.forEach((article) => {
+        // Pastikan tags adalah array sebelum join
+        const tags = Array.isArray(article.tags) ? article.tags.join(",") : "";
+        stmt.run(
+          article.title,
+          article.content,
+          article.author,
+          article.category,
+          tags,
+          article.date
+        );
+      });
+      stmt.finalize((finalizeErr) => {
+        if (finalizeErr) {
+          console.error(
+            "Error finalizing statement for articles:",
+            finalizeErr.message
+          );
+        } else {
+          console.log("Initial articles inserted.");
+        }
+      });
     });
   });
 }
 
-// Jalankan proses secara berurutan
-runMigrations(() => {
-  seedData();
-});
+// Fungsi untuk memasukkan data awal foto dari file JSON
+function insertInitialPhotos() {
+  fs.readFile("../photos.json", "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading photos.json:", err);
+      return;
+    }
+    const photos = JSON.parse(data);
+
+    // Hapus data lama sebelum memasukkan yang baru
+    db.run("DELETE FROM photos", (deleteErr) => {
+      if (deleteErr) {
+        console.error("Error clearing photos table:", deleteErr.message);
+        return;
+      }
+      console.log("Old photos deleted.");
+
+      const stmt = db.prepare(
+        "INSERT INTO photos (url, caption, category) VALUES (?, ?, ?)"
+      );
+      photos.forEach((photo) => {
+        stmt.run(photo.url, photo.caption, photo.category);
+      });
+      stmt.finalize((finalizeErr) => {
+        if (finalizeErr) {
+          console.error(
+            "Error finalizing statement for photos:",
+            finalizeErr.message
+          );
+        } else {
+          console.log("Initial photos inserted.");
+        }
+      });
+    });
+  });
+}
+
+module.exports = db;
