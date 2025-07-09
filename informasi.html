@@ -73,11 +73,7 @@
         </div>
 
         <div class="info-list">
-          <div class="info-item animate-on-scroll" data-tanggal="2012-12-07">
-            <div class="info-header">
-              <h3>ryu hasan</h3>
-              <span class="info-tag tag-penting">Tweets</span>
-            </div>
+  </div>
             <p class="info-meta">
               <i class="fas fa-calendar-alt"></i> 6 des 2012
             </p>
@@ -172,55 +168,108 @@
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <script src="js/script.js" defer></script>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const searchInput = document.getElementById("search-input");
-        const infoListContainer = document.querySelector(".info-list");
-        const allInfoItems = Array.from(
-          infoListContainer.querySelectorAll(".info-item")
-        );
+  document.addEventListener("DOMContentLoaded", function () {
+    const infoListContainer = document.querySelector(".info-list");
+    const searchInput = document.getElementById("search-input");
+    const sorter = document.getElementById("info-sorter");
+    let allInfoItems = []; // Untuk menyimpan semua data dari JSON
 
-        function highlightText(text, searchTerm) {
-          if (!searchTerm) return text;
-          const regex = new RegExp(searchTerm, "gi");
-          return text.replace(regex, '<span class="highlight">$&</span>');
+    // 1. Fungsi untuk merender item ke halaman
+    function renderItems(items) {
+      infoListContainer.innerHTML = ""; // Kosongkan kontainer dulu
+      items.forEach((item) => {
+        const infoItemDiv = document.createElement("div");
+        infoItemDiv.className = "info-item animate-on-scroll";
+        // Gunakan tanggal dari JSON untuk dataset pengurutan
+        infoItemDiv.setAttribute("data-tanggal", item.tanggal);
+
+        infoItemDiv.innerHTML = `
+          <div class="info-header">
+            <h3>${item.judul}</h3>
+            <span class="info-tag ${item.tag.kelas}">${item.tag.teks}</span>
+          </div>
+          <p class="info-meta">
+            <i class="fas fa-calendar-alt"></i> ${item.meta_info}
+          </p>
+          <div class="info-body">
+            ${item.konten_html}
+          </div>
+        `;
+        infoListContainer.appendChild(infoItemDiv);
+      });
+      // Inisialisasi ulang animasi untuk item yang baru ditambahkan
+      if (typeof window.initializeScrollAnimation === 'function') {
+        window.initializeScrollAnimation();
+      }
+    }
+
+    // 2. Fungsi untuk memuat data dari JSON
+    fetch("informasi.json")
+      .then((response) => response.json())
+      .then((data) => {
+        allInfoItems = data.informasi;
+        // Urutkan berdasarkan 'terbaru' saat pertama kali dimuat
+        allInfoItems.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+        renderItems(allInfoItems);
+        setupEventListeners(); // Panggil event listener setelah data siap
+      })
+      .catch((error) => {
+        console.error("Gagal memuat data informasi:", error);
+        infoListContainer.innerHTML = "<p>Gagal memuat data. Silakan coba lagi nanti.</p>";
+      });
+
+    // 3. Fungsi untuk mengatur semua event listener (search & sort)
+    function setupEventListeners() {
+        function handleFilterAndSort() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const sortOrder = sorter.value;
+
+            // Filter berdasarkan pencarian
+            let filteredItems = allInfoItems.filter(item => {
+                const judul = item.judul.toLowerCase();
+                const konten = item.konten_html.toLowerCase();
+                const tag = item.tag.teks.toLowerCase();
+                return judul.includes(searchTerm) || konten.includes(searchTerm) || tag.includes(searchTerm);
+            });
+
+            // Urutkan hasil filter
+            filteredItems.sort((a, b) => {
+                const dateA = new Date(a.tanggal);
+                const dateB = new Date(b.tanggal);
+                return sortOrder === 'terbaru' ? dateB - dateA : dateA - dateB;
+            });
+
+            renderItems(filteredItems);
+
+            // Fungsi highlight (opsional, bisa disempurnakan)
+            if (searchTerm) {
+                highlightTextInContainer(searchTerm);
+            }
         }
 
-        function filterInfoItems() {
-          const searchTerm = searchInput.value.toLowerCase();
+        searchInput.addEventListener("input", debounce(handleFilterAndSort, 300));
+        sorter.addEventListener("change", handleFilterAndSort);
+    }
 
-          allInfoItems.forEach((item) => {
+    // 4. Fungsi untuk highlight
+    function highlightTextInContainer(searchTerm) {
+        const regex = new RegExp(searchTerm, "gi");
+        const itemsToHighlight = infoListContainer.querySelectorAll('.info-item');
+
+        itemsToHighlight.forEach(item => {
             const titleElement = item.querySelector("h3");
-            const tagElement = item.querySelector(".info-tag");
             const contentElement = item.querySelector(".info-body");
 
-            const title = titleElement?.textContent || "";
-            const tag = tagElement?.textContent || "";
-            const content = contentElement?.textContent || "";
+            // Hapus highlight sebelumnya
+            titleElement.innerHTML = titleElement.innerHTML.replace(/<span class="highlight">/g, '').replace(/<\/span>/g, '');
+            contentElement.innerHTML = contentElement.innerHTML.replace(/<span class="highlight">/g, '').replace(/<\/span>/g, '');
 
-            const highlightedTitle = highlightText(title, searchTerm);
-            const highlightedTag = highlightText(tag, searchTerm);
-            const highlightedContent = highlightText(content, searchTerm);
-
-            if (
-              title.toLowerCase().includes(searchTerm) ||
-              tag.toLowerCase().includes(searchTerm) ||
-              content.toLowerCase().includes(searchTerm)
-            ) {
-              item.style.display = "block";
-              if (titleElement) titleElement.innerHTML = highlightedTitle;
-              if (tagElement) tagElement.innerHTML = highlightedTag;
-              if (contentElement) contentElement.innerHTML = highlightedContent;
-            } else {
-              item.style.display = "none";
-              if (titleElement) titleElement.textContent = title; // Kembalikan ke teks asli saat tidak cocok
-              if (tagElement) tagElement.textContent = tag;
-              if (contentElement) contentElement.textContent = content;
-            }
-          });
-        }
-
-        searchInput.addEventListener("input", debounce(filterInfoItems, 300));
-      });
-    </script>
+            // Tambahkan highlight baru
+            titleElement.innerHTML = titleElement.innerHTML.replace(regex, '<span class="highlight">$&</span>');
+            contentElement.innerHTML = contentElement.innerHTML.replace(regex, '<span class="highlight">$&</span>');
+        });
+    }
+  });
+</script>
   </body>
 </html>
