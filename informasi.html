@@ -16,6 +16,23 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
     <link rel="stylesheet" href="css/style.css" />
+    <style>
+      /* Style untuk search bar */
+      .search-container {
+        margin-bottom: 20px;
+        text-align: left;
+      }
+      #search-input {
+        width: 100%;
+        padding: 12px;
+        background-color: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        color: var(--text-color);
+        font-size: 1em;
+        font-family: "Poppins", sans-serif;
+      }
+    </style>
   </head>
   <body>
     <div id="particles-js"></div>
@@ -30,12 +47,29 @@
           me.
         </p>
 
-        <div class="sort-container animate-on-scroll">
-          <label for="info-sorter">Urutkan berdasarkan:</label>
-          <select id="info-sorter" class="sorter">
-            <option value="terbaru">Terbaru ke Lama</option>
-            <option value="terlama">Lama ke Terbaru</option>
-          </select>
+        <div
+          class="controls-container animate-on-scroll"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+          "
+        >
+          <div class="search-container" style="flex-grow: 1">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Cari berdasarkan konten, judul, atau tag..."
+            />
+          </div>
+          <div class="sort-container" style="margin-bottom: 0">
+            <label for="info-sorter">Urutkan:</label>
+            <select id="info-sorter" class="sorter">
+              <option value="terbaru">Terbaru</option>
+              <option value="terlama">Terlama</option>
+            </select>
+          </div>
         </div>
 
         <div class="info-list">
@@ -92,7 +126,7 @@
                 semu, khayalan bahwa kita memiliki tempat penting di alam
                 semesta ini, tidak berarti apapun di hadapan setitik cahaya
                 redup ini. Planet kita hanyalah sebutir debu yang kesepian di
-                alam yang besar dan gelap. Dalam kebingungan kita, di tengah
+                alam yang besar dan gelap. Dalam kebingungan kita, di tengah -
                 luasnya jagat raya ini, tiada tanda bahwa pertolongan akan
                 datang dari tempat lain untuk menyelamatkan kita dari diri kita
                 sendiri. Bumi adalah satu-satunya dunia, sejauh ini, yang
@@ -137,5 +171,39 @@
 
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <script src="js/script.js" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("search-input");
+        const infoListContainer = document.querySelector(".info-list");
+        const allInfoItems = Array.from(
+          infoListContainer.querySelectorAll(".info-item")
+        );
+
+        function filterInfoItems() {
+          const searchTerm = searchInput.value.toLowerCase();
+
+          allInfoItems.forEach((item) => {
+            const title =
+              item.querySelector("h3")?.textContent.toLowerCase() || "";
+            const tag =
+              item.querySelector(".info-tag")?.textContent.toLowerCase() || "";
+            const content =
+              item.querySelector(".info-body")?.textContent.toLowerCase() || "";
+
+            if (
+              title.includes(searchTerm) ||
+              tag.includes(searchTerm) ||
+              content.includes(searchTerm)
+            ) {
+              item.style.display = "block";
+            } else {
+              item.style.display = "none";
+            }
+          });
+        }
+
+        searchInput.addEventListener("input", debounce(filterInfoItems, 300));
+      });
+    </script>
   </body>
 </html>

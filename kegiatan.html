@@ -76,6 +76,21 @@
         font-size: 1.2em;
         font-style: normal;
       }
+      /* Style untuk search bar */
+      .search-container {
+        margin-bottom: 30px;
+        text-align: left;
+      }
+      #search-input {
+        width: 100%;
+        padding: 12px;
+        background-color: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        color: var(--text-color);
+        font-size: 1em;
+        font-family: "Poppins", sans-serif;
+      }
     </style>
   </head>
   <body>
@@ -91,6 +106,14 @@
           kategori untuk melihat daftar judul.
         </p>
 
+        <div class="search-container animate-on-scroll">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Cari berdasarkan judul atau kategori..."
+          />
+        </div>
+
         <div id="kategori-container" class="animate-on-scroll"></div>
       </div>
     </main>
@@ -101,42 +124,14 @@
     <script src="js/script.js" defer></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        let allCategories = []; // Simpan semua data kategori
+
         // Fungsi untuk memuat data dari file JSON
         fetch("articles.json")
           .then((response) => response.json())
           .then((data) => {
-            const container = document.getElementById("kategori-container");
-            container.innerHTML = ""; // Kosongkan kontainer
-
-            // Loop melalui setiap kategori dari file JSON
-            data.kategori.forEach((kategori) => {
-              // Buat elemen untuk setiap grup
-              const grup = document.createElement("div");
-              grup.className = "artikel-grup";
-
-              let artikelHTML = "";
-              // Loop melalui setiap artikel dalam kategori
-              kategori.artikel.forEach((artikel) => {
-                artikelHTML += `<li><a href="${artikel.url}">${artikel.judul}</a></li>`;
-              });
-
-              // Buat struktur HTML lengkap untuk grup
-              grup.innerHTML = `
-                <h3 class="kategori-judul">
-                  <span>${kategori.nama}</span>
-                  <i class="fas fa-plus icon"></i>
-                </h3>
-                <div class="artikel-judul-list">
-                  <ul>
-                    ${artikelHTML}
-                  </ul>
-                </div>
-              `;
-
-              container.appendChild(grup);
-            });
-
-            // Setelah semua HTML dibuat, tambahkan event listener untuk accordion
+            allCategories = data.kategori; // Simpan data asli
+            renderCategories(allCategories); // Tampilkan semua kategori awal
             setupAccordion();
           })
           .catch((error) => {
@@ -145,10 +140,82 @@
               "<p>Gagal memuat daftar artikel.</p>";
           });
 
+        // Fungsi untuk me-render kategori ke DOM
+        function renderCategories(categories) {
+          const container = document.getElementById("kategori-container");
+          container.innerHTML = ""; // Kosongkan kontainer
+
+          if (categories.length === 0) {
+            container.innerHTML = "<p>Tidak ada hasil yang ditemukan.</p>";
+            return;
+          }
+
+          categories.forEach((kategori) => {
+            const grup = document.createElement("div");
+            grup.className = "artikel-grup";
+
+            let artikelHTML = "";
+            kategori.artikel.forEach((artikel) => {
+              artikelHTML += `<li><a href="${artikel.url}">${artikel.judul}</a></li>`;
+            });
+
+            grup.innerHTML = `
+              <h3 class="kategori-judul">
+                <span>${kategori.nama}</span>
+                <i class="fas fa-plus icon"></i>
+              </h3>
+              <div class="artikel-judul-list">
+                <ul>
+                  ${artikelHTML}
+                </ul>
+              </div>
+            `;
+            container.appendChild(grup);
+          });
+          setupAccordion();
+        }
+
+        // Fungsi untuk menyaring kategori dan artikel
+        function filterContent(searchTerm) {
+          const lowerCaseSearchTerm = searchTerm.toLowerCase();
+
+          const filteredCategories = allCategories
+            .map((kategori) => {
+              const filteredArticles = kategori.artikel.filter((artikel) =>
+                artikel.judul.toLowerCase().includes(lowerCaseSearchTerm)
+              );
+
+              // Sertakan kategori jika namanya cocok atau jika memiliki artikel yang cocok
+              if (
+                kategori.nama.toLowerCase().includes(lowerCaseSearchTerm) ||
+                filteredArticles.length > 0
+              ) {
+                // Jika nama kategori cocok, tampilkan semua artikelnya
+                if (kategori.nama.toLowerCase().includes(lowerCaseSearchTerm)) {
+                  return { ...kategori };
+                }
+                // Jika tidak, tampilkan hanya artikel yang cocok
+                return { ...kategori, artikel: filteredArticles };
+              }
+              return null;
+            })
+            .filter(Boolean); // Hapus kategori yang null
+
+          renderCategories(filteredCategories);
+        }
+
+        // Event listener untuk input pencarian
+        const searchInput = document.getElementById("search-input");
+        searchInput.addEventListener(
+          "input",
+          debounce(() => {
+            filterContent(searchInput.value);
+          }, 300)
+        );
+
         // Fungsi untuk mengaktifkan accordion
         function setupAccordion() {
           const kategoriJudul = document.querySelectorAll(".kategori-judul");
-
           kategoriJudul.forEach((judul) => {
             judul.addEventListener("click", function () {
               this.classList.toggle("aktif");

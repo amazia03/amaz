@@ -111,6 +111,17 @@ document.addEventListener("DOMContentLoaded", function () {
 }); // Akhir dari DOMContentLoaded
 
 // =========================================
+// 6. FUNGSI DEBOUNCE UNTUK OPTIMASI INPUT
+// =========================================
+function debounce(func, delay) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+// =========================================
 // KONFIGURASI TSPARTICLES (LATAR BELAKANG)
 // Tetap di luar karena tidak perlu menunggu DOM dinamis
 // =========================================
