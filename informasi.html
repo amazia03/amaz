@@ -80,106 +80,109 @@
 
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <script src="js/script.js" defer></script>
-   <script>
-document.addEventListener("DOMContentLoaded", function () {
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
     const infoListContainer = document.querySelector(".info-list");
     const searchInput = document.getElementById("search-input");
     const sorter = document.getElementById("info-sorter");
-    let originalText = new Map(); // Untuk menyimpan teks asli sebelum highlight
+    let allInfoItems = []; // Untuk menyimpan semua data dari JSON
 
     // 1. Fungsi untuk merender item ke halaman
-    function renderItems(items, searchTerm = "") {
-        infoListContainer.innerHTML = ""; // Kosongkan kontainer
-        originalText.clear();
+    function renderItems(items) {
+      infoListContainer.innerHTML = ""; // Kosongkan kontainer dulu
+      items.forEach((item) => {
+        const infoItemDiv = document.createElement("div");
+        infoItemDiv.className = "info-item animate-on-scroll";
+        // Gunakan tanggal dari JSON untuk dataset pengurutan
+        infoItemDiv.setAttribute("data-tanggal", item.tanggal);
 
-        if (!items || items.length === 0) {
-            infoListContainer.innerHTML = "<p>Tidak ada hasil yang ditemukan.</p>";
-            return;
-        }
-
-        items.forEach((item, index) => {
-            const infoItemDiv = document.createElement("div");
-            infoItemDiv.className = "info-item animate-on-scroll";
-            infoItemDiv.setAttribute("data-tanggal", item.tanggal);
-
-            // Simpan teks asli sebelum di-highlight
-            const itemKey = `item-${index}`;
-            originalText.set(`${itemKey}-judul`, item.judul);
-            originalText.set(`${itemKey}-konten`, item.konten_html);
-
-            // Highlight judul dan konten jika ada searchTerm
-            const highlightedJudul = searchTerm ? highlightText(item.judul, searchTerm) : item.judul;
-            const highlightedKonten = searchTerm ? highlightText(item.konten_html, searchTerm) : item.konten_html;
-
-            infoItemDiv.innerHTML = `
-              <div class="info-header">
-                <h3>${highlightedJudul}</h3>
-                <span class="info-tag ${item.tag_kelas}">${item.tag_teks}</span>
-              </div>
-              <p class="info-meta">
-                <i class="fas fa-calendar-alt"></i> ${item.meta_info}
-              </p>
-              <div class="info-body">
-                ${highlightedKonten}
-              </div>
-            `;
-            infoListContainer.appendChild(infoItemDiv);
-        });
-
-        if (typeof window.initializeScrollAnimation === 'function') {
-            window.initializeScrollAnimation();
-        }
+        infoItemDiv.innerHTML = `
+          <div class="info-header">
+            <h3>${item.judul}</h3>
+            <span class="info-tag ${item.tag.kelas}">${item.tag.teks}</span>
+          </div>
+          <p class="info-meta">
+            <i class="fas fa-calendar-alt"></i> ${item.meta_info}
+          </p>
+          <div class="info-body">
+            ${item.konten_html}
+          </div>
+        `;
+        infoListContainer.appendChild(infoItemDiv);
+      });
+      // Inisialisasi ulang animasi untuk item yang baru ditambahkan
+      if (typeof window.initializeScrollAnimation === 'function') {
+        window.initializeScrollAnimation();
+      }
     }
 
-    // 2. Fungsi utama untuk memuat data dari API
-    function loadData() {
-        const searchTerm = searchInput.value;
-        const sortOrder = sorter.value;
+    // 2. Fungsi untuk memuat data dari JSON
+    fetch("informasi.json")
+      .then((response) => response.json())
+      .then((data) => {
+        allInfoItems = data.informasi;
+        // Urutkan berdasarkan 'terbaru' saat pertama kali dimuat
+        allInfoItems.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+        renderItems(allInfoItems);
+        setupEventListeners(); // Panggil event listener setelah data siap
+      })
+      .catch((error) => {
+        console.error("Gagal memuat data informasi:", error);
+        infoListContainer.innerHTML = "<p>Gagal memuat data. Silakan coba lagi nanti.</p>";
+      });
 
-        // Buat URL dengan query parameter
-        const url = new URL('http://localhost:3000/api/tweets');
-        if (searchTerm) url.searchParams.append('search', searchTerm);
-        url.searchParams.append('sort', sortOrder);
+    // 3. Fungsi untuk mengatur semua event listener (search & sort)
+    function setupEventListeners() {
+        function handleFilterAndSort() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const sortOrder = sorter.value;
 
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(result => {
-                renderItems(result.data, searchTerm);
-            })
-            .catch(error => {
-                console.error("Gagal memuat data dari API:", error);
-                infoListContainer.innerHTML = `<p style="color:red; text-align:left;">Gagal terhubung ke server data. Pastikan server backend Anda sedang berjalan.</p>`;
+            // Filter berdasarkan pencarian
+            let filteredItems = allInfoItems.filter(item => {
+                const judul = item.judul.toLowerCase();
+                const konten = item.konten_html.toLowerCase();
+                const tag = item.tag.teks.toLowerCase();
+                return judul.includes(searchTerm) || konten.includes(searchTerm) || tag.includes(searchTerm);
             });
+
+            // Urutkan hasil filter
+            filteredItems.sort((a, b) => {
+                const dateA = new Date(a.tanggal);
+                const dateB = new Date(b.tanggal);
+                return sortOrder === 'terbaru' ? dateB - dateA : dateA - dateB;
+            });
+
+            renderItems(filteredItems);
+
+            // Fungsi highlight (opsional, bisa disempurnakan)
+            if (searchTerm) {
+                highlightTextInContainer(searchTerm);
+            }
+        }
+
+        searchInput.addEventListener("input", debounce(handleFilterAndSort, 300));
+        sorter.addEventListener("change", handleFilterAndSort);
     }
 
-    // 3. Fungsi untuk highlight teks
-    function highlightText(text, term) {
-        if (!term) return text;
-        const regex = new RegExp(`(${term})`, 'gi');
-        return text.replace(regex, '<span class="highlight">$1</span>');
+    // 4. Fungsi untuk highlight
+    function highlightTextInContainer(searchTerm) {
+        const regex = new RegExp(searchTerm, "gi");
+        const itemsToHighlight = infoListContainer.querySelectorAll('.info-item');
+
+        itemsToHighlight.forEach(item => {
+            const titleElement = item.querySelector("h3");
+            const contentElement = item.querySelector(".info-body");
+
+            // Hapus highlight sebelumnya
+            titleElement.innerHTML = titleElement.innerHTML.replace(/<span class="highlight">/g, '').replace(/<\/span>/g, '');
+            contentElement.innerHTML = contentElement.innerHTML.replace(/<span class="highlight">/g, '').replace(/<\/span>/g, '');
+
+            // Tambahkan highlight baru
+            titleElement.innerHTML = titleElement.innerHTML.replace(regex, '<span class="highlight">$&</span>');
+            contentElement.innerHTML = contentElement.innerHTML.replace(regex, '<span class="highlight">$&</span>');
+        });
     }
-
-    // Event listener untuk input pencarian dan dropdown urutan
-    searchInput.addEventListener('input', debounce(loadData, 300));
-    sorter.addEventListener('change', loadData);
-
-    // Muat data untuk pertama kali saat halaman dibuka
-    loadData();
-});
-
-// Fungsi debounce tidak perlu diubah
-function debounce(func, delay) {
-    let timeout;
-    return function (...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), delay);
-    };
-}
+  });
 </script>
   </body>
 </html>
