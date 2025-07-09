@@ -1,7 +1,7 @@
 {
   "informasi": [
     {
-      "id": "carl-sagan-1",
+      "id": "carlsagan1",
       "judul": "carl sagan ",
       "tag": {
         "teks": "kutipan",
@@ -12,7 +12,7 @@
       "konten_html": "Sia-sia meyakinkan orang yang sudah telanjur percaya; karena kepercayaannya tidak bersumber dari bukti, melainkan dari kebutuhan batin yang kuat untuk percaya."
     },
     {
-      "id": "carl-sagan-2",
+      "id": "carlsagan2",
       "judul": "carl sagan ",
       "tag": {
         "teks": "kutipan",
@@ -23,7 +23,7 @@
       "konten_html": "“Setiap dari kita, dalam perspektif kosmik, sangatlah berharga. Jika ada manusia yang tidak sependapat denganmu, biarkan dia hidup. Di antara seratus miliar galaksi, kau tidak akan menemukan yang serupa dengannya.”"
     },
     {
-      "id": "carl-sagan-3",
+      "id": "carlsagan3",
       "judul": "carl sagan (pale blue dot)",
       "tag": {
         "teks": "kutipan",
@@ -35,7 +35,7 @@
     },
 
     {
-      "id": "ryu-hasan-1",
+      "id": "ryuhasan1",
       "judul": "ryu hasan",
       "tag": {
         "teks": "Twets",
@@ -46,7 +46,7 @@
       "konten_html": "<p>Ilmu pengetahuan yang baik adalah yang menyisakan pertanyaan, sebagai pijakan untuk berkembangan ilmu itu sendiri. Tidak pernah final...</p>"
     },
     {
-      "id": "ryu-hasan2",
+      "id": "ryuhasan2",
       "judul": "ryu hasan",
       "tag": {
         "teks": "Twets",
@@ -57,7 +57,7 @@
       "konten_html": "<p>Ilmu pengetahuan mengajarkan Anda untuk membuka mata dan menghargai realitas di sekitar Anda. Takhayul mengajarkan Anda untuk menutup mata dan berpegang teguh pada fantasi di dalam diri Anda.</p>"
     },
     {
-      "id": "ryu-hasan-3",
+      "id": "ryuhasan3",
       "judul": "ryu hasan",
       "tag": {
         "teks": "Twets",
@@ -68,7 +68,7 @@
       "konten_html": "<p>Hanya karena Anda ingin hal itu benar, bukan berarti itu benar. Hanya karena miliaran orang percaya, bukan berarti mereka harus percaya. Dan hanya karena kebenaran itu menyakitkan, bukan berarti kebenaran itu tidak benar.</p>"
     },
     {
-      "id": "ryu-hasan-4",
+      "id": "ryuhasan4",
       "judul": "ryu hasan",
       "tag": {
         "teks": "Twets",
@@ -79,7 +79,7 @@
       "konten_html": "<p>Berapa banyak malapetaka yang diawali dengan “niat baik”?</p>"
     },
     {
-      "id": "ryu-hasan-5",
+      "id": "ryuhasan5",
       "judul": "ryu hasan",
       "tag": {
         "teks": "Twets",
@@ -90,7 +90,7 @@
       "konten_html": "<p>“Jika Anda pikir sihir adalah jawaban dari pertanyaan Anda, berarti Anda belum berusaha cukup keras.”</p>"
     },
     {
-      "id": "ryu-hasan-6",
+      "id": "ryuhasan6",
       "judul": "ryu hasan",
       "tag": {
         "teks": "Twets",
@@ -101,7 +101,7 @@
       "konten_html": "<p>“Betapa sebuah hukuman yang hebat bagi mereka yang tidak percaya pada kenyataan, mereka dipaksa untuk menerimanya setiap hari.”</p>"
     },
     {
-      "id": "ryu-hasan-7",
+      "id": "ryuhasan7",
       "judul": "ryu hasan",
       "tag": {
         "teks": "Twets",
@@ -112,7 +112,7 @@
       "konten_html": "<p>Semesta ini berjalan tidak dengan mengikuti karepe raimu</p>"
     },
     {
-      "id": "ryu-hasan-8",
+      "id": "ryuhasan8",
       "judul": "ryu hasan",
       "tag": {
         "teks": "Twets",
@@ -121,6 +121,28 @@
       "tanggal": "2019-12-15",
       "meta_info": "15 Desember 2019",
       "konten_html": "<p>Tidak ada cara yg benar atau cara yg salah dalam menjalani depresi, semua mengalir begitu saja tak bisa dibendung Kalo dengan menjilat setir mobil bisa membuat merasa lebih nyaman ya lakukan saja</p>"
+    },
+    {
+      "id": "ryuhasan9",
+      "judul": "ryu hasan",
+      "tag": {
+        "teks": "Twets",
+        "kelas": "tag-penting"
+      },
+      "tanggal": "2017-04-15",
+      "meta_info": "15 April 2017",
+      "konten_html": "<p>“Apa yang tidak kita ketahui, kita takuti. Apa yang kita takuti, kita benci. Apa yang kita benci, kita hancurkan.Pendidikan adalah jawaban atas semua masalah kehidupan.”</p>"
+    },
+    {
+      "id": "ryuhasan10",
+      "judul": "ryu hasan",
+      "tag": {
+        "teks": "Twets",
+        "kelas": "tag-penting"
+      },
+      "tanggal": "2020-03-29",
+      "meta_info": "29 Maret 2020",
+      "konten_html": "<p>“Satu-satunya obat untuk ketidaktahuan adalah pendidikan. Namun, jika ketidaktahuan itu sudah terlalu mengakar, si bodoh akan memilih untuk tidak mencari pendidikan. Beginilah cara otak kita bekerja.”</p>"
     },
     {
       "id": "naval-1",
