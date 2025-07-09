@@ -60,12 +60,13 @@
 
             data.albums.forEach((album) => {
               if (album.photos && album.photos.length > 0) {
-                // --- 1. Buat Album Cover yang Terlihat ---
                 const firstPhoto = album.photos[0];
 
+                // --- Membuat elemen utama ---
                 const albumItem = document.createElement("div");
                 albumItem.className = "album-item animate-on-scroll";
 
+                // --- Membuat Link Cover & Gambar ---
                 const albumLink = document.createElement("a");
                 albumLink.href = firstPhoto.url;
                 albumLink.setAttribute("data-lightbox", album.id);
@@ -75,18 +76,20 @@
                 const albumImg = document.createElement("img");
                 albumImg.src = album.cover;
                 albumImg.alt = album.title;
+                albumLink.appendChild(albumImg); // Masukkan gambar ke dalam link
 
+                // --- Membuat Info Album ---
                 const albumInfo = document.createElement("div");
                 albumInfo.className = "album-info";
                 albumInfo.innerHTML = `<h4>${album.title}</h4><p>Lihat Album (${album.photos.length} foto)</p>`;
 
-                albumLink.appendChild(albumImg);
-                albumLink.appendChild(albumInfo);
+                // --- GABUNGKAN SEMUA ---
+                // Ini adalah perubahan penting: albumLink dan albumInfo sekarang setara
                 albumItem.appendChild(albumLink);
+                albumItem.appendChild(albumInfo);
                 albumContainer.appendChild(albumItem);
 
-                // --- 2. Buat Link Tersembunyi untuk Foto Lainnya di Album ---
-                // Mulai dari foto kedua (indeks 1), karena foto pertama sudah jadi cover
+                // --- Buat Link Tersembunyi untuk Foto Lainnya (Lightbox) ---
                 for (let i = 1; i < album.photos.length; i++) {
                   const photo = album.photos[i];
                   const hiddenLink = document.createElement("a");
@@ -103,10 +106,10 @@
             albumContainer.innerHTML = "<p>Gagal memuat album foto.</p>";
           });
 
-        // Inisialisasi ulang opsi Lightbox jika perlu
+        // Inisialisasi Lightbox
         lightbox.option({
           resizeDuration: 200,
-          wrapAround: true, // membuat galeri bisa berputar dari akhir ke awal
+          wrapAround: true,
         });
       });
     </script>

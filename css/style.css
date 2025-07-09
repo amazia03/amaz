@@ -275,13 +275,7 @@ footer {
   display: block;
   transition: transform 0.3s ease;
 }
-.album-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.3s ease;
-}
+
 .album-item:hover .album-cover img {
   transform: scale(1.05);
 }
@@ -617,7 +611,7 @@ select.sorter:focus {
 }
 /* Style untuk teks yang disorot saat pencarian */
 .highlight {
-  background-color: blue;
+  background-color: red;
   color: black; /* Saya tambahkan ini agar teks lebih kontras */
   font-weight: bold;
 }
