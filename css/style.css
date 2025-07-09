@@ -615,3 +615,9 @@ select.sorter:focus {
     flex-direction: column;
   }
 }
+/* Style untuk teks yang disorot saat pencarian */
+.highlight {
+  background-color: blue;
+  color: black; /* Saya tambahkan ini agar teks lebih kontras */
+  font-weight: bold;
+}

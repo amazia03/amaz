@@ -179,25 +179,42 @@
           infoListContainer.querySelectorAll(".info-item")
         );
 
+        function highlightText(text, searchTerm) {
+          if (!searchTerm) return text;
+          const regex = new RegExp(searchTerm, "gi");
+          return text.replace(regex, '<span class="highlight">$&</span>');
+        }
+
         function filterInfoItems() {
           const searchTerm = searchInput.value.toLowerCase();
 
           allInfoItems.forEach((item) => {
-            const title =
-              item.querySelector("h3")?.textContent.toLowerCase() || "";
-            const tag =
-              item.querySelector(".info-tag")?.textContent.toLowerCase() || "";
-            const content =
-              item.querySelector(".info-body")?.textContent.toLowerCase() || "";
+            const titleElement = item.querySelector("h3");
+            const tagElement = item.querySelector(".info-tag");
+            const contentElement = item.querySelector(".info-body");
+
+            const title = titleElement?.textContent || "";
+            const tag = tagElement?.textContent || "";
+            const content = contentElement?.textContent || "";
+
+            const highlightedTitle = highlightText(title, searchTerm);
+            const highlightedTag = highlightText(tag, searchTerm);
+            const highlightedContent = highlightText(content, searchTerm);
 
             if (
-              title.includes(searchTerm) ||
-              tag.includes(searchTerm) ||
-              content.includes(searchTerm)
+              title.toLowerCase().includes(searchTerm) ||
+              tag.toLowerCase().includes(searchTerm) ||
+              content.toLowerCase().includes(searchTerm)
             ) {
               item.style.display = "block";
+              if (titleElement) titleElement.innerHTML = highlightedTitle;
+              if (tagElement) tagElement.innerHTML = highlightedTag;
+              if (contentElement) contentElement.innerHTML = highlightedContent;
             } else {
               item.style.display = "none";
+              if (titleElement) titleElement.textContent = title; // Kembalikan ke teks asli saat tidak cocok
+              if (tagElement) tagElement.textContent = tag;
+              if (contentElement) contentElement.textContent = content;
             }
           });
         }

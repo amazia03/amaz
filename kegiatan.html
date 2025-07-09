@@ -131,7 +131,7 @@
           .then((response) => response.json())
           .then((data) => {
             allCategories = data.kategori; // Simpan data asli
-            renderCategories(allCategories); // Tampilkan semua kategori awal
+            renderCategories(allCategories, ""); // Tampilkan semua kategori awal tanpa sorotan awal
             setupAccordion();
           })
           .catch((error) => {
@@ -140,8 +140,8 @@
               "<p>Gagal memuat daftar artikel.</p>";
           });
 
-        // Fungsi untuk me-render kategori ke DOM
-        function renderCategories(categories) {
+        // Fungsi untuk me-render kategori ke DOM dan menyorot teks
+        function renderCategories(categories, searchTerm) {
           const container = document.getElementById("kategori-container");
           container.innerHTML = ""; // Kosongkan kontainer
 
@@ -150,26 +150,41 @@
             return;
           }
 
+          const regex = searchTerm ? new RegExp(searchTerm, "gi") : null; // Membuat regex jika ada searchTerm
+
           categories.forEach((kategori) => {
             const grup = document.createElement("div");
             grup.className = "artikel-grup";
 
             let artikelHTML = "";
             kategori.artikel.forEach((artikel) => {
-              artikelHTML += `<li><a href="${artikel.url}">${artikel.judul}</a></li>`;
+              const highlightedJudul = regex
+                ? artikel.judul.replace(
+                    regex,
+                    '<span class="highlight">$&</span>'
+                  )
+                : artikel.judul;
+              artikelHTML += `<li><a href="${artikel.url}">${highlightedJudul}</a></li>`;
             });
 
+            const highlightedNamaKategori = regex
+              ? kategori.nama.replace(
+                  regex,
+                  '<span class="highlight">$&</span>'
+                )
+              : kategori.nama;
+
             grup.innerHTML = `
-              <h3 class="kategori-judul">
-                <span>${kategori.nama}</span>
-                <i class="fas fa-plus icon"></i>
-              </h3>
-              <div class="artikel-judul-list">
-                <ul>
-                  ${artikelHTML}
-                </ul>
-              </div>
-            `;
+          <h3 class="kategori-judul">
+            <span>${highlightedNamaKategori}</span>
+            <i class="fas fa-plus icon"></i>
+          </h3>
+          <div class="artikel-judul-list">
+            <ul>
+              ${artikelHTML}
+            </ul>
+          </div>
+        `;
             container.appendChild(grup);
           });
           setupAccordion();
@@ -185,23 +200,20 @@
                 artikel.judul.toLowerCase().includes(lowerCaseSearchTerm)
               );
 
-              // Sertakan kategori jika namanya cocok atau jika memiliki artikel yang cocok
               if (
                 kategori.nama.toLowerCase().includes(lowerCaseSearchTerm) ||
                 filteredArticles.length > 0
               ) {
-                // Jika nama kategori cocok, tampilkan semua artikelnya
                 if (kategori.nama.toLowerCase().includes(lowerCaseSearchTerm)) {
-                  return { ...kategori };
+                  return { ...kategori, artikel: kategori.artikel }; // Tampilkan semua artikel jika nama kategori cocok
                 }
-                // Jika tidak, tampilkan hanya artikel yang cocok
                 return { ...kategori, artikel: filteredArticles };
               }
               return null;
             })
             .filter(Boolean); // Hapus kategori yang null
 
-          renderCategories(filteredCategories);
+          renderCategories(filteredCategories, searchTerm); // Kirimkan searchTerm untuk penyorotan
         }
 
         // Event listener untuk input pencarian
