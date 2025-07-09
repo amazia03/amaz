@@ -64,22 +64,33 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // =========================================
-  // 4. SCRIPT UNTUK ANIMASI ON-SCROLL
+  // 4. SCRIPT UNTUK ANIMASI ON-SCROLL (DIPERBARUI)
   // =========================================
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
+  // Definisikan fungsi ini di window scope agar bisa diakses dari file HTML
+  window.initializeScrollAnimation = function () {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
 
-  const elementsToAnimate = document.querySelectorAll(".animate-on-scroll");
-  elementsToAnimate.forEach((el) => observer.observe(el));
+    const elementsToAnimate = document.querySelectorAll(".animate-on-scroll");
+    elementsToAnimate.forEach((el) => {
+      // Hanya amati elemen yang belum 'visible'
+      if (!el.classList.contains("visible")) {
+        observer.observe(el);
+      }
+    });
+  };
+
+  // Panggil fungsi animasi untuk elemen statis yang sudah ada saat halaman dimuat
+  window.initializeScrollAnimation();
 
   // =========================================
   // 5. SCRIPT UNTUK FITUR SORTING
