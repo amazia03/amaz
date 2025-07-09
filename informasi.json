@@ -145,6 +145,17 @@
       "konten_html": "<p>“Satu-satunya obat untuk ketidaktahuan adalah pendidikan. Namun, jika ketidaktahuan itu sudah terlalu mengakar, si bodoh akan memilih untuk tidak mencari pendidikan. Beginilah cara otak kita bekerja.”</p>"
     },
     {
+      "id": "ryuhasan11",
+      "judul": "ryu hasan",
+      "tag": {
+        "teks": "Twets",
+        "kelas": "tag-penting"
+      },
+      "tanggal": "2018-10-11",
+      "meta_info": "11 Oktober 2018",
+      "konten_html": "<p>“Kalau menurutmu pendidikan itu mahal, cobalah kebodohan.”</p>"
+    },
+    {
       "id": "naval-1",
       "judul": "naval ravikant",
       "tag": {
