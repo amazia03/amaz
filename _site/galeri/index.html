@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photos</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div id="particles-js"></div>
+
+    <header id="header-placeholder"><div class="header-container">
+  <div class="logo">
+    <a href="/" class="logo-link">this is amazia the great ape</a>
+    <p><h4>critical thinking please.</h4></p>
+  </div>
+  
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/galeri/">Photos</a></li>
+      <li><a href="/kegiatan/">Reading</a></li>
+      <li><a href="/informasi/">Tweets & Note Series</a></li>
+      <li><a href="/kontak/">Kontak</a></li>
+    </ul>
+  </nav>
+
+  <div class="header-right-side">
+    <div class="social-media">
+      <a href="https://www.instagram.com/amaz_03/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://github.com/usernameanda" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="mailto:emailanda@example.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+    </div>
+
+    <div class="search-container">
+      <form action="/pencarian/" method="GET" id="search-form">
+        <input
+          type="search"
+          name="q"
+          id="search-input-header"
+          placeholder="Cari..."
+          required
+          class="search-input"
+          list="search-suggestions"
+        />
+        <datalist id="search-suggestions">
+          <option value="about humans"></option><option value="Judul Artikel tentang Keresahan 2"></option><option value="Ringkasan Buku &#39;Atomic Habits&#39;"></option><option value="Ringkasan Buku &#39;Sapiens&#39;"></option><option value="Judul Artikel Pertama Saya (Contoh)"></option><option value="Penjelasan Sederhana tentang Entropi"></option><option value="Sejarah Singkat Perang Dunia II"></option><option value="Pengantar Filsafat Stoikisme"></option><option value="Refleksi di Tengah Hujan (Contoh)"></option>
+          <option value="carl sagan "></option><option value="carl sagan "></option><option value="carl sagan (pale blue dot)"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="naval ravikant"></option>
+        </datalist>
+        <button type="button" id="search-toggle" class="search-toggle" aria-label="Toggle Search">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <button id="menu-toggle" class="menu-toggle" aria-label="Buka Menu">
+    <i class="fas fa-bars"></i>
+  </button>
+</div></header>
+
+    <main>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css"
+/>
+
+<div class="container">
+  <h2 class="animate-on-scroll">Photos</h2>
+  <p class="animate-on-scroll" style="margin-bottom: 40px">
+    Kumpulan momen visual yang saya dokumentasikan.
+  </p>
+
+  <div id="album-container" class="album-grid">
+     
+    <div class="album-item animate-on-scroll">
+      <a
+        href="/foto/sd.jpg"
+        data-lightbox="random-picture"
+        data-title="Masa SD"
+        class="album-cover"
+      >
+        <img
+          src="/foto/me_and_band.jpg"
+          alt="Random Picture"
+        />
+        <div class="album-info">
+          <h4>Random Picture</h4>
+          <p>Lihat Album (17 foto)</p>
+        </div>
+      </a>
+    </div>
+      
+    <div class="album-item animate-on-scroll">
+      <a
+        href="/foto/books/animal-farm.jpg"
+        data-lightbox="Books-Collection"
+        data-title="animal farm"
+        class="album-cover"
+      >
+        <img
+          src="/foto/books/libary-books.jpg"
+          alt="Books Collection"
+        />
+        <div class="album-info">
+          <h4>Books Collection</h4>
+          <p>Lihat Album (4 foto)</p>
+        </div>
+      </a>
+    </div>
+     
+  </div>
+
+  <div id="lightbox-links" style="display: none">
+      
+    <a
+      href="/foto/smp.jpg"
+      data-lightbox="random-picture"
+      data-title="Masa SMP"
+    ></a>
+     
+    <a
+      href="/foto/high_school.jpg"
+      data-lightbox="random-picture"
+      data-title="Masa SMA"
+    ></a>
+     
+    <a
+      href="/foto/high_school2.JPG"
+      data-lightbox="random-picture"
+      data-title="Masa SMA 2"
+    ></a>
+     
+    <a
+      href="/foto/me_and_family.jpg"
+      data-lightbox="random-picture"
+      data-title="Bersama Keluarga"
+    ></a>
+     
+    <a
+      href="/foto/me_and_band.jpg"
+      data-lightbox="random-picture"
+      data-title="Nge-band"
+    ></a>
+     
+    <a
+      href="/foto/me_cajon.jpg"
+      data-lightbox="random-picture"
+      data-title="Main Cajon"
+    ></a>
+     
+    <a
+      href="/foto/me-music.jpg"
+      data-lightbox="random-picture"
+      data-title="music"
+    ></a>
+     
+    <a
+      href="/foto/me_botak1.jpg"
+      data-lightbox="random-picture"
+      data-title="Botak Core"
+    ></a>
+     
+    <a
+      href="/foto/me_retret.JPG"
+      data-lightbox="random-picture"
+      data-title="Retret"
+    ></a>
+     
+    <a
+      href="/foto/me_magangaguscom.JPG"
+      data-lightbox="random-picture"
+      data-title="Magang"
+    ></a>
+     
+    <a
+      href="/foto/friends_cjwi.jpg"
+      data-lightbox="random-picture"
+      data-title="Rekan Kerja di PT. CJWI"
+    ></a>
+     
+    <a
+      href="/foto/natal.jpg"
+      data-lightbox="random-picture"
+      data-title="Acara Natal"
+    ></a>
+     
+    <a
+      href="/foto/metriel.jpg"
+      data-lightbox="random-picture"
+      data-title="🛵"
+    ></a>
+     
+    <a
+      href="/foto/me1.jpg"
+      data-lightbox="random-picture"
+      data-title="Nganu"
+    ></a>
+     
+    <a
+      href="/foto/pepople_krengseng1.jpg"
+      data-lightbox="random-picture"
+      data-title="kumpul-kumpul"
+    ></a>
+     
+    <a
+      href="/foto/people_krengseng.jpg"
+      data-lightbox="random-picture"
+      data-title="kumpul-kumpul"
+    ></a>
+       
+    <a
+      href="/foto/foto-karang-taruna/wisata.jpeg"
+      data-lightbox="Books-Collection"
+      data-title="Wisata"
+    ></a>
+     
+    <a
+      href="/foto/foto-karang-taruna/tari.jpeg"
+      data-lightbox="Books-Collection"
+      data-title="Penampilan Tari Tradisional"
+    ></a>
+     
+    <a
+      href="/foto/foto-karang-taruna/tari.JPG"
+      data-lightbox="Books-Collection"
+      data-title="Latihan Tari"
+    ></a>
+     
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+<script>
+  lightbox.option({
+    resizeDuration: 200,
+    wrapAround: true,
+  });
+</script>
+</main>
+
+    <footer id="footer-placeholder"><div class="footer-social-media">
+  <a
+    href="https://www.instagram.com/amaz_03/"
+    target="_blank"
+    aria-label="Instagram"
+    ><i class="fab fa-instagram"></i
+  ></a>
+  <a href="https://github.com/usernameanda" target="_blank" aria-label="GitHub"
+    ><i class="fab fa-github"></i
+  ></a>
+  <a href="mailto:emailanda@example.com" aria-label="Email"
+    ><i class="fas fa-envelope"></i
+  ></a>
+</div>
+<p>&copy; 2025 Created By Amazia Kristanto.</p>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+    <script src="/js/script.js" defer></script>
+  </body>
+</html>

@@ -1,182 +1,42 @@
-<!DOCTYPE html>
-<html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hasil Pencarian - Website Pribadi</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-    <link rel="stylesheet" href="css/style.css" />
-    <style>
-      .search-result-item {
-        background-color: var(--surface-color);
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        padding: 20px;
-        margin-bottom: 20px;
-        text-align: left;
-        transition: box-shadow 0.3s ease;
-      }
-      .search-result-item:hover {
-        box-shadow: 0 5px 15px rgba(0, 170, 255, 0.1);
-      }
-      .search-result-item h4 a {
-        color: var(--primary-color);
-        text-decoration: none;
-        font-size: 1.4em;
-        font-style: normal;
-      }
-      .search-result-item p {
-        font-style: normal;
-        color: #ccc;
-      }
-      .result-meta {
-        font-size: 0.9em;
-        color: #888;
-        margin-top: 10px;
-        font-style: italic;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="particles-js"></div>
-    <header id="header-placeholder"></header>
-    <main>
-      <div class="container">
-        <h2 class="animate-on-scroll">Hasil Pencarian</h2>
-        <p
-          class="animate-on-scroll"
-          id="search-query-display"
-          style="margin-bottom: 40px"
-        ></p>
-        <div id="search-results-container" class="animate-on-scroll">
-          <p>Memuat hasil...</p>
-        </div>
-      </div>
-    </main>
-    <footer id="footer-placeholder"></footer>
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
-    <script src="js/script.js" defer></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const resultsContainer = document.getElementById(
-          "search-results-container"
-        );
-        const queryDisplay = document.getElementById("search-query-display");
+---
+layout: layout.html
+title: Hasil Pencarian
+---
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const query = urlParams.get("q");
+<main>
+  <div class="container">
+    <h2 class="animate-on-scroll">Hasil Pencarian</h2>
+    <p
+      class="animate-on-scroll"
+      id="search-query-display"
+      style="margin-bottom: 40px"
+    ></p>
+    <div id="search-results-container" class="animate-on-scroll">
+      <p>Memuat hasil...</p>
+    </div>
+  </div>
+</main>
 
-        if (!query) {
-          queryDisplay.textContent = "Silakan masukkan kata kunci pencarian.";
-          resultsContainer.innerHTML = "";
-          return;
-        }
+<script>
+  // Script pencarian lama Anda bisa diletakkan di sini,
+  // namun perlu penyesuaian untuk mengambil data dari file json yang sudah di-pass-through
+  // oleh Eleventy. Ini adalah langkah lanjutan setelah semua halaman utama berfungsi.
+  document.addEventListener("DOMContentLoaded", function () {
+    const resultsContainer = document.getElementById(
+      "search-results-container"
+    );
+    const queryDisplay = document.getElementById("search-query-display");
 
-        queryDisplay.textContent = `Hasil pencarian untuk: "${query}"`;
-        const regex = new RegExp(query, "gi");
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get("q");
 
-        function highlight(text) {
-          if (!text) return "";
-          return text.replace(regex, `<span class="highlight">$&</span>`);
-        }
-
-        async function fetchAllData() {
-          try {
-            const [articlesRes, informasiRes] = await Promise.all([
-              fetch("articles.json"),
-              fetch("informasi.json"),
-            ]);
-            const articlesData = await articlesRes.json();
-            const informasiData = await informasiRes.json();
-            return {
-              articles: articlesData.kategori,
-              tweets: informasiData.informasi,
-            };
-          } catch (error) {
-            console.error("Gagal memuat data:", error);
-            resultsContainer.innerHTML =
-              "<p style='color:red;'>Gagal memuat data untuk pencarian.</p>";
-            return null;
-          }
-        }
-
-        function search(data, query) {
-          const lowerCaseQuery = query.toLowerCase();
-          let results = [];
-
-          // Search in articles
-          data.articles.forEach((kategori) => {
-            kategori.artikel.forEach((artikel) => {
-              if (artikel.judul.toLowerCase().includes(lowerCaseQuery)) {
-                results.push({
-                  type: "Artikel",
-                  title: artikel.judul,
-                  url: artikel.url,
-                  context: `Kategori: ${kategori.nama}`,
-                });
-              }
-            });
-          });
-
-          // Search in tweets/informasi
-          data.tweets.forEach((info) => {
-            const contentMatch = info.konten_html
-              .toLowerCase()
-              .includes(lowerCaseQuery);
-            const titleMatch = info.judul
-              .toLowerCase()
-              .includes(lowerCaseQuery);
-
-            if (contentMatch || titleMatch) {
-              // Remove HTML tags for snippet
-              const snippet =
-                info.konten_html.replace(/<[^>]*>/g, "").substring(0, 150) +
-                "...";
-              results.push({
-                type: "Tweets & Note",
-                title: info.judul,
-                url: "informasi.html", // Link to the main page
-                context: snippet,
-              });
-            }
-          });
-
-          return results;
-        }
-
-        fetchAllData().then((data) => {
-          if (!data) return;
-
-          const searchResults = search(data, query);
-          resultsContainer.innerHTML = "";
-
-          if (searchResults.length === 0) {
-            resultsContainer.innerHTML =
-              "<p>Tidak ada hasil yang ditemukan.</p>";
-            return;
-          }
-
-          searchResults.forEach((result) => {
-            const item = document.createElement("div");
-            item.className = "search-result-item";
-            item.innerHTML = `
-              <h4><a href="${result.url}">${highlight(result.title)}</a></h4>
-              <p>${highlight(result.context)}</p>
-              <div class="result-meta">Sumber: ${result.type}</div>
-            `;
-            resultsContainer.appendChild(item);
-          });
-        });
-      });
-    </script>
-  </body>
-</html>
+    if (!query) {
+      queryDisplay.textContent = "Silakan masukkan kata kunci pencarian.";
+      resultsContainer.innerHTML = "";
+      return;
+    }
+    queryDisplay.textContent = `Hasil pencarian untuk: "${query}"`;
+    resultsContainer.innerHTML =
+      "<p>Fungsi pencarian sedang dalam pengembangan.</p>";
+  });
+</script>

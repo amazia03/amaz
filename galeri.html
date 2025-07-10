@@ -1,100 +1,59 @@
-<!DOCTYPE html>
-<html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Photos - Website Pribadi</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css"
-    />
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body>
-    <div id="particles-js"></div>
-    <header id="header-placeholder"></header>
-    <main>
-      <div class="container">
-        <h2 class="animate-on-scroll">Photos</h2>
-        <p class="animate-on-scroll" style="margin-bottom: 40px">
-          Kumpulan momen visual yang saya dokumentasikan.
-        </p>
-        <div id="album-container" class="album-grid"></div>
-        <div id="lightbox-links" style="display: none"></div>
-      </div>
-    </main>
-    <footer id="footer-placeholder"></footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
-    <script src="js/script.js" defer></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const albumContainer = document.getElementById("album-container");
-        const lightboxLinksContainer =
-          document.getElementById("lightbox-links");
+---
+layout: layout.html
+title: Photos
+---
 
-        // === PERUBAHAN DI SINI ===
-        // Mengganti alamat API dengan path ke file JSON lokal
-        fetch("photos.json") // Sebelumnya: "http://localhost:3000/api/albums"
-          .then((response) => response.json())
-          .then((data) => {
-            albumContainer.innerHTML = "";
-            data.albums.forEach((album) => {
-              if (album.photos && album.photos.length > 0) {
-                const firstPhoto = album.photos[0];
-                const albumItem = document.createElement("div");
-                albumItem.className = "album-item animate-on-scroll";
-                const albumLink = document.createElement("a");
-                albumLink.href = firstPhoto.url;
-                albumLink.setAttribute("data-lightbox", album.id);
-                albumLink.setAttribute("data-title", firstPhoto.title);
-                albumLink.className = "album-cover";
-                const albumImg = document.createElement("img");
-                albumImg.src = album.cover;
-                albumImg.alt = album.title;
-                const albumInfo = document.createElement("div");
-                albumInfo.className = "album-info";
-                albumInfo.innerHTML = `<h4>${album.title}</h4><p>Lihat Album (${album.photos.length} foto)</p>`;
-                albumLink.appendChild(albumImg);
-                albumLink.appendChild(albumInfo);
-                albumItem.appendChild(albumLink);
-                albumContainer.appendChild(albumItem);
-                for (let i = 1; i < album.photos.length; i++) {
-                  const photo = album.photos[i];
-                  const hiddenLink = document.createElement("a");
-                  hiddenLink.href = photo.url;
-                  hiddenLink.setAttribute("data-lightbox", album.id);
-                  hiddenLink.setAttribute("data-title", photo.title);
-                  lightboxLinksContainer.appendChild(hiddenLink);
-                }
-              }
-            });
-            if (typeof window.initializeScrollAnimation === "function") {
-              window.initializeScrollAnimation();
-            }
-          })
-          .catch((error) => {
-            console.error("Gagal memuat data album:", error);
-            albumContainer.innerHTML =
-              "<p style='color:red;'>Gagal memuat data album. Pastikan file photos.json ada di direktori yang sama.</p>";
-          });
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css"
+/>
 
-        lightbox.option({
-          resizeDuration: 200,
-          wrapAround: true,
-        });
-      });
-    </script>
-  </body>
-</html>
+<div class="container">
+  <h2 class="animate-on-scroll">Photos</h2>
+  <p class="animate-on-scroll" style="margin-bottom: 40px">
+    Kumpulan momen visual yang saya dokumentasikan.
+  </p>
+
+  <div id="album-container" class="album-grid">
+    {% for album in photos.albums %} {% if album.photos and album.photos.length
+    > 0 %}
+    <div class="album-item animate-on-scroll">
+      <a
+        href="{{ album.photos[0].url | replace('./', '/') }}"
+        data-lightbox="{{ album.id }}"
+        data-title="{{ album.photos[0].title }}"
+        class="album-cover"
+      >
+        <img
+          src="{{ album.cover | replace('./', '/') }}"
+          alt="{{ album.title }}"
+        />
+        <div class="album-info">
+          <h4>{{ album.title }}</h4>
+          <p>Lihat Album ({{ album.photos.length }} foto)</p>
+        </div>
+      </a>
+    </div>
+    {% endif %} {% endfor %}
+  </div>
+
+  <div id="lightbox-links" style="display: none">
+    {% for album in photos.albums %} {% for i in range(1, album.photos.length)
+    %} {% set photo = album.photos[i] %}
+    <a
+      href="{{ photo.url | replace('./', '/') }}"
+      data-lightbox="{{ album.id }}"
+      data-title="{{ photo.title }}"
+    ></a>
+    {% endfor %} {% endfor %}
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+<script>
+  lightbox.option({
+    resizeDuration: 200,
+    wrapAround: true,
+  });
+</script>

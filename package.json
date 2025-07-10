@@ -1,0 +1,25 @@
+{
+  "name": "migrasi-web-personal",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000a\u0000m\u0000a\u0000z\u0000i\u0000a\u0000-\u0000t\u0000h\u0000e\u0000-\u0000g\u0000r\u0000e\u0000a\u0000t\u0000-\u0000a\u0000p\u0000e\u0000s\u0000\r\u0000 \u0000#\u0000 \u0000a\u0000m\u0000a\u0000z\u0000i\u0000a\u0000-\u0000t\u0000h\u0000e\u0000-\u0000g\u0000r\u0000e\u0000a\u0000t\u0000-\u0000a\u0000p\u0000e\u0000s\u0000\r\u0000 \u0000#\u0000 \u0000a\u0000m\u0000a\u0000z\u0000i\u0000a\u0000-\u0000t\u0000h\u0000e\u0000-\u0000g\u0000r\u0000e\u0000a\u0000t\u0000-\u0000a\u0000p\u0000e\u0000s\u0000\r\u0000 \u0000#\u0000 \u0000a\u0000m\u0000a\u0000z\u0000i\u0000a\u0000-\u0000t\u0000h\u0000e\u0000-\u0000g\u0000r\u0000e\u0000a\u0000t\u0000-\u0000a\u0000p\u0000e\u0000s\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx @11ty/eleventy --serve",
+    "build": "npx @11ty/eleventy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amazia03/amazia-the-great-apes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amazia03/amazia-the-great-apes/issues"
+  },
+  "homepage": "https://github.com/amazia03/amazia-the-great-apes#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  }
+}

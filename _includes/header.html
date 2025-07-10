@@ -1,0 +1,50 @@
+<div class="header-container">
+  <div class="logo">
+    <a href="/" class="logo-link">this is amazia the great ape</a>
+    <p><h4>critical thinking please.</h4></p>
+  </div>
+  
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/galeri/">Photos</a></li>
+      <li><a href="/kegiatan/">Reading</a></li>
+      <li><a href="/informasi/">Tweets & Note Series</a></li>
+      <li><a href="/kontak/">Kontak</a></li>
+    </ul>
+  </nav>
+
+  <div class="header-right-side">
+    <div class="social-media">
+      <a href="https://www.instagram.com/amaz_03/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://github.com/usernameanda" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="mailto:emailanda@example.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+    </div>
+
+    <div class="search-container">
+      <form action="/pencarian/" method="GET" id="search-form">
+        <input
+          type="search"
+          name="q"
+          id="search-input-header"
+          placeholder="Cari..."
+          required
+          class="search-input"
+          list="search-suggestions"
+        />
+        <datalist id="search-suggestions">
+          {% for kategori in articles.kategori %}{% for artikel in kategori.artikel %}<option value="{{ artikel.judul }}"></option>{% endfor %}{% endfor %}
+          {% for item in informasi.informasi %}<option value="{{ item.judul }}"></option>{% endfor %}
+        </datalist>
+        <button type="button" id="search-toggle" class="search-toggle" aria-label="Toggle Search">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <button id="menu-toggle" class="menu-toggle" aria-label="Buka Menu">
+    <i class="fas fa-bars"></i>
+  </button>
+</div>

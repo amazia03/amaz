@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reading</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div id="particles-js"></div>
+
+    <header id="header-placeholder"><div class="header-container">
+  <div class="logo">
+    <a href="/" class="logo-link">this is amazia the great ape</a>
+    <p><h4>critical thinking please.</h4></p>
+  </div>
+  
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/galeri/">Photos</a></li>
+      <li><a href="/kegiatan/">Reading</a></li>
+      <li><a href="/informasi/">Tweets & Note Series</a></li>
+      <li><a href="/kontak/">Kontak</a></li>
+    </ul>
+  </nav>
+
+  <div class="header-right-side">
+    <div class="social-media">
+      <a href="https://www.instagram.com/amaz_03/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://github.com/usernameanda" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="mailto:emailanda@example.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+    </div>
+
+    <div class="search-container">
+      <form action="/pencarian/" method="GET" id="search-form">
+        <input
+          type="search"
+          name="q"
+          id="search-input-header"
+          placeholder="Cari..."
+          required
+          class="search-input"
+          list="search-suggestions"
+        />
+        <datalist id="search-suggestions">
+          <option value="about humans"></option><option value="Judul Artikel tentang Keresahan 2"></option><option value="Ringkasan Buku &#39;Atomic Habits&#39;"></option><option value="Ringkasan Buku &#39;Sapiens&#39;"></option><option value="Judul Artikel Pertama Saya (Contoh)"></option><option value="Penjelasan Sederhana tentang Entropi"></option><option value="Sejarah Singkat Perang Dunia II"></option><option value="Pengantar Filsafat Stoikisme"></option><option value="Refleksi di Tengah Hujan (Contoh)"></option>
+          <option value="carl sagan "></option><option value="carl sagan "></option><option value="carl sagan (pale blue dot)"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="naval ravikant"></option>
+        </datalist>
+        <button type="button" id="search-toggle" class="search-toggle" aria-label="Toggle Search">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <button id="menu-toggle" class="menu-toggle" aria-label="Buka Menu">
+    <i class="fas fa-bars"></i>
+  </button>
+</div></header>
+
+    <main>
+<style>
+  /* CSS untuk Auto-suggestion Box */
+  .autocomplete-items {
+    position: absolute;
+    border: 1px solid var(--border-color);
+    border-top: none;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--surface-color);
+  }
+  .autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .autocomplete-items div:hover {
+    background-color: #222;
+  }
+  .search-container {
+    position: relative; /* Diperlukan untuk positioning dropdown */
+  }
+</style>
+
+<div class="container">
+  <h2 class="animate-on-scroll">Reading</h2>
+  <p class="animate-on-scroll" style="margin-bottom: 50px">
+    Kumpulan tulisan yang telah dikelompokkan berdasarkan kategori. Klik
+    kategori untuk melihat daftar judul.
+  </p>
+
+  <div class="controls-container animate-on-scroll">
+    <div class="search-container" style="flex-grow: 1">
+      <input
+        type="text"
+        id="search-input"
+        class="page-search-input"
+        placeholder="Cari berdasarkan judul atau kategori..."
+        list="reading-suggestions"
+      />
+      <datalist id="reading-suggestions">
+        
+        <option value="KERESAHAN"></option>
+        
+        <option value="about humans"></option>
+        
+        <option value="Judul Artikel tentang Keresahan 2"></option>
+         
+        <option value="SUMMARY BOOKS"></option>
+        
+        <option value="Ringkasan Buku &#39;Atomic Habits&#39;"></option>
+        
+        <option value="Ringkasan Buku &#39;Sapiens&#39;"></option>
+         
+        <option value="SCIENCE"></option>
+        
+        <option value="Judul Artikel Pertama Saya (Contoh)"></option>
+        
+        <option value="Penjelasan Sederhana tentang Entropi"></option>
+         
+        <option value="HISTORY"></option>
+        
+        <option value="Sejarah Singkat Perang Dunia II"></option>
+         
+        <option value="PHILOSOPHY"></option>
+        
+        <option value="Pengantar Filsafat Stoikisme"></option>
+        
+        <option value="Refleksi di Tengah Hujan (Contoh)"></option>
+         
+      </datalist>
+    </div>
+  </div>
+
+  <div id="kategori-container" class="animate-on-scroll">
+    
+    <div class="artikel-grup">
+      <h3 class="kategori-judul">
+        <span class="kategori-nama-teks">KERESAHAN</span>
+        <i class="fas fa-plus icon"></i>
+      </h3>
+      <div class="artikel-judul-list">
+        <ul>
+          
+          <li><a href="/artikel/keresahan/about-humans.html">about humans</a></li>
+          
+          <li><a href="#">Judul Artikel tentang Keresahan 2</a></li>
+          
+        </ul>
+      </div>
+    </div>
+    
+    <div class="artikel-grup">
+      <h3 class="kategori-judul">
+        <span class="kategori-nama-teks">SUMMARY BOOKS</span>
+        <i class="fas fa-plus icon"></i>
+      </h3>
+      <div class="artikel-judul-list">
+        <ul>
+          
+          <li><a href="#">Ringkasan Buku &#39;Atomic Habits&#39;</a></li>
+          
+          <li><a href="#">Ringkasan Buku &#39;Sapiens&#39;</a></li>
+          
+        </ul>
+      </div>
+    </div>
+    
+    <div class="artikel-grup">
+      <h3 class="kategori-judul">
+        <span class="kategori-nama-teks">SCIENCE</span>
+        <i class="fas fa-plus icon"></i>
+      </h3>
+      <div class="artikel-judul-list">
+        <ul>
+          
+          <li><a href="kegiatan-17agustus.html">Judul Artikel Pertama Saya (Contoh)</a></li>
+          
+          <li><a href="#">Penjelasan Sederhana tentang Entropi</a></li>
+          
+        </ul>
+      </div>
+    </div>
+    
+    <div class="artikel-grup">
+      <h3 class="kategori-judul">
+        <span class="kategori-nama-teks">HISTORY</span>
+        <i class="fas fa-plus icon"></i>
+      </h3>
+      <div class="artikel-judul-list">
+        <ul>
+          
+          <li><a href="#">Sejarah Singkat Perang Dunia II</a></li>
+          
+        </ul>
+      </div>
+    </div>
+    
+    <div class="artikel-grup">
+      <h3 class="kategori-judul">
+        <span class="kategori-nama-teks">PHILOSOPHY</span>
+        <i class="fas fa-plus icon"></i>
+      </h3>
+      <div class="artikel-judul-list">
+        <ul>
+          
+          <li><a href="#">Pengantar Filsafat Stoikisme</a></li>
+          
+          <li><a href="#">Refleksi di Tengah Hujan (Contoh)</a></li>
+          
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("search-input");
+    const allKategori = document.querySelectorAll(".artikel-grup");
+
+    // Simpan data asli untuk reset & suggestion
+    let originalData = [];
+    allKategori.forEach((grup) => {
+      const kategoriNama = grup.querySelector(".kategori-nama-teks");
+      const linkArtikels = grup.querySelectorAll("li a");
+      kategoriNama.originalHTML = kategoriNama.innerHTML;
+      originalData.push({
+        type: "kategori",
+        text: kategoriNama.textContent,
+        element: grup,
+      });
+
+      linkArtikels.forEach((link) => {
+        link.originalHTML = link.innerHTML;
+        originalData.push({
+          type: "artikel",
+          text: link.textContent,
+          element: link.parentElement,
+        });
+      });
+    });
+
+    function highlightText(element, searchTerm, originalHTML) {
+      if (!searchTerm) {
+        element.innerHTML = originalHTML;
+        return;
+      }
+      const regex = new RegExp(searchTerm, "gi");
+      element.innerHTML = originalHTML.replace(
+        regex,
+        `<span class="highlight">$&</span>`
+      );
+    }
+
+    function filterContent() {
+      const searchTerm = searchInput.value.toLowerCase();
+
+      allKategori.forEach((grup) => {
+        let isGrupVisible = false;
+        const namaKategoriSpan = grup.querySelector(".kategori-nama-teks");
+        const listItems = grup.querySelectorAll("ul li");
+
+        highlightText(
+          namaKategoriSpan,
+          searchTerm,
+          namaKategoriSpan.originalHTML
+        );
+        if (namaKategoriSpan.textContent.toLowerCase().includes(searchTerm))
+          isGrupVisible = true;
+
+        listItems.forEach((item) => {
+          const link = item.querySelector("a");
+          highlightText(link, searchTerm, link.originalHTML);
+          if (link.textContent.toLowerCase().includes(searchTerm)) {
+            item.style.display = "";
+            isGrupVisible = true;
+          } else {
+            item.style.display = "none";
+          }
+        });
+        grup.style.display = isGrupVisible ? "" : "none";
+      });
+    }
+
+    function showSuggestions() {
+      const searchTerm = searchInput.value;
+      closeAllLists();
+      if (!searchTerm) return;
+
+      const suggestionBox = document.createElement("div");
+      suggestionBox.setAttribute("id", "autocomplete-list");
+      suggestionBox.setAttribute("class", "autocomplete-items");
+      searchInput.parentNode.appendChild(suggestionBox);
+
+      const suggestions = originalData
+        .filter((item) =>
+          item.text.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .slice(0, 5);
+
+      suggestions.forEach((sugg) => {
+        const itemDiv = document.createElement("div");
+        itemDiv.innerHTML = sugg.text.replace(
+          new RegExp(searchTerm, "gi"),
+          "<strong>$&</strong>"
+        );
+        itemDiv.addEventListener("click", function () {
+          searchInput.value = sugg.text;
+          filterContent();
+          closeAllLists();
+        });
+        suggestionBox.appendChild(itemDiv);
+      });
+    }
+
+    function closeAllLists(elmnt) {
+      const x = document.getElementsByClassName("autocomplete-items");
+      for (let i = 0; i < x.length; i++) {
+        if (elmnt != x[i] && elmnt != searchInput) {
+          x[i].parentNode.removeChild(x[i]);
+        }
+      }
+    }
+
+    // --- Accordion Setup ---
+    const kategoriJudul = document.querySelectorAll(".kategori-judul");
+    kategoriJudul.forEach((judul) => {
+      judul.addEventListener("click", function () {
+        this.classList.toggle("aktif");
+        this.nextElementSibling.style.maxHeight = this.classList.contains(
+          "aktif"
+        )
+          ? this.nextElementSibling.scrollHeight + "px"
+          : null;
+      });
+    });
+
+    // --- Event Listeners ---
+    searchInput.addEventListener("input", debounce(filterContent, 300));
+    searchInput.addEventListener("input", debounce(showSuggestions, 300));
+    document.addEventListener("click", (e) => closeAllLists(e.target));
+  });
+</script>
+</main>
+
+    <footer id="footer-placeholder"><div class="footer-social-media">
+  <a
+    href="https://www.instagram.com/amaz_03/"
+    target="_blank"
+    aria-label="Instagram"
+    ><i class="fab fa-instagram"></i
+  ></a>
+  <a href="https://github.com/usernameanda" target="_blank" aria-label="GitHub"
+    ><i class="fab fa-github"></i
+  ></a>
+  <a href="mailto:emailanda@example.com" aria-label="Email"
+    ><i class="fas fa-envelope"></i
+  ></a>
+</div>
+<p>&copy; 2025 Created By Amazia Kristanto.</p>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+    <script src="/js/script.js" defer></script>
+  </body>
+</html>

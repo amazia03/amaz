@@ -1,170 +1,112 @@
-<!DOCTYPE html>
-<html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tweets & Note Series - Website Pribadi</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-    <link rel="stylesheet" href="css/style.css" />
-    <style>
-      .search-container {
-        margin-bottom: 20px;
-        text-align: left;
-      }
-      #search-input {
-        width: 100%;
-        padding: 12px;
-        background-color: var(--surface-color);
-        border: 1px solid var(--border-color);
-        border-radius: 5px;
-        color: var(--text-color);
-        font-size: 1em;
-        font-family: "Poppins", sans-serif;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="particles-js"></div>
-    <header id="header-placeholder"></header>
-    <main>
-      <div class="container">
-        <h2 class="animate-on-scroll">Tweets & Note Series</h2>
-        <p class="animate-on-scroll" style="margin-bottom: 40px">
-          Kumpulan pemikiran singkat, catatan,Tweets yang sekirannya menarik for
-          me.
-        </p>
-        <div
-          class="controls-container animate-on-scroll"
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-          "
-        >
-          <div class="search-container" style="flex-grow: 1">
-            <input
-              type="text"
-              id="search-input"
-              placeholder="Cari berdasarkan konten, judul, atau tag..."
-            />
-          </div>
-          <div class="sort-container" style="margin-bottom: 0">
-            <label for="info-sorter">Urutkan:</label>
-            <select id="info-sorter" class="sorter">
-              <option value="terbaru">Terbaru</option>
-              <option value="terlama">Terlama</option>
-            </select>
-          </div>
-        </div>
-        <div class="info-list"></div>
+---
+layout: layout.html
+title: Tweets & Note Series
+---
+
+<div class="container">
+  <h2 class="animate-on-scroll">Tweets & Note Series</h2>
+  <p class="animate-on-scroll" style="margin-bottom: 40px">
+    Kumpulan pemikiran singkat, catatan, Tweets yang sekirannya menarik for me.
+  </p>
+
+  <div class="controls-container animate-on-scroll">
+    <div class="search-container" style="flex-grow: 1">
+      <input
+        type="text"
+        id="search-input-info"
+        class="page-search-input"
+        placeholder="Cari berdasarkan konten, judul, atau tag..."
+        list="info-suggestions"
+      />
+      <datalist id="info-suggestions">
+        {% for item in informasi.informasi %}
+        <option value="{{ item.judul }}"></option>
+        <option value="{{ item.tag.teks }}"></option>
+        {% endfor %}
+      </datalist>
+    </div>
+    <div class="sort-container">
+      <label for="info-sorter">Urutkan:</label>
+      <select id="info-sorter" class="sorter">
+        <option value="terbaru">Terbaru</option>
+        <option value="terlama">Terlama</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="info-list">
+    {% for item in informasi.informasi %}
+    <div class="info-item animate-on-scroll" data-tanggal="{{ item.tanggal }}">
+      <div class="info-header">
+        <h3>{{ item.judul }}</h3>
+        <span class="info-tag {{ item.tag.kelas }}">{{ item.tag.teks }}</span>
       </div>
-    </main>
-    <footer id="footer-placeholder"></footer>
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
-    <script src="js/script.js" defer></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const infoListContainer = document.querySelector(".info-list");
-        const searchInput = document.getElementById("search-input");
-        const sorter = document.getElementById("info-sorter");
-        let allInfoItems = [];
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> {{ item.meta_info }}
+      </p>
+      <div class="info-body">{{ item.konten_html | safe }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 
-        function renderItems(items, searchTerm = "") {
-          infoListContainer.innerHTML = "";
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("search-input-info");
+    const sorter = document.getElementById("info-sorter");
+    const infoListContainer = document.querySelector(".info-list");
 
-          // Regex untuk menemukan semua kecocokan (g) dan tidak sensitif huruf (i)
-          const regex = searchTerm ? new RegExp(searchTerm, "gi") : null;
-          const highlight = (text) => {
-            if (!regex || !text) return text;
-            return text.replace(regex, `<span class="highlight">$&</span>`);
-          };
+    const allItems = Array.from(
+      infoListContainer.querySelectorAll(".info-item")
+    );
 
-          items.forEach((item) => {
-            const infoItemDiv = document.createElement("div");
-            infoItemDiv.className = "info-item animate-on-scroll";
-            infoItemDiv.setAttribute("data-tanggal", item.tanggal);
-            const tag =
-              typeof item.tag === "string" ? JSON.parse(item.tag) : item.tag;
+    allItems.forEach((item) => {
+      item.originalInnerHTML = item.innerHTML;
+    });
 
-            infoItemDiv.innerHTML = `
-              <div class="info-header">
-                <h3>${highlight(item.judul)}</h3>
-                <span class="info-tag ${tag.kelas}">${highlight(
-              tag.teks
-            )}</span>
-              </div>
-              <p class="info-meta">
-                <i class="fas fa-calendar-alt"></i> ${item.meta_info}
-              </p>
-              <div class="info-body">
-                ${highlight(item.konten_html)}
-              </div>
-            `;
-            infoListContainer.appendChild(infoItemDiv);
-          });
-          // Inisialisasi ulang animasi scroll setelah me-render ulang item
-          if (typeof window.initializeScrollAnimation === "function") {
-            window.initializeScrollAnimation();
+    function highlightAndFilter() {
+      const searchTerm = searchInput.value.toLowerCase();
+
+      allItems.forEach((item) => {
+        item.innerHTML = item.originalInnerHTML;
+
+        const itemText = item.textContent.toLowerCase();
+
+        if (itemText.includes(searchTerm)) {
+          item.style.display = "";
+          if (searchTerm) {
+            const regex = new RegExp(searchTerm, "gi");
+            item.innerHTML = item.originalInnerHTML.replace(
+              regex,
+              `<span class="highlight">$&</span>`
+            );
           }
+        } else {
+          item.style.display = "none";
         }
-
-        function handleFilterAndSort() {
-          const searchTerm = searchInput.value.toLowerCase();
-          const sortOrder = sorter.value;
-
-          let filteredItems = allInfoItems.filter((item) => {
-            const tag =
-              typeof item.tag === "string" ? JSON.parse(item.tag) : item.tag;
-            // Pencarian sekarang mencakup judul, konten, dan tag
-            return (
-              item.judul.toLowerCase().includes(searchTerm) ||
-              item.konten_html.toLowerCase().includes(searchTerm) ||
-              tag.teks.toLowerCase().includes(searchTerm)
-            );
-          });
-
-          filteredItems.sort((a, b) => {
-            const dateA = new Date(a.tanggal);
-            const dateB = new Date(b.tanggal);
-            return sortOrder === "terbaru" ? dateB - dateA : dateA - dateB;
-          });
-
-          renderItems(filteredItems, searchInput.value);
-        }
-
-        fetch("informasi.json")
-          .then((response) => {
-            if (!response.ok) throw new Error("Network response was not ok");
-            return response.json();
-          })
-          .then((data) => {
-            allInfoItems = data.informasi;
-            // Urutkan data awal berdasarkan default (terbaru)
-            allInfoItems.sort(
-              (a, b) => new Date(b.tanggal) - new Date(a.tanggal)
-            );
-            renderItems(allInfoItems); // Tampilkan semua item saat pertama kali dimuat
-
-            const debouncedFilter = debounce(handleFilterAndSort, 300);
-            searchInput.addEventListener("input", debouncedFilter);
-            sorter.addEventListener("change", handleFilterAndSort);
-          })
-          .catch((error) => {
-            console.error("Gagal memuat data:", error);
-            infoListContainer.innerHTML =
-              "<p style='color:red;'>Gagal memuat data. Pastikan file informasi.json ada di direktori yang sama.</p>";
-          });
       });
-    </script>
-  </body>
-</html>
+      sortVisibleItems();
+    }
+
+    function sortVisibleItems() {
+      const sortOrder = sorter.value;
+      const visibleItems = allItems.filter(
+        (item) => item.style.display !== "none"
+      );
+
+      visibleItems.sort((a, b) => {
+        const dateA = new Date(a.dataset.tanggal);
+        const dateB = new Date(b.dataset.tanggal);
+        return sortOrder === "terbaru" ? dateB - dateA : dateA - dateB;
+      });
+
+      infoListContainer.innerHTML = "";
+      visibleItems.forEach((item) => infoListContainer.appendChild(item));
+    }
+
+    sorter.addEventListener("change", sortVisibleItems);
+    searchInput.addEventListener("input", debounce(highlightAndFilter, 300));
+
+    highlightAndFilter();
+  });
+</script>

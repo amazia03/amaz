@@ -1,224 +1,203 @@
-<!DOCTYPE html>
-<html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reading - Kategori Tulisan</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-    <link rel="stylesheet" href="css/style.css" />
-    <style>
-      .artikel-grup {
-        text-align: left;
-        margin-bottom: 15px;
-        border-bottom: 1px solid var(--border-color);
-        padding-bottom: 15px;
-      }
-      .kategori-judul {
-        font-size: 1.8em;
-        color: var(--primary-color);
-        margin: 0;
-        padding: 10px 0;
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-style: normal;
-        transition: color 0.3s ease;
-      }
-      .kategori-judul:hover {
-        color: #00caff;
-      }
-      .kategori-judul .icon {
-        font-size: 0.8em;
-        transition: transform 0.3s ease;
-      }
-      .kategori-judul.aktif .icon {
-        transform: rotate(45deg);
-      }
-      .artikel-judul-list {
-        padding-left: 10px;
-        margin-top: 15px;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.5s ease-out;
-      }
-      .artikel-judul-list ul {
-        list-style: none;
-        padding-left: 0;
-      }
-      .artikel-judul-list li {
-        background-color: var(--surface-color);
-        border-left: 3px solid var(--primary-color);
-        margin-bottom: 10px;
-        border-radius: 4px;
-        transition: background-color 0.3s ease;
-      }
-      .artikel-judul-list li:hover {
-        background-color: #222;
-      }
-      .artikel-judul-list li a,
-      .artikel-judul-list li a:visited {
-        display: block;
-        padding: 15px 20px;
-        text-decoration: none;
-        color: var(--text-color);
-        font-size: 1.2em;
-        font-style: normal;
-      }
-      .search-container {
-        margin-bottom: 30px;
-        text-align: left;
-      }
-      #search-input {
-        width: 100%;
-        padding: 12px;
-        background-color: var(--surface-color);
-        border: 1px solid var(--border-color);
-        border-radius: 5px;
-        color: var(--text-color);
-        font-size: 1em;
-        font-family: "Poppins", sans-serif;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="particles-js"></div>
-    <header id="header-placeholder"></header>
-    <main>
-      <div class="container">
-        <h2 class="animate-on-scroll">Reading</h2>
-        <p class="animate-on-scroll" style="margin-bottom: 50px">
-          Kumpulan tulisan yang telah dikelompokkan berdasarkan kategori. Klik
-          kategori untuk melihat daftar judul.
-        </p>
-        <div class="search-container animate-on-scroll">
-          <input
-            type="text"
-            id="search-input"
-            placeholder="Cari berdasarkan judul atau kategori..."
-          />
-        </div>
-        <div id="kategori-container" class="animate-on-scroll"></div>
+---
+layout: layout.html
+title: Reading
+---
+
+<style>
+  /* CSS untuk Auto-suggestion Box */
+  .autocomplete-items {
+    position: absolute;
+    border: 1px solid var(--border-color);
+    border-top: none;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--surface-color);
+  }
+  .autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .autocomplete-items div:hover {
+    background-color: #222;
+  }
+  .search-container {
+    position: relative; /* Diperlukan untuk positioning dropdown */
+  }
+</style>
+
+<div class="container">
+  <h2 class="animate-on-scroll">Reading</h2>
+  <p class="animate-on-scroll" style="margin-bottom: 50px">
+    Kumpulan tulisan yang telah dikelompokkan berdasarkan kategori. Klik
+    kategori untuk melihat daftar judul.
+  </p>
+
+  <div class="controls-container animate-on-scroll">
+    <div class="search-container" style="flex-grow: 1">
+      <input
+        type="text"
+        id="search-input"
+        class="page-search-input"
+        placeholder="Cari berdasarkan judul atau kategori..."
+        list="reading-suggestions"
+      />
+      <datalist id="reading-suggestions">
+        {% for kategori in articles.kategori %}
+        <option value="{{ kategori.nama }}"></option>
+        {% for artikel in kategori.artikel %}
+        <option value="{{ artikel.judul }}"></option>
+        {% endfor %} {% endfor %}
+      </datalist>
+    </div>
+  </div>
+
+  <div id="kategori-container" class="animate-on-scroll">
+    {% for kategori in articles.kategori %}
+    <div class="artikel-grup">
+      <h3 class="kategori-judul">
+        <span class="kategori-nama-teks">{{ kategori.nama }}</span>
+        <i class="fas fa-plus icon"></i>
+      </h3>
+      <div class="artikel-judul-list">
+        <ul>
+          {% for artikel in kategori.artikel %}
+          <li><a href="{{ artikel.url }}">{{ artikel.judul }}</a></li>
+          {% endfor %}
+        </ul>
       </div>
-    </main>
-    <footer id="footer-placeholder"></footer>
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
-    <script src="js/script.js" defer></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        let allCategories = [];
-        fetch("articles.json")
-          .then((response) => response.json())
-          .then((data) => {
-            allCategories = data.kategori;
-            renderCategories(allCategories, "");
-          })
-          .catch((error) => {
-            console.error("Error memuat data artikel:", error);
-            document.getElementById("kategori-container").innerHTML =
-              "<p style='color:red;'>Gagal memuat data artikel. Pastikan file articles.json ada di direktori yang sama.</p>";
-          });
+    </div>
+    {% endfor %}
+  </div>
+</div>
 
-        function renderCategories(categories, searchTerm) {
-          const container = document.getElementById("kategori-container");
-          container.innerHTML = "";
-          if (categories.length === 0) {
-            container.innerHTML = "<p>Tidak ada hasil yang ditemukan.</p>";
-            return;
-          }
-          // Regex untuk menemukan semua kecocokan (g) dan tidak sensitif huruf (i)
-          const regex = searchTerm ? new RegExp(searchTerm, "gi") : null;
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("search-input");
+    const allKategori = document.querySelectorAll(".artikel-grup");
 
-          // Fungsi untuk menyorot teks
-          const highlight = (text) => {
-            if (!regex || !text) return text;
-            return text.replace(regex, `<span class="highlight">$&</span>`);
-          };
-
-          categories.forEach((kategori) => {
-            const grup = document.createElement("div");
-            grup.className = "artikel-grup";
-            let artikelHTML = "";
-            kategori.artikel.forEach((artikel) => {
-              artikelHTML += `<li><a href="${artikel.url}">${highlight(
-                artikel.judul
-              )}</a></li>`;
-            });
-
-            grup.innerHTML = `
-              <h3 class="kategori-judul">
-                <span>${highlight(kategori.nama)}</span>
-                <i class="fas fa-plus icon"></i>
-              </h3>
-              <div class="artikel-judul-list"><ul>${artikelHTML}</ul></div>
-            `;
-            container.appendChild(grup);
-          });
-          setupAccordion();
-        }
-
-        function filterContent(searchTerm) {
-          const lowerCaseSearchTerm = searchTerm.toLowerCase();
-          const filteredCategories = allCategories
-            .map((kategori) => {
-              const filteredArticles = kategori.artikel.filter((artikel) =>
-                artikel.judul.toLowerCase().includes(lowerCaseSearchTerm)
-              );
-              if (
-                kategori.nama.toLowerCase().includes(lowerCaseSearchTerm) ||
-                filteredArticles.length > 0
-              ) {
-                // Jika nama kategori cocok, tampilkan semua artikelnya
-                const articlesToShow = kategori.nama
-                  .toLowerCase()
-                  .includes(lowerCaseSearchTerm)
-                  ? kategori.artikel
-                  : filteredArticles;
-                return { ...kategori, artikel: articlesToShow };
-              }
-              return null;
-            })
-            .filter(Boolean); // Hapus kategori yang null
-          renderCategories(filteredCategories, searchTerm);
-        }
-
-        const searchInput = document.getElementById("search-input");
-        searchInput.addEventListener(
-          "input",
-          debounce(() => {
-            filterContent(searchInput.value);
-          }, 300)
-        );
-
-        function setupAccordion() {
-          const kategoriJudul = document.querySelectorAll(".kategori-judul");
-          kategoriJudul.forEach((judul) => {
-            judul.addEventListener("click", function () {
-              this.classList.toggle("aktif");
-              const konten = this.nextElementSibling;
-              const icon = this.querySelector(".icon");
-              if (konten.style.maxHeight) {
-                konten.style.maxHeight = null;
-                icon.classList.remove("fa-minus");
-                icon.classList.add("fa-plus");
-              } else {
-                konten.style.maxHeight = konten.scrollHeight + "px";
-                icon.classList.remove("fa-plus");
-                icon.classList.add("fa-minus");
-              }
-            });
-          });
-        }
+    // Simpan data asli untuk reset & suggestion
+    let originalData = [];
+    allKategori.forEach((grup) => {
+      const kategoriNama = grup.querySelector(".kategori-nama-teks");
+      const linkArtikels = grup.querySelectorAll("li a");
+      kategoriNama.originalHTML = kategoriNama.innerHTML;
+      originalData.push({
+        type: "kategori",
+        text: kategoriNama.textContent,
+        element: grup,
       });
-    </script>
-  </body>
-</html>
+
+      linkArtikels.forEach((link) => {
+        link.originalHTML = link.innerHTML;
+        originalData.push({
+          type: "artikel",
+          text: link.textContent,
+          element: link.parentElement,
+        });
+      });
+    });
+
+    function highlightText(element, searchTerm, originalHTML) {
+      if (!searchTerm) {
+        element.innerHTML = originalHTML;
+        return;
+      }
+      const regex = new RegExp(searchTerm, "gi");
+      element.innerHTML = originalHTML.replace(
+        regex,
+        `<span class="highlight">$&</span>`
+      );
+    }
+
+    function filterContent() {
+      const searchTerm = searchInput.value.toLowerCase();
+
+      allKategori.forEach((grup) => {
+        let isGrupVisible = false;
+        const namaKategoriSpan = grup.querySelector(".kategori-nama-teks");
+        const listItems = grup.querySelectorAll("ul li");
+
+        highlightText(
+          namaKategoriSpan,
+          searchTerm,
+          namaKategoriSpan.originalHTML
+        );
+        if (namaKategoriSpan.textContent.toLowerCase().includes(searchTerm))
+          isGrupVisible = true;
+
+        listItems.forEach((item) => {
+          const link = item.querySelector("a");
+          highlightText(link, searchTerm, link.originalHTML);
+          if (link.textContent.toLowerCase().includes(searchTerm)) {
+            item.style.display = "";
+            isGrupVisible = true;
+          } else {
+            item.style.display = "none";
+          }
+        });
+        grup.style.display = isGrupVisible ? "" : "none";
+      });
+    }
+
+    function showSuggestions() {
+      const searchTerm = searchInput.value;
+      closeAllLists();
+      if (!searchTerm) return;
+
+      const suggestionBox = document.createElement("div");
+      suggestionBox.setAttribute("id", "autocomplete-list");
+      suggestionBox.setAttribute("class", "autocomplete-items");
+      searchInput.parentNode.appendChild(suggestionBox);
+
+      const suggestions = originalData
+        .filter((item) =>
+          item.text.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .slice(0, 5);
+
+      suggestions.forEach((sugg) => {
+        const itemDiv = document.createElement("div");
+        itemDiv.innerHTML = sugg.text.replace(
+          new RegExp(searchTerm, "gi"),
+          "<strong>$&</strong>"
+        );
+        itemDiv.addEventListener("click", function () {
+          searchInput.value = sugg.text;
+          filterContent();
+          closeAllLists();
+        });
+        suggestionBox.appendChild(itemDiv);
+      });
+    }
+
+    function closeAllLists(elmnt) {
+      const x = document.getElementsByClassName("autocomplete-items");
+      for (let i = 0; i < x.length; i++) {
+        if (elmnt != x[i] && elmnt != searchInput) {
+          x[i].parentNode.removeChild(x[i]);
+        }
+      }
+    }
+
+    // --- Accordion Setup ---
+    const kategoriJudul = document.querySelectorAll(".kategori-judul");
+    kategoriJudul.forEach((judul) => {
+      judul.addEventListener("click", function () {
+        this.classList.toggle("aktif");
+        this.nextElementSibling.style.maxHeight = this.classList.contains(
+          "aktif"
+        )
+          ? this.nextElementSibling.scrollHeight + "px"
+          : null;
+      });
+    });
+
+    // --- Event Listeners ---
+    searchInput.addEventListener("input", debounce(filterContent, 300));
+    searchInput.addEventListener("input", debounce(showSuggestions, 300));
+    document.addEventListener("click", (e) => closeAllLists(e.target));
+  });
+</script>

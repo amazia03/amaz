@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tweets &amp; Note Series</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div id="particles-js"></div>
+
+    <header id="header-placeholder"><div class="header-container">
+  <div class="logo">
+    <a href="/" class="logo-link">this is amazia the great ape</a>
+    <p><h4>critical thinking please.</h4></p>
+  </div>
+  
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/galeri/">Photos</a></li>
+      <li><a href="/kegiatan/">Reading</a></li>
+      <li><a href="/informasi/">Tweets & Note Series</a></li>
+      <li><a href="/kontak/">Kontak</a></li>
+    </ul>
+  </nav>
+
+  <div class="header-right-side">
+    <div class="social-media">
+      <a href="https://www.instagram.com/amaz_03/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://github.com/usernameanda" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="mailto:emailanda@example.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+    </div>
+
+    <div class="search-container">
+      <form action="/pencarian/" method="GET" id="search-form">
+        <input
+          type="search"
+          name="q"
+          id="search-input-header"
+          placeholder="Cari..."
+          required
+          class="search-input"
+          list="search-suggestions"
+        />
+        <datalist id="search-suggestions">
+          <option value="about humans"></option><option value="Judul Artikel tentang Keresahan 2"></option><option value="Ringkasan Buku &#39;Atomic Habits&#39;"></option><option value="Ringkasan Buku &#39;Sapiens&#39;"></option><option value="Judul Artikel Pertama Saya (Contoh)"></option><option value="Penjelasan Sederhana tentang Entropi"></option><option value="Sejarah Singkat Perang Dunia II"></option><option value="Pengantar Filsafat Stoikisme"></option><option value="Refleksi di Tengah Hujan (Contoh)"></option>
+          <option value="carl sagan "></option><option value="carl sagan "></option><option value="carl sagan (pale blue dot)"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="ryu hasan"></option><option value="naval ravikant"></option>
+        </datalist>
+        <button type="button" id="search-toggle" class="search-toggle" aria-label="Toggle Search">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <button id="menu-toggle" class="menu-toggle" aria-label="Buka Menu">
+    <i class="fas fa-bars"></i>
+  </button>
+</div></header>
+
+    <main>
+<div class="container">
+  <h2 class="animate-on-scroll">Tweets & Note Series</h2>
+  <p class="animate-on-scroll" style="margin-bottom: 40px">
+    Kumpulan pemikiran singkat, catatan, Tweets yang sekirannya menarik for me.
+  </p>
+
+  <div class="controls-container animate-on-scroll">
+    <div class="search-container" style="flex-grow: 1">
+      <input
+        type="text"
+        id="search-input-info"
+        class="page-search-input"
+        placeholder="Cari berdasarkan konten, judul, atau tag..."
+        list="info-suggestions"
+      />
+      <datalist id="info-suggestions">
+        
+        <option value="carl sagan "></option>
+        <option value="kutipan"></option>
+        
+        <option value="carl sagan "></option>
+        <option value="kutipan"></option>
+        
+        <option value="carl sagan (pale blue dot)"></option>
+        <option value="kutipan"></option>
+        
+        <option value="ryu hasan"></option>
+        <option value="Twets"></option>
+        
+        <option value="ryu hasan"></option>
+        <option value="Twets"></option>
+        
+        <option value="ryu hasan"></option>
+        <option value="Twets"></option>
+        
+        <option value="ryu hasan"></option>
+        <option value="Twets"></option>
+        
+        <option value="ryu hasan"></option>
+        <option value="Twets"></option>
+        
+        <option value="ryu hasan"></option>
+        <option value="Twets"></option>
+        
+        <option value="ryu hasan"></option>
+        <option value="Twets"></option>
+        
+        <option value="ryu hasan"></option>
+        <option value="Twets"></option>
+        
+        <option value="ryu hasan"></option>
+        <option value="Twets"></option>
+        
+        <option value="ryu hasan"></option>
+        <option value="Twets"></option>
+        
+        <option value="ryu hasan"></option>
+        <option value="Twets"></option>
+        
+        <option value="naval ravikant"></option>
+        <option value="Twets"></option>
+        
+      </datalist>
+    </div>
+    <div class="sort-container">
+      <label for="info-sorter">Urutkan:</label>
+      <select id="info-sorter" class="sorter">
+        <option value="terbaru">Terbaru</option>
+        <option value="terlama">Terlama</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="info-list">
+    
+    <div class="info-item animate-on-scroll" data-tanggal="1994-10-13">
+      <div class="info-header">
+        <h3>carl sagan </h3>
+        <span class="info-tag tag-pengumuman">kutipan</span>
+      </div>
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> 13 Oktober 1994
+      </p>
+      <div class="info-body">Sia-sia meyakinkan orang yang sudah telanjur percaya; karena kepercayaannya tidak bersumber dari bukti, melainkan dari kebutuhan batin yang kuat untuk percaya.</div>
+    </div>
+    
+    <div class="info-item animate-on-scroll" data-tanggal="1996-10-13">
+      <div class="info-header">
+        <h3>carl sagan </h3>
+        <span class="info-tag tag-pengumuman">kutipan</span>
+      </div>
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> 13 Oktober 1996
+      </p>
+      <div class="info-body">“Setiap dari kita, dalam perspektif kosmik, sangatlah berharga. Jika ada manusia yang tidak sependapat denganmu, biarkan dia hidup. Di antara seratus miliar galaksi, kau tidak akan menemukan yang serupa dengannya.”</div>
+    </div>
+    
+    <div class="info-item animate-on-scroll" data-tanggal="1996-10-13">
+      <div class="info-header">
+        <h3>carl sagan (pale blue dot)</h3>
+        <span class="info-tag tag-pengumuman">kutipan</span>
+      </div>
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> 13 Oktober 1996
+      </p>
+      <div class="info-body"><p>Dari jarak sejauh ini, Bumi tidak lagi terlihat penting. Namun bagi kita, lain lagi ceritanya. Tataplah lagi titik itu. Titik itulah yang dinamai 'di sini.' Itulah rumah. Itulah kita. Di satu titik itu semua orang yang kamu cintai, semua orang yang kamu kenal, semua orang yang pernah kamu dengar namanya, semua manusia yang pernah ada, menghabiskan hidup mereka. Segenap kebahagiaan dan penderitaan kita, ribuan agama, pemikiran, dan doktrin ekonomi yang merasa benar, setiap pemburu dan perambah, setiap pahlawan dan pengecut, setiap pembangun dan pemusnah peradaban, setiap raja dan petani, setiap pasangan muda yang jatuh cinta, setiap ibu dan ayah, anak yang bercita-cita tinggi, penemu dan penjelajah, setiap pengajar kebaikan, setiap politisi busuk, setiap "bintang pujaan", setiap "pemimpin besar", setiap orang suci dan pendosa sepanjang sejarah spesies manusia hidup di sana, di atas setitik debu yang melayang dalam seberkas sinar.</p><p>Bumi adalah panggung yang amat kecil di tengah luasnya arena kosmik. Renungkanlah sungai darah yang ditumpahkan para jenderal dan maharaja sehingga dalam keagungan dan kejayaan itu mereka dapat menjadi penguasa sementara di sebagian kecil dari titik itu. Renungkanlah kekejaman tanpa akhir yang dilakukan orang-orang di satu sudut titik ini terhadap orang-orang tak dikenal di sudut titik yang lain, betapa sering mereka salah paham, betapa siap mereka untuk membunuh satu sama lain, betapa bergejolak kebencian mereka. Sikap kita, keistimewaan kita yang semu, khayalan bahwa kita memiliki tempat penting di alam semesta ini, tidak berarti apapun di hadapan setitik cahaya redup ini. Planet kita hanyalah sebutir debu yang kesepian di alam yang besar dan gelap. Dalam kebingungan kita, di tengah - luasnya jagat raya ini, tiada tanda bahwa pertolongan akan datang dari tempat lain untuk menyelamatkan kita dari diri kita sendiri.</p><p>Bumi adalah satu-satunya dunia, sejauh ini, yang diketahui memiliki kehidupan. Tidak ada tempat lain, setidaknya sampai beberapa waktu ke depan, yang bisa dijadikan tempat tinggal. Ada yang bisa kita kunjungi, tetapi belum ada yang bisa kita tinggali. Suka atau tidak, untuk saat ini, Bumi adalah satu-satunya tempat kita hidup. Sering dikatakan bahwa astronomi adalah sebuah pengalaman yang menumbuhkan kerendahan hati dan membangun kepribadian. Mungkin tak ada yang dapat menunjukkan laknatnya kesombongan manusia secara lebih baik selain citra dunia kita yang mungil ini. Bagiku, gambar ini mempertegas tanggung jawab kita untuk bertindak lebih baik terhadap satu sama lain, dan menjaga serta merawat sang titik biru pucat, satu-satunya rumah yang kita kenal selama ini.<br>— Carl Sagan, pidato di Universitas Cornell, 13 Oktober 1994</p></div>
+    </div>
+    
+    <div class="info-item animate-on-scroll" data-tanggal="2012-12-06">
+      <div class="info-header">
+        <h3>ryu hasan</h3>
+        <span class="info-tag tag-penting">Twets</span>
+      </div>
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> 6 des 2012
+      </p>
+      <div class="info-body"><p>Ilmu pengetahuan yang baik adalah yang menyisakan pertanyaan, sebagai pijakan untuk berkembangan ilmu itu sendiri. Tidak pernah final...</p></div>
+    </div>
+    
+    <div class="info-item animate-on-scroll" data-tanggal="2020-01-25">
+      <div class="info-header">
+        <h3>ryu hasan</h3>
+        <span class="info-tag tag-penting">Twets</span>
+      </div>
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> 20 Januari 2020
+      </p>
+      <div class="info-body"><p>Ilmu pengetahuan mengajarkan Anda untuk membuka mata dan menghargai realitas di sekitar Anda. Takhayul mengajarkan Anda untuk menutup mata dan berpegang teguh pada fantasi di dalam diri Anda.</p></div>
+    </div>
+    
+    <div class="info-item animate-on-scroll" data-tanggal="2020-03-27">
+      <div class="info-header">
+        <h3>ryu hasan</h3>
+        <span class="info-tag tag-penting">Twets</span>
+      </div>
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> 27 Maret 2020
+      </p>
+      <div class="info-body"><p>Hanya karena Anda ingin hal itu benar, bukan berarti itu benar. Hanya karena miliaran orang percaya, bukan berarti mereka harus percaya. Dan hanya karena kebenaran itu menyakitkan, bukan berarti kebenaran itu tidak benar.</p></div>
+    </div>
+    
+    <div class="info-item animate-on-scroll" data-tanggal="2020-07-13">
+      <div class="info-header">
+        <h3>ryu hasan</h3>
+        <span class="info-tag tag-penting">Twets</span>
+      </div>
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> 13 Juli 2020
+      </p>
+      <div class="info-body"><p>Berapa banyak malapetaka yang diawali dengan “niat baik”?</p></div>
+    </div>
+    
+    <div class="info-item animate-on-scroll" data-tanggal="2019-03-17">
+      <div class="info-header">
+        <h3>ryu hasan</h3>
+        <span class="info-tag tag-penting">Twets</span>
+      </div>
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> 17 Maret 2019
+      </p>
+      <div class="info-body"><p>“Jika Anda pikir sihir adalah jawaban dari pertanyaan Anda, berarti Anda belum berusaha cukup keras.”</p></div>
+    </div>
+    
+    <div class="info-item animate-on-scroll" data-tanggal="2019-12-30">
+      <div class="info-header">
+        <h3>ryu hasan</h3>
+        <span class="info-tag tag-penting">Twets</span>
+      </div>
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> 30 Desember 2019
+      </p>
+      <div class="info-body"><p>“Betapa sebuah hukuman yang hebat bagi mereka yang tidak percaya pada kenyataan, mereka dipaksa untuk menerimanya setiap hari.”</p></div>
+    </div>
+    
+    <div class="info-item animate-on-scroll" data-tanggal="2020-12-15">
+      <div class="info-header">
+        <h3>ryu hasan</h3>
+        <span class="info-tag tag-penting">Twets</span>
+      </div>
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> 15 Desember 2020
+      </p>
+      <div class="info-body"><p>Semesta ini berjalan tidak dengan mengikuti karepe raimu</p></div>
+    </div>
+    
+    <div class="info-item animate-on-scroll" data-tanggal="2019-12-15">
+      <div class="info-header">
+        <h3>ryu hasan</h3>
+        <span class="info-tag tag-penting">Twets</span>
+      </div>
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> 15 Desember 2019
+      </p>
+      <div class="info-body"><p>Tidak ada cara yg benar atau cara yg salah dalam menjalani depresi, semua mengalir begitu saja tak bisa dibendung Kalo dengan menjilat setir mobil bisa membuat merasa lebih nyaman ya lakukan saja</p></div>
+    </div>
+    
+    <div class="info-item animate-on-scroll" data-tanggal="2017-04-15">
+      <div class="info-header">
+        <h3>ryu hasan</h3>
+        <span class="info-tag tag-penting">Twets</span>
+      </div>
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> 15 April 2017
+      </p>
+      <div class="info-body"><p>“Apa yang tidak kita ketahui, kita takuti. Apa yang kita takuti, kita benci. Apa yang kita benci, kita hancurkan.Pendidikan adalah jawaban atas semua masalah kehidupan.”</p></div>
+    </div>
+    
+    <div class="info-item animate-on-scroll" data-tanggal="2020-03-29">
+      <div class="info-header">
+        <h3>ryu hasan</h3>
+        <span class="info-tag tag-penting">Twets</span>
+      </div>
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> 29 Maret 2020
+      </p>
+      <div class="info-body"><p>“Satu-satunya obat untuk ketidaktahuan adalah pendidikan. Namun, jika ketidaktahuan itu sudah terlalu mengakar, si bodoh akan memilih untuk tidak mencari pendidikan. Beginilah cara otak kita bekerja.”</p></div>
+    </div>
+    
+    <div class="info-item animate-on-scroll" data-tanggal="2018-10-11">
+      <div class="info-header">
+        <h3>ryu hasan</h3>
+        <span class="info-tag tag-penting">Twets</span>
+      </div>
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> 11 Oktober 2018
+      </p>
+      <div class="info-body"><p>“Kalau menurutmu pendidikan itu mahal, cobalah kebodohan.”</p></div>
+    </div>
+    
+    <div class="info-item animate-on-scroll" data-tanggal="2020-10-30">
+      <div class="info-header">
+        <h3>naval ravikant</h3>
+        <span class="info-tag tag-penting">Twets</span>
+      </div>
+      <p class="info-meta">
+        <i class="fas fa-calendar-alt"></i> 30 Oktober 2020
+      </p>
+      <div class="info-body"><p>“Anda menghabiskan waktu untuk menghemat uang, padahal seharusnya Anda membelanjakan uang untuk menghemat waktu.”</p></div>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("search-input-info");
+    const sorter = document.getElementById("info-sorter");
+    const infoListContainer = document.querySelector(".info-list");
+
+    const allItems = Array.from(
+      infoListContainer.querySelectorAll(".info-item")
+    );
+
+    allItems.forEach((item) => {
+      item.originalInnerHTML = item.innerHTML;
+    });
+
+    function highlightAndFilter() {
+      const searchTerm = searchInput.value.toLowerCase();
+
+      allItems.forEach((item) => {
+        item.innerHTML = item.originalInnerHTML;
+
+        const itemText = item.textContent.toLowerCase();
+
+        if (itemText.includes(searchTerm)) {
+          item.style.display = "";
+          if (searchTerm) {
+            const regex = new RegExp(searchTerm, "gi");
+            item.innerHTML = item.originalInnerHTML.replace(
+              regex,
+              `<span class="highlight">$&</span>`
+            );
+          }
+        } else {
+          item.style.display = "none";
+        }
+      });
+      sortVisibleItems();
+    }
+
+    function sortVisibleItems() {
+      const sortOrder = sorter.value;
+      const visibleItems = allItems.filter(
+        (item) => item.style.display !== "none"
+      );
+
+      visibleItems.sort((a, b) => {
+        const dateA = new Date(a.dataset.tanggal);
+        const dateB = new Date(b.dataset.tanggal);
+        return sortOrder === "terbaru" ? dateB - dateA : dateA - dateB;
+      });
+
+      infoListContainer.innerHTML = "";
+      visibleItems.forEach((item) => infoListContainer.appendChild(item));
+    }
+
+    sorter.addEventListener("change", sortVisibleItems);
+    searchInput.addEventListener("input", debounce(highlightAndFilter, 300));
+
+    highlightAndFilter();
+  });
+</script>
+</main>
+
+    <footer id="footer-placeholder"><div class="footer-social-media">
+  <a
+    href="https://www.instagram.com/amaz_03/"
+    target="_blank"
+    aria-label="Instagram"
+    ><i class="fab fa-instagram"></i
+  ></a>
+  <a href="https://github.com/usernameanda" target="_blank" aria-label="GitHub"
+    ><i class="fab fa-github"></i
+  ></a>
+  <a href="mailto:emailanda@example.com" aria-label="Email"
+    ><i class="fas fa-envelope"></i
+  ></a>
+</div>
+<p>&copy; 2025 Created By Amazia Kristanto.</p>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+    <script src="/js/script.js" defer></script>
+  </body>
+</html>
