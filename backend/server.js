@@ -1,5 +1,4 @@
-// Salin dan tempel seluruh kode ini untuk menggantikan isi file backend/server.js
-
+// Ganti seluruh isi file backend/server.js dengan ini
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
@@ -9,86 +8,59 @@ const app = express();
 const port = 3000;
 app.use(cors());
 
-const DB_PATH = path.join(__dirname, "blog.db");
+// PERUBAHAN: Menggunakan nama database yang benar
+const DB_PATH = path.join(__dirname, "personal-blog.db");
 const db = new sqlite3.Database(DB_PATH, (err) => {
   if (err) console.error(err.message);
   else console.log("Server terhubung ke database SQLite.");
 });
 
-// Endpoint untuk Tweets (seperti sebelumnya)
-app.get("/api/tweets", (req, res) => {
-  const { search, sort } = req.query;
-  let sql = `SELECT * FROM tweets`;
-  const params = [];
-  if (search) {
-    sql += ` WHERE judul LIKE ? OR konten_html LIKE ? OR tag_teks LIKE ?`;
-    params.push(`%${search}%`, `%${search}%`, `%${search}%`);
-  }
-  sql += ` ORDER BY tanggal ${sort === "terlama" ? "ASC" : "DESC"}`;
-  db.all(sql, params, (err, rows) => {
+// Endpoint untuk Tweets/Informasi
+app.get("/api/informasi", (req, res) => {
+  // Pastikan endpoint ini dipanggil jika perlu
+  const sql = `SELECT * FROM informasi ORDER BY tanggal DESC`;
+  db.all(sql, [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
-    res.json({ message: "success", data: rows });
+    res.json({ informasi: rows });
   });
 });
 
-// Endpoint BARU untuk Articles
+// Endpoint untuk Articles
 app.get("/api/articles", (req, res) => {
   const sql = `SELECT kategori, judul, url FROM articles ORDER BY kategori`;
   db.all(sql, [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
-
-    // Mengelompokkan artikel berdasarkan kategori, mirip struktur JSON asli
     const grouped = rows.reduce((acc, row) => {
-      if (!acc[row.kategori]) {
-        acc[row.kategori] = [];
-      }
+      if (!acc[row.kategori]) acc[row.kategori] = [];
       acc[row.kategori].push({ judul: row.judul, url: row.url });
       return acc;
     }, {});
-
     const result = Object.keys(grouped).map((key) => ({
       nama: key,
       artikel: grouped[key],
     }));
-
     res.json({ kategori: result });
   });
 });
 
-// Endpoint BARU untuk Photos/Albums
+// Endpoint untuk Photos/Albums
 app.get("/api/albums", (req, res) => {
-  const sql = `
-      SELECT 
-          a.id as album_id, a.title as album_title, a.cover, a.description,
-          p.url as photo_url, p.title as photo_title
-      FROM albums a
-      LEFT JOIN photos p ON a.id = p.album_id
-  `;
-  db.all(sql, [], (err, rows) => {
+  const sqlAlbums = `SELECT * FROM albums`;
+  db.all(sqlAlbums, [], (err, albums) => {
     if (err) return res.status(500).json({ error: err.message });
 
-    // Mengelompokkan foto ke dalam albumnya masing-masing
-    const albumsMap = new Map();
-    rows.forEach((row) => {
-      if (!albumsMap.has(row.album_id)) {
-        albumsMap.set(row.album_id, {
-          id: row.album_id,
-          title: row.album_title,
-          cover: row.cover,
-          description: row.description,
-          photos: [],
-        });
-      }
-      if (row.photo_url) {
-        albumsMap.get(row.album_id).photos.push({
-          url: row.photo_url,
-          title: row.photo_title,
-        });
-      }
-    });
+    const sqlPhotos = `SELECT * FROM photos`;
+    db.all(sqlPhotos, [], (err, photos) => {
+      if (err) return res.status(500).json({ error: err.message });
 
-    const result = Array.from(albumsMap.values());
-    res.json({ albums: result });
+      // Menggabungkan foto ke dalam album yang sesuai
+      const result = albums.map((album) => ({
+        ...album,
+        photos: photos.filter((photo) => photo.album_id === album.id),
+      }));
+
+      res.json({ albums: result });
+    });
   });
 });
 
