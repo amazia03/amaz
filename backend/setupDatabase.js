@@ -1,142 +1,151 @@
 const sqlite3 = require("sqlite3").verbose();
 const fs = require("fs");
+const path = require("path");
 
-// Path ke file database
-const dbPath = "./personal-blog.db";
+// --- Konfigurasi Tabel ---
+// Daftar semua tabel yang ingin kita buat dan isi.
+// Ini membuat kode lebih rapi jika Anda ingin menambah tabel lain nanti.
+const tablesConfig = [
+  {
+    name: "articles",
+    schema: "(id INT, title TEXT, content TEXT, imageUrl TEXT)",
+    jsonPath: "../articles.json",
+  },
+  {
+    name: "informasi",
+    schema: "(id INT, title TEXT, date TEXT, content TEXT)",
+    jsonPath: "../informasi.json",
+  },
+  {
+    name: "photos",
+    schema: "(id INT, imageUrl TEXT, caption TEXT)",
+    jsonPath: "../photos.json",
+  },
+];
 
-// Buat atau buka database
+// --- Koneksi Database ---
+const dbPath = path.join(__dirname, "personal-blog.db");
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
-    console.error("Error opening database:", err.message);
-  } else {
-    console.log("Connected to the SQLite database.");
-    createTables();
+    return console.error("❌ Gagal menyambung ke database:", err.message);
   }
+  console.log("✅ Terhubung dengan database.");
+  // Mulai proses utama HANYA SETELAH koneksi berhasil
+  runSetup();
 });
 
-// Fungsi untuk membuat tabel
-function createTables() {
-  // Tabel untuk artikel
-  db.run(
-    `CREATE TABLE IF NOT EXISTS articles (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        content TEXT NOT NULL,
-        author TEXT,
-        category TEXT,
-        tags TEXT,
-        date PUBLISHED
-    )`,
-    (err) => {
-      if (err) {
-        console.error("Error creating articles table:", err.message);
-      } else {
-        console.log("Articles table created or already exists.");
-        insertInitialArticles();
-      }
-    }
-  );
+// --- Fungsi Utama untuk Menjalankan Semua Proses ---
+function runSetup() {
+  db.serialize(() => {
+    // Langkah 1: Hapus dan buat ulang semua tabel terlebih dahulu.
+    tablesConfig.forEach((table) => {
+      db.run(`DROP TABLE IF EXISTS ${table.name}`);
+      db.run(`CREATE TABLE ${table.name} ${table.schema}`, (err) => {
+        if (err) {
+          console.error(`❌ Gagal membuat tabel ${table.name}:`, err.message);
+        } else {
+          console.log(`✔️  Tabel ${table.name} berhasil dibuat.`);
+        }
+      });
+    });
 
-  // Tabel untuk foto
-  db.run(
-    `CREATE TABLE IF NOT EXISTS photos (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        url TEXT NOT NULL,
-        caption TEXT,
-        category TEXT
-    )`,
-    (err) => {
-      if (err) {
-        console.error("Error creating photos table:", err.message);
-      } else {
-        console.log("Photos table created or already exists.");
-        insertInitialPhotos();
-      }
-    }
-  );
+    // Langkah 2: Masukkan data untuk semua tabel secara berurutan.
+    insertAllData(() => {
+      // Langkah 3 (Terakhir): Setelah semua data masuk, baru tutup koneksi.
+      console.log("\n✨ Semua data berhasil dimasukkan!");
+      db.close((err) => {
+        if (err) {
+          return console.error("❌ Gagal menutup database:", err.message);
+        }
+        console.log("🔌 Koneksi database berhasil ditutup.");
+      });
+    });
+  });
 }
 
-// Fungsi untuk memasukkan data awal artikel dari file JSON
-function insertInitialArticles() {
-  fs.readFile("../articles.json", "utf8", (err, data) => {
+/**
+ * Fungsi ini akan memanggil fungsi insert untuk setiap tabel secara bergiliran.
+ * @param {function} finalCallback - Fungsi yang akan dipanggil setelah semua selesai.
+ */
+function insertAllData(finalCallback) {
+  let index = 0;
+  function next() {
+    if (index < tablesConfig.length) {
+      // Proses satu tabel
+      const table = tablesConfig[index];
+      console.log(`\n--- Memproses tabel ${table.name} ---`);
+      insertDataForTable(table, () => {
+        // Setelah selesai, lanjut ke tabel berikutnya
+        index++;
+        next();
+      });
+    } else {
+      // Jika semua tabel sudah diproses, panggil callback terakhir.
+      finalCallback();
+    }
+  }
+  next(); // Mulai dari tabel pertama
+}
+
+/**
+ * Fungsi untuk membaca satu file JSON dan memasukkan datanya ke tabel yang sesuai.
+ * @param {object} tableConfig - Objek konfigurasi untuk satu tabel.
+ * @param {function} callback - Fungsi yang harus dipanggil setelah selesai.
+ */
+function insertDataForTable(tableConfig, callback) {
+  const jsonFullPath = path.join(__dirname, tableConfig.jsonPath);
+
+  fs.readFile(jsonFullPath, "utf8", (err, data) => {
     if (err) {
-      console.error("Error reading articles.json:", err);
+      console.error(
+        `❌ Error membaca file ${path.basename(jsonFullPath)}:`,
+        err
+      );
+      callback(); // Tetap panggil callback agar proses tidak berhenti
       return;
     }
-    const articles = JSON.parse(data);
 
-    // Hapus data lama sebelum memasukkan yang baru
-    db.run("DELETE FROM articles", (deleteErr) => {
-      if (deleteErr) {
-        console.error("Error clearing articles table:", deleteErr.message);
-        return;
-      }
-      console.log("Old articles deleted.");
-
-      const stmt = db.prepare(
-        "INSERT INTO articles (title, content, author, category, tags, date) VALUES (?, ?, ?, ?, ?, ?)"
-      );
-      articles.forEach((article) => {
-        // Pastikan tags adalah array sebelum join
-        const tags = Array.isArray(article.tags) ? article.tags.join(",") : "";
-        stmt.run(
-          article.title,
-          article.content,
-          article.author,
-          article.category,
-          tags,
-          article.date
+    try {
+      const items = JSON.parse(data);
+      if (items.length === 0) {
+        console.log(
+          `🟡 File ${path.basename(jsonFullPath)} kosong, tidak ada data.`
         );
-      });
-      stmt.finalize((finalizeErr) => {
-        if (finalizeErr) {
-          console.error(
-            "Error finalizing statement for articles:",
-            finalizeErr.message
-          );
-        } else {
-          console.log("Initial articles inserted.");
-        }
-      });
-    });
-  });
-}
-
-// Fungsi untuk memasukkan data awal foto dari file JSON
-function insertInitialPhotos() {
-  fs.readFile("../photos.json", "utf8", (err, data) => {
-    if (err) {
-      console.error("Error reading photos.json:", err);
-      return;
-    }
-    const photos = JSON.parse(data);
-
-    // Hapus data lama sebelum memasukkan yang baru
-    db.run("DELETE FROM photos", (deleteErr) => {
-      if (deleteErr) {
-        console.error("Error clearing photos table:", deleteErr.message);
+        callback(); // Lanjut ke tabel berikutnya
         return;
       }
-      console.log("Old photos deleted.");
 
-      const stmt = db.prepare(
-        "INSERT INTO photos (url, caption, category) VALUES (?, ?, ?)"
-      );
-      photos.forEach((photo) => {
-        stmt.run(photo.url, photo.caption, photo.category);
+      const cols = Object.keys(items[0]).join(", ");
+      const placeholders = Object.keys(items[0])
+        .map(() => "?")
+        .join(", ");
+      const sql = `INSERT INTO ${tableConfig.name} (${cols}) VALUES (${placeholders})`;
+
+      const stmt = db.prepare(sql);
+      items.forEach((item) => {
+        stmt.run(Object.values(item));
       });
-      stmt.finalize((finalizeErr) => {
-        if (finalizeErr) {
+
+      // Finalize statement, dan panggil callback setelah selesai
+      stmt.finalize((err) => {
+        if (err) {
           console.error(
-            "Error finalizing statement for photos:",
-            finalizeErr.message
+            `❌ Gagal memasukkan data untuk ${tableConfig.name}:`,
+            err.message
           );
         } else {
-          console.log("Initial photos inserted.");
+          console.log(
+            `✔️  Data dari ${path.basename(jsonFullPath)} dimasukkan.`
+          );
         }
+        callback(); // Panggil callback untuk menandakan proses ini selesai
       });
-    });
+    } catch (parseError) {
+      console.error(
+        `❌ Error parsing JSON dari ${path.basename(jsonFullPath)}:`,
+        parseError
+      );
+      callback(); // Lanjut meskipun ada error
+    }
   });
 }
-
-module.exports = db;
