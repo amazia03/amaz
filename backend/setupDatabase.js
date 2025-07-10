@@ -3,29 +3,30 @@ const fs = require("fs");
 const path = require("path");
 
 // --- Konfigurasi Tabel ---
+// Daftar semua tabel yang ingin kita buat dan isi.
 const tablesConfig = [
   {
     name: "articles",
-    schema: "(id INT, title TEXT, content TEXT, imageUrl TEXT)",
+    // PERUBAHAN: Skema diubah total untuk menyimpan data artikel yang relevan
+    schema:
+      "(id INTEGER PRIMARY KEY AUTOINCREMENT, judul TEXT, url TEXT, kategori TEXT)",
     jsonPath: "../articles.json",
-    // PERUBAHAN: Menambahkan kunci data untuk fleksibilitas
-    dataKey: "articles",
+    dataKey: "kategori", // Kunci utama untuk data artikel
   },
   {
     name: "informasi",
-    // PERUBAHAN: Menyesuaikan skema dengan file informasi.json
-    // id diubah ke TEXT, dan semua kolom dari JSON ditambahkan.
-    // Kolom 'tag' akan disimpan sebagai teks JSON.
     schema:
       "(id TEXT PRIMARY KEY, judul TEXT, tag TEXT, tanggal TEXT, meta_info TEXT, konten_html TEXT)",
     jsonPath: "../informasi.json",
-    dataKey: "informasi", // Kunci di dalam file JSON tempat array data berada
+    dataKey: "informasi",
   },
   {
     name: "photos",
-    schema: "(id INT, imageUrl TEXT, caption TEXT)",
+    // PERUBAHAN: Skema diubah untuk menyimpan setiap foto beserta info albumnya
+    schema:
+      "(id INTEGER PRIMARY KEY AUTOINCREMENT, url TEXT, title TEXT, album_id TEXT, album_title TEXT)",
     jsonPath: "../photos.json",
-    dataKey: "photos",
+    dataKey: "albums", // Kunci utama untuk data foto
   },
 ];
 
@@ -65,10 +66,6 @@ function runSetup() {
   });
 }
 
-/**
- * Fungsi ini akan memanggil fungsi insert untuk setiap tabel secara bergiliran.
- * @param {function} finalCallback - Fungsi yang akan dipanggil setelah semua selesai.
- */
 function insertAllData(finalCallback) {
   let index = 0;
   function next() {
@@ -88,8 +85,7 @@ function insertAllData(finalCallback) {
 
 /**
  * Fungsi untuk membaca satu file JSON dan memasukkan datanya ke tabel yang sesuai.
- * @param {object} tableConfig - Objek konfigurasi untuk satu tabel.
- * @param {function} callback - Fungsi yang harus dipanggil setelah selesai.
+ * PERUBAHAN BESAR DI FUNGSI INI
  */
 function insertDataForTable(tableConfig, callback) {
   const jsonFullPath = path.join(__dirname, tableConfig.jsonPath);
@@ -100,13 +96,11 @@ function insertDataForTable(tableConfig, callback) {
         `❌ Error membaca file ${path.basename(jsonFullPath)}:`,
         err
       );
-      callback();
-      return;
+      return callback();
     }
 
     try {
       const parsedData = JSON.parse(data);
-      // PERUBAHAN: Mengambil array dari dalam objek JSON sesuai dataKey
       const items = parsedData[tableConfig.dataKey];
 
       if (!items || items.length === 0) {
@@ -115,42 +109,51 @@ function insertDataForTable(tableConfig, callback) {
             jsonFullPath
           )} tidak memiliki data di kunci '${tableConfig.dataKey}'.`
         );
-        callback();
-        return;
+        return callback();
       }
 
-      // PERUBAHAN: Menangani data kompleks sebelum dimasukkan
-      const processedItems = items.map((item) => {
-        const newItem = { ...item };
-        // Jika ada kolom 'tag' dan itu adalah objek, ubah jadi string
-        if (newItem.tag && typeof newItem.tag === "object") {
-          newItem.tag = JSON.stringify(newItem.tag);
+      // PERUBAHAN: Logika khusus untuk setiap jenis tabel
+      db.serialize(() => {
+        if (tableConfig.name === "articles") {
+          const sql = `INSERT INTO articles (judul, url, kategori) VALUES (?, ?, ?)`;
+          const stmt = db.prepare(sql);
+          items.forEach((kategori) => {
+            const namaKategori = kategori.nama;
+            kategori.artikel.forEach((artikel) => {
+              stmt.run(artikel.judul, artikel.url, namaKategori);
+            });
+          });
+          stmt.finalize();
+        } else if (tableConfig.name === "photos") {
+          const sql = `INSERT INTO photos (url, title, album_id, album_title) VALUES (?, ?, ?, ?)`;
+          const stmt = db.prepare(sql);
+          items.forEach((album) => {
+            album.photos.forEach((photo) => {
+              stmt.run(photo.url, photo.title, album.id, album.title);
+            });
+          });
+          stmt.finalize();
+        } else if (tableConfig.name === "informasi") {
+          const processedItems = items.map((item) => {
+            const newItem = { ...item };
+            if (newItem.tag && typeof newItem.tag === "object") {
+              newItem.tag = JSON.stringify(newItem.tag);
+            }
+            return newItem;
+          });
+          const cols = Object.keys(processedItems[0]).join(", ");
+          const placeholders = Object.keys(processedItems[0])
+            .map(() => "?")
+            .join(", ");
+          const sql = `INSERT INTO informasi (${cols}) VALUES (${placeholders})`;
+          const stmt = db.prepare(sql);
+          processedItems.forEach((item) => stmt.run(Object.values(item)));
+          stmt.finalize();
         }
-        return newItem;
-      });
 
-      const cols = Object.keys(processedItems[0]).join(", ");
-      const placeholders = Object.keys(processedItems[0])
-        .map(() => "?")
-        .join(", ");
-      const sql = `INSERT INTO ${tableConfig.name} (${cols}) VALUES (${placeholders})`;
-
-      const stmt = db.prepare(sql);
-      processedItems.forEach((item) => {
-        stmt.run(Object.values(item));
-      });
-
-      stmt.finalize((err) => {
-        if (err) {
-          console.error(
-            `❌ Gagal memasukkan data untuk ${tableConfig.name}:`,
-            err.message
-          );
-        } else {
-          console.log(
-            `✔️  Data dari ${path.basename(jsonFullPath)} dimasukkan.`
-          );
-        }
+        console.log(
+          `✔️  Data dari ${path.basename(jsonFullPath)} berhasil diproses.`
+        );
         callback();
       });
     } catch (parseError) {
