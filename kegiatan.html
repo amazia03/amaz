@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reading - Kategori Tulisan</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,7 +16,6 @@
     />
     <link rel="stylesheet" href="css/style.css" />
     <style>
-      /* CSS untuk grup artikel yang bisa dilipat (accordion) */
       .artikel-grup {
         text-align: left;
         margin-bottom: 15px;
@@ -76,7 +74,6 @@
         font-size: 1.2em;
         font-style: normal;
       }
-      /* Style untuk search bar */
       .search-container {
         margin-bottom: 30px;
         text-align: left;
@@ -95,9 +92,7 @@
   </head>
   <body>
     <div id="particles-js"></div>
-
     <header id="header-placeholder"></header>
-
     <main>
       <div class="container">
         <h2 class="animate-on-scroll">Reading</h2>
@@ -105,7 +100,6 @@
           Kumpulan tulisan yang telah dikelompokkan berdasarkan kategori. Klik
           kategori untuk melihat daftar judul.
         </p>
-
         <div class="search-container animate-on-scroll">
           <input
             type="text"
@@ -113,21 +107,18 @@
             placeholder="Cari berdasarkan judul atau kategori..."
           />
         </div>
-
         <div id="kategori-container" class="animate-on-scroll"></div>
       </div>
     </main>
-
     <footer id="footer-placeholder"></footer>
-
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <script src="js/script.js" defer></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         let allCategories = [];
-
-        // GANTI SUMBER DATA: dari 'articles.json' menjadi alamat API
-        fetch("http://localhost:3000/api/articles")
+        // === PERUBAHAN DI SINI ===
+        // Mengganti alamat API dengan path ke file JSON lokal
+        fetch("articles.json") // Sebelumnya: "http://localhost:3000/api/articles"
           .then((response) => response.json())
           .then((data) => {
             allCategories = data.kategori;
@@ -135,13 +126,12 @@
             setupAccordion();
           })
           .catch((error) => {
-            console.error("Error memuat data artikel dari API:", error);
+            console.error("Error memuat data artikel:", error);
             document.getElementById("kategori-container").innerHTML =
-              "<p style='color:red;'>Gagal terhubung ke server. Pastikan server backend Anda berjalan.</p>";
+              "<p style='color:red;'>Gagal memuat data artikel. Pastikan file articles.json ada di direktori yang sama.</p>";
           });
 
         function renderCategories(categories, searchTerm) {
-          // (Fungsi ini tidak perlu diubah, sama seperti sebelumnya)
           const container = document.getElementById("kategori-container");
           container.innerHTML = "";
           if (categories.length === 0) {
@@ -169,19 +159,18 @@
                 )
               : kategori.nama;
             grup.innerHTML = `
-          <h3 class="kategori-judul">
-            <span>${highlightedNamaKategori}</span>
-            <i class="fas fa-plus icon"></i>
-          </h3>
-          <div class="artikel-judul-list"><ul>${artikelHTML}</ul></div>
-        `;
+              <h3 class="kategori-judul">
+                <span>${highlightedNamaKategori}</span>
+                <i class="fas fa-plus icon"></i>
+              </h3>
+              <div class="artikel-judul-list"><ul>${artikelHTML}</ul></div>
+            `;
             container.appendChild(grup);
           });
           setupAccordion();
         }
 
         function filterContent(searchTerm) {
-          // (Fungsi ini tidak perlu diubah, sama seperti sebelumnya)
           const lowerCaseSearchTerm = searchTerm.toLowerCase();
           const filteredCategories = allCategories
             .map((kategori) => {
@@ -212,7 +201,6 @@
         );
 
         function setupAccordion() {
-          // (Fungsi ini tidak perlu diubah, sama seperti sebelumnya)
           const kategoriJudul = document.querySelectorAll(".kategori-judul");
           kategoriJudul.forEach((judul) => {
             judul.addEventListener("click", function () {

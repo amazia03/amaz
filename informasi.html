@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tweets & Note Series - Website Pribadi</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,7 +16,6 @@
     />
     <link rel="stylesheet" href="css/style.css" />
     <style>
-      /* Style untuk search bar */
       .search-container {
         margin-bottom: 20px;
         text-align: left;
@@ -36,9 +34,7 @@
   </head>
   <body>
     <div id="particles-js"></div>
-
     <header id="header-placeholder"></header>
-
     <main>
       <div class="container">
         <h2 class="animate-on-scroll">Tweets & Note Series</h2>
@@ -46,7 +42,6 @@
           Kumpulan pemikiran singkat, catatan,Tweets yang sekirannya menarik for
           me.
         </p>
-
         <div
           class="controls-container animate-on-scroll"
           style="
@@ -71,95 +66,92 @@
             </select>
           </div>
         </div>
-
-        <div class="info-list">
-  </div>
-           
-
+        <div class="info-list"></div>
+      </div>
+    </main>
     <footer id="footer-placeholder"></footer>
-
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <script src="js/script.js" defer></script>
     <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const infoListContainer = document.querySelector(".info-list");
-    const searchInput = document.getElementById("search-input");
-    const sorter = document.getElementById("info-sorter");
+      document.addEventListener("DOMContentLoaded", function () {
+        const infoListContainer = document.querySelector(".info-list");
+        const searchInput = document.getElementById("search-input");
+        const sorter = document.getElementById("info-sorter");
 
-    // Fungsi untuk merender item (tidak berubah)
-    function renderItems(items) {
-      infoListContainer.innerHTML = "";
-      items.forEach((item) => {
-        const infoItemDiv = document.createElement("div");
-        infoItemDiv.className = "info-item animate-on-scroll";
-        infoItemDiv.setAttribute("data-tanggal", item.tanggal);
-        // PERUBAHAN: Parsing tag JSON jika ada
-        const tag = typeof item.tag === 'string' ? JSON.parse(item.tag) : item.tag;
-        infoItemDiv.innerHTML = `
-          <div class="info-header">
-            <h3>${item.judul}</h3>
-            <span class="info-tag ${tag.kelas}">${tag.teks}</span>
-          </div>
-          <p class="info-meta">
-            <i class="fas fa-calendar-alt"></i> ${item.meta_info}
-          </p>
-          <div class="info-body">
-            ${item.konten_html}
-          </div>
-        `;
-        infoListContainer.appendChild(infoItemDiv);
-      });
-      if (typeof window.initializeScrollAnimation === "function") {
-        window.initializeScrollAnimation();
-      }
-    }
+        function renderItems(items) {
+          infoListContainer.innerHTML = "";
+          items.forEach((item) => {
+            const infoItemDiv = document.createElement("div");
+            infoItemDiv.className = "info-item animate-on-scroll";
+            infoItemDiv.setAttribute("data-tanggal", item.tanggal);
+            const tag =
+              typeof item.tag === "string" ? JSON.parse(item.tag) : item.tag;
+            infoItemDiv.innerHTML = `
+              <div class="info-header">
+                <h3>${item.judul}</h3>
+                <span class="info-tag ${tag.kelas}">${tag.teks}</span>
+              </div>
+              <p class="info-meta">
+                <i class="fas fa-calendar-alt"></i> ${item.meta_info}
+              </p>
+              <div class="info-body">
+                ${item.konten_html}
+              </div>
+            `;
+            infoListContainer.appendChild(infoItemDiv);
+          });
+          if (typeof window.initializeScrollAnimation === "function") {
+            window.initializeScrollAnimation();
+          }
+        }
 
-    // Fungsi untuk memuat data dan mengatur event listener
-    function fetchDataAndSetup() {
-        // PERUBAHAN UTAMA: Mengambil data dari server, bukan file .json
-        fetch("http://localhost:3000/api/informasi")
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
+        function fetchDataAndSetup() {
+          // === PERUBAHAN DI SINI ===
+          // Mengganti alamat API dengan path ke file JSON lokal
+          fetch("informasi.json") // Sebelumnya: "http://localhost:3000/api/informasi"
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
             })
-            .then(data => {
-                const allInfoItems = data.informasi;
-                renderItems(allInfoItems); // Render pertama kali
-                
-                // Atur event listener setelah data berhasil dimuat
-                const handleFilterAndSort = debounce(() => {
-                    const searchTerm = searchInput.value.toLowerCase();
-                    const sortOrder = sorter.value;
-                    
-                    let filteredItems = allInfoItems.filter(item => {
-                        const tag = typeof item.tag === 'string' ? JSON.parse(item.tag) : item.tag;
-                        return item.judul.toLowerCase().includes(searchTerm) ||
-                               item.konten_html.toLowerCase().includes(searchTerm) ||
-                               tag.teks.toLowerCase().includes(searchTerm);
-                    });
-                    
-                    filteredItems.sort((a, b) => {
-                        const dateA = new Date(a.tanggal);
-                        const dateB = new Date(b.tanggal);
-                        return sortOrder === 'terbaru' ? dateB - dateA : dateA - dateB;
-                    });
-                    
-                    renderItems(filteredItems);
-                }, 300);
-
-                searchInput.addEventListener("input", handleFilterAndSort);
-                sorter.addEventListener("change", handleFilterAndSort);
+            .then((data) => {
+              const allInfoItems = data.informasi;
+              renderItems(allInfoItems);
+              const handleFilterAndSort = debounce(() => {
+                const searchTerm = searchInput.value.toLowerCase();
+                const sortOrder = sorter.value;
+                let filteredItems = allInfoItems.filter((item) => {
+                  const tag =
+                    typeof item.tag === "string"
+                      ? JSON.parse(item.tag)
+                      : item.tag;
+                  return (
+                    item.judul.toLowerCase().includes(searchTerm) ||
+                    item.konten_html.toLowerCase().includes(searchTerm) ||
+                    tag.teks.toLowerCase().includes(searchTerm)
+                  );
+                });
+                filteredItems.sort((a, b) => {
+                  const dateA = new Date(a.tanggal);
+                  const dateB = new Date(b.tanggal);
+                  return sortOrder === "terbaru"
+                    ? dateB - dateA
+                    : dateA - dateB;
+                });
+                renderItems(filteredItems);
+              }, 300);
+              searchInput.addEventListener("input", handleFilterAndSort);
+              sorter.addEventListener("change", handleFilterAndSort);
             })
-            .catch(error => {
-                console.error("Gagal memuat data dari API:", error);
-                infoListContainer.innerHTML = "<p style='color:red;'>Gagal terhubung ke server. Pastikan server backend Anda berjalan.</p>";
+            .catch((error) => {
+              console.error("Gagal memuat data dari API:", error);
+              infoListContainer.innerHTML =
+                "<p style='color:red;'>Gagal memuat data. Pastikan file informasi.json ada di direktori yang sama.</p>";
             });
-    }
-
-    fetchDataAndSetup();
-  });
-</script>
+        }
+        fetchDataAndSetup();
+      });
+    </script>
   </body>
 </html>
