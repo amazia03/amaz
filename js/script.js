@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
   loadComponent("header-placeholder", "header.html", () => {
     initializeMenu();
     setActiveNavLink();
+    initializeSearchToggle(); // <-- INI BARIS YANG DITAMBAHKAN
   });
 
   // Memuat Footer
@@ -59,6 +60,41 @@ document.addEventListener("DOMContentLoaded", function () {
         // Mengganti ikon antara bars dan times (X)
         icon.classList.toggle("fa-bars");
         icon.classList.toggle("fa-times");
+      });
+    }
+  };
+  // =========================================
+  // SCRIPT UNTUK HEADER SEARCH TOGGLE
+  // =========================================
+  const initializeSearchToggle = () => {
+    const searchContainer = document.querySelector(".search-container");
+    const searchToggle = document.getElementById("search-toggle");
+    const searchInput = document.getElementById("search-input-header");
+    const searchForm = document.getElementById("search-form");
+
+    if (searchToggle && searchInput && searchContainer) {
+      searchToggle.addEventListener("click", function (e) {
+        e.preventDefault(); // Mencegah form submit jika tombol adalah tipe submit
+
+        const isExpanded = searchContainer.classList.contains("active");
+
+        if (isExpanded && searchInput.value.trim() !== "") {
+          // Jika sudah terbuka dan ada isinya, submit form
+          searchForm.submit();
+        } else {
+          // Jika belum terbuka, buka bilah pencarian
+          searchContainer.classList.toggle("active");
+          if (searchContainer.classList.contains("active")) {
+            searchInput.focus(); // Fokus ke input setelah terbuka
+          }
+        }
+      });
+
+      // Menutup bilah pencarian jika diklik di luar
+      document.addEventListener("click", function (event) {
+        if (!searchContainer.contains(event.target)) {
+          searchContainer.classList.remove("active");
+        }
       });
     }
   };

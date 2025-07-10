@@ -116,14 +116,11 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         let allCategories = [];
-        // === PERUBAHAN DI SINI ===
-        // Mengganti alamat API dengan path ke file JSON lokal
-        fetch("articles.json") // Sebelumnya: "http://localhost:3000/api/articles"
+        fetch("articles.json")
           .then((response) => response.json())
           .then((data) => {
             allCategories = data.kategori;
             renderCategories(allCategories, "");
-            setupAccordion();
           })
           .catch((error) => {
             console.error("Error memuat data artikel:", error);
@@ -138,29 +135,28 @@
             container.innerHTML = "<p>Tidak ada hasil yang ditemukan.</p>";
             return;
           }
+          // Regex untuk menemukan semua kecocokan (g) dan tidak sensitif huruf (i)
           const regex = searchTerm ? new RegExp(searchTerm, "gi") : null;
+
+          // Fungsi untuk menyorot teks
+          const highlight = (text) => {
+            if (!regex || !text) return text;
+            return text.replace(regex, `<span class="highlight">$&</span>`);
+          };
+
           categories.forEach((kategori) => {
             const grup = document.createElement("div");
             grup.className = "artikel-grup";
             let artikelHTML = "";
             kategori.artikel.forEach((artikel) => {
-              const highlightedJudul = regex
-                ? artikel.judul.replace(
-                    regex,
-                    `<span class="highlight">$&</span>`
-                  )
-                : artikel.judul;
-              artikelHTML += `<li><a href="${artikel.url}">${highlightedJudul}</a></li>`;
+              artikelHTML += `<li><a href="${artikel.url}">${highlight(
+                artikel.judul
+              )}</a></li>`;
             });
-            const highlightedNamaKategori = regex
-              ? kategori.nama.replace(
-                  regex,
-                  `<span class="highlight">$&</span>`
-                )
-              : kategori.nama;
+
             grup.innerHTML = `
               <h3 class="kategori-judul">
-                <span>${highlightedNamaKategori}</span>
+                <span>${highlight(kategori.nama)}</span>
                 <i class="fas fa-plus icon"></i>
               </h3>
               <div class="artikel-judul-list"><ul>${artikelHTML}</ul></div>
@@ -181,14 +177,17 @@
                 kategori.nama.toLowerCase().includes(lowerCaseSearchTerm) ||
                 filteredArticles.length > 0
               ) {
-                if (kategori.nama.toLowerCase().includes(lowerCaseSearchTerm)) {
-                  return { ...kategori, artikel: kategori.artikel };
-                }
-                return { ...kategori, artikel: filteredArticles };
+                // Jika nama kategori cocok, tampilkan semua artikelnya
+                const articlesToShow = kategori.nama
+                  .toLowerCase()
+                  .includes(lowerCaseSearchTerm)
+                  ? kategori.artikel
+                  : filteredArticles;
+                return { ...kategori, artikel: articlesToShow };
               }
               return null;
             })
-            .filter(Boolean);
+            .filter(Boolean); // Hapus kategori yang null
           renderCategories(filteredCategories, searchTerm);
         }
 

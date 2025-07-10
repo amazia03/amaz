@@ -77,80 +77,93 @@
         const infoListContainer = document.querySelector(".info-list");
         const searchInput = document.getElementById("search-input");
         const sorter = document.getElementById("info-sorter");
+        let allInfoItems = [];
 
-        function renderItems(items) {
+        function renderItems(items, searchTerm = "") {
           infoListContainer.innerHTML = "";
+
+          // Regex untuk menemukan semua kecocokan (g) dan tidak sensitif huruf (i)
+          const regex = searchTerm ? new RegExp(searchTerm, "gi") : null;
+          const highlight = (text) => {
+            if (!regex || !text) return text;
+            return text.replace(regex, `<span class="highlight">$&</span>`);
+          };
+
           items.forEach((item) => {
             const infoItemDiv = document.createElement("div");
             infoItemDiv.className = "info-item animate-on-scroll";
             infoItemDiv.setAttribute("data-tanggal", item.tanggal);
             const tag =
               typeof item.tag === "string" ? JSON.parse(item.tag) : item.tag;
+
             infoItemDiv.innerHTML = `
               <div class="info-header">
-                <h3>${item.judul}</h3>
-                <span class="info-tag ${tag.kelas}">${tag.teks}</span>
+                <h3>${highlight(item.judul)}</h3>
+                <span class="info-tag ${tag.kelas}">${highlight(
+              tag.teks
+            )}</span>
               </div>
               <p class="info-meta">
                 <i class="fas fa-calendar-alt"></i> ${item.meta_info}
               </p>
               <div class="info-body">
-                ${item.konten_html}
+                ${highlight(item.konten_html)}
               </div>
             `;
             infoListContainer.appendChild(infoItemDiv);
           });
+          // Inisialisasi ulang animasi scroll setelah me-render ulang item
           if (typeof window.initializeScrollAnimation === "function") {
             window.initializeScrollAnimation();
           }
         }
 
-        function fetchDataAndSetup() {
-          // === PERUBAHAN DI SINI ===
-          // Mengganti alamat API dengan path ke file JSON lokal
-          fetch("informasi.json") // Sebelumnya: "http://localhost:3000/api/informasi"
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Network response was not ok");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              const allInfoItems = data.informasi;
-              renderItems(allInfoItems);
-              const handleFilterAndSort = debounce(() => {
-                const searchTerm = searchInput.value.toLowerCase();
-                const sortOrder = sorter.value;
-                let filteredItems = allInfoItems.filter((item) => {
-                  const tag =
-                    typeof item.tag === "string"
-                      ? JSON.parse(item.tag)
-                      : item.tag;
-                  return (
-                    item.judul.toLowerCase().includes(searchTerm) ||
-                    item.konten_html.toLowerCase().includes(searchTerm) ||
-                    tag.teks.toLowerCase().includes(searchTerm)
-                  );
-                });
-                filteredItems.sort((a, b) => {
-                  const dateA = new Date(a.tanggal);
-                  const dateB = new Date(b.tanggal);
-                  return sortOrder === "terbaru"
-                    ? dateB - dateA
-                    : dateA - dateB;
-                });
-                renderItems(filteredItems);
-              }, 300);
-              searchInput.addEventListener("input", handleFilterAndSort);
-              sorter.addEventListener("change", handleFilterAndSort);
-            })
-            .catch((error) => {
-              console.error("Gagal memuat data dari API:", error);
-              infoListContainer.innerHTML =
-                "<p style='color:red;'>Gagal memuat data. Pastikan file informasi.json ada di direktori yang sama.</p>";
-            });
+        function handleFilterAndSort() {
+          const searchTerm = searchInput.value.toLowerCase();
+          const sortOrder = sorter.value;
+
+          let filteredItems = allInfoItems.filter((item) => {
+            const tag =
+              typeof item.tag === "string" ? JSON.parse(item.tag) : item.tag;
+            // Pencarian sekarang mencakup judul, konten, dan tag
+            return (
+              item.judul.toLowerCase().includes(searchTerm) ||
+              item.konten_html.toLowerCase().includes(searchTerm) ||
+              tag.teks.toLowerCase().includes(searchTerm)
+            );
+          });
+
+          filteredItems.sort((a, b) => {
+            const dateA = new Date(a.tanggal);
+            const dateB = new Date(b.tanggal);
+            return sortOrder === "terbaru" ? dateB - dateA : dateA - dateB;
+          });
+
+          renderItems(filteredItems, searchInput.value);
         }
-        fetchDataAndSetup();
+
+        fetch("informasi.json")
+          .then((response) => {
+            if (!response.ok) throw new Error("Network response was not ok");
+            return response.json();
+          })
+          .then((data) => {
+            allInfoItems = data.informasi;
+            // Urutkan data awal berdasarkan default (terbaru)
+            allInfoItems.sort(
+              (a, b) => new Date(b.tanggal) - new Date(a.tanggal)
+            );
+            renderItems(allInfoItems); // Tampilkan semua item saat pertama kali dimuat
+
+            const debouncedFilter = debounce(handleFilterAndSort, 300);
+            searchInput.addEventListener("input", debouncedFilter);
+            sorter.addEventListener("change", handleFilterAndSort);
+          })
+          .catch((error) => {
+            console.error("Gagal memuat data:", error);
+            infoListContainer.innerHTML =
+              "<p style='color:red;'>Gagal memuat data. Pastikan file informasi.json ada di direktori yang sama.</p>";
+          });
       });
     </script>
   </body>

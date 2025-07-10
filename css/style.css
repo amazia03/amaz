@@ -615,3 +615,41 @@ select.sorter:focus {
   color: black; /* Saya tambahkan ini agar teks lebih kontras */
   font-weight: bold;
 }
+/* === HEADER SEARCH TOGGLE === */
+.search-container {
+  position: relative;
+  margin-left: 20px;
+}
+.search-container .search-input {
+  width: 0;
+  padding: 8px 0;
+  border: none;
+  border-bottom: 2px solid var(--text-color);
+  background-color: transparent;
+  color: var(--text-color);
+  font-size: 1em;
+  opacity: 0;
+  transition: width 0.4s ease-in-out, opacity 0.3s ease-in-out,
+    padding 0.4s ease-in-out;
+  font-family: "Poppins", sans-serif;
+}
+.search-container .search-input:focus {
+  outline: none;
+}
+.search-container.active .search-input {
+  width: 200px; /* Lebar saat bilah pencarian aktif */
+  opacity: 1;
+  padding: 8px 10px;
+}
+.search-container .search-toggle {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 1.3em;
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.3s ease;
+}
+.search-container .search-toggle:hover {
+  color: var(--primary-color);
+}
