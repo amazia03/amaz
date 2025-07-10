@@ -1,6 +1,17 @@
 {
   "informasi": [
     {
+      "id": "nganu1",
+      "judul": "nganu ",
+      "tag": {
+        "teks": "Twets",
+        "kelas": "tag-penting"
+      },
+      "tanggal": "2025-06-16",
+      "meta_info": "16 Juni 2025",
+      "konten_html": "After all, everyone is a hero in their own story."
+    },
+    {
       "id": "carlsagan1",
       "judul": "carl sagan ",
       "tag": {
