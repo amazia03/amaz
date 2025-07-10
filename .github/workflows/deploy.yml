@@ -37,7 +37,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20" # Menggunakan Node.js versi 20
+          node-version: "20"
           cache: "npm"
           cache-dependency-path: backend/package-lock.json
 
@@ -46,9 +46,8 @@ jobs:
         run: |
           cd backend
           npm install
+          npm rebuild # PERUBAHAN DI SINI: Kompilasi ulang paket native
           node setupDatabase.js
-        # Perintah ini akan masuk ke folder backend, menginstall sqlite3,
-        # lalu menjalankan skrip untuk membuat file personal-blog.db
 
       # 4. Menyiapkan artefak untuk di-upload ke GitHub Pages
       - name: Setup Pages
@@ -58,7 +57,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Path default-nya adalah seluruh repositori, yang sudah sesuai
           path: "."
 
       # 6. Melakukan deployment ke GitHub Pages
