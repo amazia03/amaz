@@ -1,1 +1,1 @@
-# amazia-the-great-apes
+# amazia-the-greates-apes
