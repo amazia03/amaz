@@ -1,0 +1,7 @@
+# Folder hasil build (kita akan membuatnya di server, bukan di-upload)
+# Catatan: Baris ini bisa dihapus jika menggunakan metode upload artifact lama,
+# tapi untuk GitHub Actions modern, lebih baik tidak menguploadnya.
+_site
+
+# Folder dependensi Node.js
+node_modules
