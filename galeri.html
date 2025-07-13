@@ -27,11 +27,9 @@ title: Galeri Foto
       >
         <img
           class="album-cover"
-          src="<img"
-          src=<img src="{{ album.cover | replace('./', '/') | url }}" alt="{{ album.title }}">
+          src="{{ album.cover | replace('./', '/') | url }}"
           alt="{{ album.title }}"
         />
-        alt="{{ album.title }}" />
         <div class="album-info">
           <h4>{{ album.title }}</h4>
           <p>Lihat Album ({{ album.photos.length }} foto)</p>
