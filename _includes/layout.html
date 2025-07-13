@@ -15,8 +15,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
-    <!-- Update path CSS -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/css/style.css" />
+    <link rel="stylesheet" href="{{ '/css/style.css' | url }}" />
   </head>
   <body>
     <div id="particles-js"></div>
@@ -25,7 +24,6 @@
     <footer id="footer-placeholder">{% include "footer.html" %}</footer>
 
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
-    <!-- Update path JavaScript -->
-    <script src="{{ site.baseurl }}/js/script.js" defer></script>
+    <script src="{{ '/js/script.js' | url }}" defer></script>
   </body>
 </html>
