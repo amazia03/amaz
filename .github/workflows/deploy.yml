@@ -1,0 +1,44 @@
+name: Build and Deploy to GitHub Pages
+
+on:
+  # Jalankan workflow setiap kali ada push ke branch 'main'
+  push:
+    branches:
+      - main
+
+# Izinkan satu deployment konkuren, batalkan proses yang sedang berjalan jika ada push baru
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Gunakan versi Node.js yang sesuai
+          cache: 'npm'
+
+      - name: Install Dependencies 📦
+        run: npm install
+
+      - name: Build Website 🏗️
+        run: npm run build # Menjalankan perintah "eleventy"
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Unggah konten dari folder output Eleventy
+          path: './_site'
+
+      - name: Deploy to GitHub Pages 🚀
+        id: deployment
+        uses: actions/deploy-pages@v4
