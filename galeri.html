@@ -20,13 +20,14 @@ title: Galeri Foto
     > 0 %}
     <div class="album-item animate-on-scroll">
       <a
-        href="{{ album.photos[0].url | replace('./', '/') }}"
+        href="{{ album.photos[0].url | replace('./', '/') | url }}"
         data-lightbox="{{ album.id }}"
         data-title="{{ album.photos[0].title }}"
         class="album-cover"
       >
         <img
-          src="{{ album.cover | replace('./', '/') }}"
+          class="album-cover"
+          src="{{ album.photos[0].url | replace('./', '/') | url }}"
           alt="{{ album.title }}"
         />
         <div class="album-info">
@@ -42,7 +43,7 @@ title: Galeri Foto
     {% for album in photos.albums %} {% for i in range(1, album.photos.length)
     %} {% set photo = album.photos[i] %}
     <a
-      href="{{ photo.url | replace('./', '/') }}"
+      href="{{ photo.url | replace('./', '/') | url }}"
       data-lightbox="{{ album.id }}"
       data-title="{{ photo.title }}"
     ></a>
