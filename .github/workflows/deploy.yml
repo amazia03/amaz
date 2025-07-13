@@ -1,19 +1,17 @@
 name: Build and Deploy to GitHub Pages
 
 on:
-  # Jalankan workflow setiap kali ada push ke branch 'main'
   push:
     branches:
       - main
 
-# Izinkan satu deployment konkuren, batalkan proses yang sedang berjalan jika ada push baru
 concurrency:
   group: "pages"
   cancel-in-progress: true
 
 jobs:
   deploy:
-    permissions:  
+    permissions:
       contents: read
       pages: write
       id-token: write
@@ -22,15 +20,24 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '18' # Gunakan versi Node.js yang sesuai
+          node-version: '18'
           cache: 'npm'
 
       - name: Install Dependencies 📦
         run: npm install
 
+      # ==========================================================
+      # LANGKAH PERBAIKAN: Memberikan izin eksekusi pada Eleventy
+      # ==========================================================
+      - name: Fix Execute Permissions
+        run: chmod +x node_modules/.bin/eleventy
+
       - name: Build Website 🏗️
-        run: npm run build # Menjalankan perintah "eleventy"
+        run: npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -38,7 +45,6 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Unggah konten dari folder output Eleventy
           path: './_site'
 
       - name: Deploy to GitHub Pages 🚀
