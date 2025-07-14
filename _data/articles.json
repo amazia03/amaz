@@ -5,11 +5,11 @@
       "artikel": [
         {
           "judul": "about humans",
-          "url": "/artikel/keresahan/summary_books/about-humans.html"
+          "url": "/artikel/keresahan/summary_books/about-humans.md"
         },
         {
-          "judul": "Judul Artikel tentang Keresahan 2",
-          "url": "#"
+          "judul": "Menavigasi Ketidakpastian di Era Digital",
+          "url": "/artikel/keresahan/menavigasi-ketidakpastian/"
         }
       ]
     },
@@ -18,11 +18,15 @@
       "artikel": [
         {
           "judul": "Ringkasan Buku 'Atomic Habits'",
-          "url": "#"
+          "url": "/artikel/summary-books/atomic-habits/"
         },
         {
           "judul": "Ringkasan Buku 'Sapiens'",
-          "url": "#"
+          "url": "/artikel/summary-books/sapiens/"
+        },
+        {
+          "judul": "Ringkasan Buku 'The Almanack of Naval Ravikant'",
+          "url": "/artikel/summary-books/almanack-of-naval-ravikant/"
         }
       ]
     },
@@ -30,12 +34,12 @@
       "nama": "SCIENCE",
       "artikel": [
         {
-          "judul": "Judul Artikel Pertama Saya (Contoh)",
-          "url": "kegiatan-17agustus.html"
+          "judul": "Memahami Konsep Lubang Hitam",
+          "url": "/artikel/science/memahami-lubang-hitam/"
         },
         {
           "judul": "Penjelasan Sederhana tentang Entropi",
-          "url": "#"
+          "url": "/artikel/science/penjelasan-entropi/"
         }
       ]
     },
@@ -44,7 +48,11 @@
       "artikel": [
         {
           "judul": "Sejarah Singkat Perang Dunia II",
-          "url": "#"
+          "url": "/artikel/history/perang-dunia-ii/"
+        },
+        {
+          "judul": "Revolusi Industri dan Dampaknya",
+          "url": "/artikel/history/revolusi-industri/"
         }
       ]
     },
@@ -53,11 +61,11 @@
       "artikel": [
         {
           "judul": "Pengantar Filsafat Stoikisme",
-          "url": "#"
+          "url": "/artikel/philosophy/pengantar-stoikisme/"
         },
         {
-          "judul": "Refleksi di Tengah Hujan (Contoh)",
-          "url": "#"
+          "judul": "Eksistensialisme: Kebebasan dan Tanggung Jawab",
+          "url": "/artikel/philosophy/eksistensialisme-dan-kebebasan/"
         }
       ]
     }
