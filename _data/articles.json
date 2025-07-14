@@ -5,17 +5,17 @@
       "artikel": [
         {
           "judul": "about humans",
-          "url": "/artikel/keresahan/summary_books/about-humans.md"
-        },
-        {
-          "judul": "Menavigasi Ketidakpastian di Era Digital",
-          "url": "/artikel/keresahan/menavigasi-ketidakpastian/"
+          "url": "../artikel/summary-books/about-humans.html"
         }
       ]
     },
     {
       "nama": "SUMMARY BOOKS",
       "artikel": [
+        {
+          "judul": "Novel Insight About Humans #0",
+          "url": "/artikel/summary-books/about-humans/"
+        },
         {
           "judul": "Ringkasan Buku 'Atomic Habits'",
           "url": "/artikel/summary-books/atomic-habits/"
