@@ -1,6 +1,28 @@
 {
   "informasi": [
     {
+      "id": "nganu1",
+      "judul": "nganu ",
+      "tag": {
+        "teks": "nganu",
+        "kelas": "tag-penting"
+      },
+      "tanggal": "2025-02-03",
+      "meta_info": "03 febuary 2025",
+      "konten_html": "Lagipula, setiap orang adalah pahlawan dalam kisahnya masing-masing."
+    },
+    {
+      "id": "nganu2",
+      "judul": "nganu ",
+      "tag": {
+        "teks": "nganu",
+        "kelas": "tag-penting"
+      },
+      "tanggal": "2025-02-02",
+      "meta_info": "02 febuary 2025",
+      "konten_html": "In the end, life is about being realistic and going with the flow, not about being idealistic and dreaming of a limitless sky."
+    },
+    {
       "id": "carlsagan1",
       "judul": "carl sagan ",
       "tag": {
@@ -165,6 +187,39 @@
       "tanggal": "2020-10-30",
       "meta_info": "30 Oktober 2020",
       "konten_html": "<p>“Anda menghabiskan waktu untuk menghemat uang, padahal seharusnya Anda membelanjakan uang untuk menghemat waktu.”</p>"
+    },
+    {
+      "id": "Wendell-Berry-1",
+      "judul": "Wendell Berry",
+      "tag": {
+        "teks": "Twets",
+        "kelas": "tag-penting"
+      },
+      "tanggal": "2020-10-30",
+      "meta_info": "30 Oktober 2020",
+      "konten_html": "<p>Maka aku pun pergi ke hutan. Saat aku masuk ke bawah pepohonan, dengan percaya diri, hampir seketika, tanpa melakukan apa pun, semuanya berjalan sebagaimana mestinya. Aku memasuki tatanan yang tak ada di luar sana, di ruang-ruang manusia....Aku tak sepenting yang kukira. Aku bersukacita karenanya. —Wendell Berry</p>"
+    },
+    {
+      "id": "Michael-Levitt1",
+      "judul": "Michael Levitt",
+      "tag": {
+        "teks": "kutipan",
+        "kelas": "tag-pengumuman"
+      },
+      "tanggal": "2024-03-02",
+      "meta_info": "02 maret 2024",
+      "konten_html": "<p>Kecenderungan alami saya dalam hidup adalah selalu memperlakukan hidup sebagai Prasmanan.Ambillah apa yang kamu suka, dan jangan mengeluh terhadap apa yang tidak kamu suka. --Michael Levitt received the 2013 Nobel Prize in Chemistry</p>"
+    },
+    {
+      "id": "Isaac-Asimov1",
+      "judul": "Isaac Asimov",
+      "tag": {
+        "teks": "kutipan",
+        "kelas": "tag-pengumuman"
+      },
+      "tanggal": "1992-10-30",
+      "meta_info": "(1920 - 1992)",
+      "konten_html": "<p>Pendidikan bukanlah sesuatu yang dapat Anda selesaikan. </p>"
     }
   ]
 }
