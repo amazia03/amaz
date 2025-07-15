@@ -5,12 +5,12 @@ module.exports = function (eleventyConfig) {
   const isProduction = process.env.NODE_ENV === "production";
 
   // Menyalin folder statis ke hasil akhir
-  eleventyConfig.addPassthroughCopy("css");
-  eleventyConfig.addPassthroughCopy("js");
-  eleventyConfig.addPassthroughCopy("foto");
+  // file: .eleventy.js
 
-  eleventyConfig.addPassthroughCopy("artikel");
-
+  eleventyConfig.addPassthroughCopy({ css: "css" });
+  eleventyConfig.addPassthroughCopy({ js: "js" });
+  eleventyConfig.addPassthroughCopy({ foto: "foto" });
+  eleventyConfig.addPassthroughCopy({ artikel: "artikel" });
   // Mengatur Nunjucks sebagai mesin template
   return {
     markdownTemplateEngine: "njk",
