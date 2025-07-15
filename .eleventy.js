@@ -23,6 +23,6 @@ module.exports = function (eleventyConfig) {
       output: "_site",
     },
     // Atur pathPrefix hanya untuk mode produksi
-    pathPrefix: isProduction ? "/amazia-kristanto/" : "/",
+    pathPrefix: isProduction ? "/amaz/" : "/",
   };
 };
