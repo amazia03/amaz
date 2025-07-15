@@ -6,26 +6,32 @@
       "cover": "./foto/me_and_band.jpg",
       "description": "Kumpulan foto acak dari berbagai momen.",
       "photos": [
-        { "url": "./foto/sd.jpg", "title": "Masa SD" },
-        { "url": "./foto/smp.jpg", "title": "Masa SMP" },
-        { "url": "./foto/high_school.jpg", "title": "Masa SMA" },
-        { "url": "./foto/high_school2.JPG", "title": "Masa SMA 2" },
-        { "url": "./foto/me_and_family.jpg", "title": "Bersama Keluarga" },
-        { "url": "./foto/me_and_band.jpg", "title": "Nge-band" },
-        { "url": "./foto/me_cajon.jpg", "title": "Main Cajon" },
-        { "url": "./foto/me-music.jpg", "title": "music" },
-        { "url": "./foto/me_botak1.jpg", "title": "Botak Core" },
-        { "url": "./foto/me_retret.JPG", "title": "Retret" },
-        { "url": "./foto/me_magangaguscom.JPG", "title": "Magang" },
+        { "url": ".../foto/new0/children.jpg", "title": "kids" },
+        { "url": ".../foto/sd.jpg", "title": "Masa SD" },
+        { "url": ".../foto/smp.jpg", "title": "Masa SMP" },
+        { "url": ".../foto/high_school.jpg", "title": "Masa SMA" },
+        { "url": ".../foto/high_school1.jpg", "title": "Masa SMA 2" },
+        { "url": ".../foto/new0/kuliah.jpg", "title": "school" },
+        { "url": ".../foto/me_and_family.jpg", "title": " Keluarga" },
+        { "url": ".../foto/me_and_band.jpg", "title": "Nge-band" },
+        { "url": ".../foto/me_cajon.jpg", "title": " Cajon" },
+        { "url": ".../foto/me-music.jpg", "title": "music" },
+        { "url": ".../foto/new0/bass.jpg", "title": "music" },
+        { "url": ".../foto/me_botak1.jpg", "title": "music" },
+        { "url": ".../foto/me_botak.jpg", "title": "Botak Core" },
+        { "url": ".../foto/me_retret.JPG", "title": "Retret" },
+        { "url": ".../foto/me_magangaguscom.JPG", "title": "Magang" },
         {
-          "url": "./foto/friends_cjwi.jpg",
+          "url": ".../foto/friends_cjwi.jpg",
           "title": "Rekan Kerja di PT. CJWI"
         },
-        { "url": "./foto/natal.jpg", "title": "Acara Natal" },
-        { "url": "./foto/metriel.jpg", "title": "🛵" },
-        { "url": "./foto/me1.jpg", "title": "Nganu" },
-        { "url": "./foto/pepople_krengseng1.jpg", "title": "kumpul-kumpul" },
-        { "url": "./foto/people_krengseng.jpg", "title": "kumpul-kumpul" }
+        { "url": ".../foto/new0/cimory.jpg", "title": "work cimory" },
+        { "url": ".../foto/new0/cimory2.jpg", "title": "work cimory" },
+        { "url": ".../foto/natal.jpg", "title": "Acara Natal" },
+        { "url": ".../foto/metriel.jpg", "title": "🛵" },
+        { "url": ".../foto/me1.jpg", "title": "Nganu" },
+        { "url": ".../foto/people_krengseng.jpg", "title": "kumpul-kumpul" },
+        { "url": ".../foto/pepople_krengseng1.jpg", "title": "kumpul-kumpul" }
       ]
     },
     {
@@ -35,7 +41,7 @@
       "description": "Books Collection",
       "photos": [
         {
-          "url": "./foto/books/animal-farm.jpg",
+          "url": ".../foto/books/animal-farm.jpg",
           "title": "animal farm"
         },
         { "url": "", "title": "Wisata" },
