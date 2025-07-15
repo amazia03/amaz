@@ -4,8 +4,12 @@
       "nama": "KERESAHAN",
       "artikel": [
         {
-          "judul": "about humans",
-          "url": "../artikel/summary-books/about-humans.html"
+          "judul": "About Humans",
+          "url": "../artikel/keresahan/01/about-humans.html"
+        },
+        {
+          "judul": "Fenomena Brain Root",
+          "url": "../artikel/keresahan/01/Brain-root.html"
         }
       ]
     },
@@ -14,7 +18,7 @@
       "artikel": [
         {
           "judul": "Novel Insight About Humans #0",
-          "url": "/artikel/summary-books/about-humans/"
+          "url": "/artikel/summary-books/about"
         },
         {
           "judul": "Ringkasan Buku 'Atomic Habits'",
@@ -47,8 +51,8 @@
       "nama": "HISTORY",
       "artikel": [
         {
-          "judul": "Sejarah Singkat Perang Dunia II",
-          "url": "/artikel/history/perang-dunia-ii/"
+          "judul": "Alasan Kebencian Nazi Pada Yahudi",
+          "url": "../artikel/history/alasan-nazi-membenti-yahudi.html"
         },
         {
           "judul": "Revolusi Industri dan Dampaknya",
