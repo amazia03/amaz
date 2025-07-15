@@ -5,22 +5,17 @@ on:
     branches:
       - main
 
-# Izin untuk deployment ke GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Hanya izinkan satu deployment berjalan pada satu waktu
 concurrency:
   group: "pages"
   cancel-in-progress: true
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -35,15 +30,14 @@ jobs:
       - name: Install Dependencies 📦
         run: npm install
 
+      # ==========================================================
+      # LANGKAH PERBAIKAN: Memberikan izin eksekusi pada Eleventy
+      # ==========================================================
+      - name: Fix Execute Permissions
+        run: chmod +x node_modules/.bin/eleventy
+
       - name: Build Website 🏗️
-        # ==========================================================
-        # PERBAIKAN UTAMA:
-        # Menggunakan 'npx @11ty/eleventy' secara langsung.
-        # Ini lebih andal daripada 'npm run build' karena tidak
-        # bergantung pada isi file package.json dan tidak
-        # memerlukan perubahan izin (chmod).
-        # ==========================================================
-        run: npx @11ty/eleventy
+        run: npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -51,7 +45,6 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Unggah seluruh isi dari folder _site
           path: "./_site"
 
       - name: Deploy to GitHub Pages 🚀
