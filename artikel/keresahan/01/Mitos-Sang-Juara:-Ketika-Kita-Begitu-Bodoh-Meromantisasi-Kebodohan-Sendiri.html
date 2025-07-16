@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manusia: Evolusi, Perilaku, dan Kesadaran</title>
+
+    <style>
+      :root {
+        --bg-color: #ffffff;
+        --text-color: #333333;
+        --header-color: #222222;
+        --accent-color: #007acc;
+        --card-bg-color: #f9f9f9;
+        --border-color: #dddddd;
+        --table-header-bg: #f2f2f2;
+      }
+      body.dark-mode {
+        --bg-color: #121212;
+        --text-color: #e0e0e0;
+        --header-color: #ffffff;
+        --accent-color: #61dafb;
+        --card-bg-color: #1e1e1e;
+        --border-color: #444444;
+        --table-header-bg: #333333;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.7;
+        display: flex;
+        justify-content: center;
+        padding: 2rem 1rem;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      main {
+        max-width: 800px;
+        width: 100%;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: var(--header-color);
+        line-height: 1.3;
+        margin-bottom: 0.75rem;
+        margin-top: 1.5rem;
+      }
+      h1 {
+        font-size: 2.5rem;
+      }
+      h2 {
+        font-size: 2rem;
+        border-bottom: 2px solid var(--border-color);
+        padding-bottom: 0.5rem;
+      }
+      h3 {
+        font-size: 1.5rem;
+      }
+      h4 {
+        font-size: 1.2rem;
+        color: var(--accent-color);
+      }
+      p,
+      ul {
+        margin-bottom: 1.25rem;
+      }
+      a {
+        color: var(--accent-color);
+        text-decoration: none;
+        transition: opacity 0.2s ease;
+      }
+      a:hover {
+        opacity: 0.8;
+        text-decoration: underline;
+      }
+      ul {
+        padding-left: 20px;
+      }
+      ul li {
+        margin-bottom: 0.5rem;
+      }
+      article {
+        background-color: var(--card-bg-color);
+        border: 1px solid var(--border-color);
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode article {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+      .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+        font-size: 0.95rem;
+      }
+      .custom-table th,
+      .custom-table td {
+        border: 1px solid var(--border-color);
+        padding: 12px 15px;
+        text-align: left;
+      }
+      .custom-table thead th {
+        background-color: var(--table-header-bg);
+        font-weight: 600;
+      }
+      .theme-switcher {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: 1.5rem;
+      }
+      .theme-switcher button {
+        background-color: var(--card-bg-color);
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        padding: 8px 12px;
+        cursor: pointer;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      .theme-switcher button:hover {
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div id="theme-container"></div>
+      <article id="article-container"></article>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // =========================================================================
+        // BAGIAN I: DATA ARTIKEL (VERSI LENGKAP)
+        // =========================================================================
+        const articlesData = [
+          {
+            id: "Mitos-Sang-Juara:-Ketika-Kita-Begitu-Bodoh-Meromantisasi-Kebodohan-Sendiri",
+            title:
+              "Mitos Sang Juara: Ketika Kita Begitu Bodoh Meromantisasi Kebodohan Sendiri",
+            content: `
+                 <h1>Mitos Sang Juara: Ketika Kita Begitu Bodoh Meromantisasi Kebodohan Sendiri</h1>
+
+    <p>Bagaimana, Anda sudah membaca lagi kisah heroik Si Anu yang sukses <em>meski</em> DO dari Harvard, atau Si Bete yang membangun kerajaan bisnisnya dari garasi tanpa <em>selembar pun</em> ijazah? Narasi klise itu lagi? Ah, sungguh membosankan melihat betapa mudahnya akal sehat kita dibius oleh ilusi "kisah inspiratif" yang picisan. Belakangan ini, seolah tak ada hari tanpa unggahan di media sosial, atau seminar motivasi yang menjual premis usang: pendidikan formal itu tak penting, lihat saja Steve Jobs! Elon Musk! Mark Zuckerberg!</p>
+
+    <p>Absurd kan? Logikanya di mana? Apakah otak kolektif kita sudah begitu malas sehingga hanya mampu menelan mentah-mentah remah-remah kesimpulan tanpa pernah mengunyah faktanya? Inilah yang disebut <strong>Survivorship Bias</strong>, sebuah cacat logika fundamental yang, celakanya, merajalela dan dipuja-puja sebagai kearifan lokal. Kita hanya melihat para penyintas—mereka yang "berhasil"—sambil dengan sengaja mengabaikan kuburan massal berisi jutaan individu yang gagal total karena mengikuti resep sukses yang sama, atau lebih parah, karena sama sekali tidak memiliki modal untuk bahkan mencoba.</p>
+
+    <p>Saya, yang telah menghabiskan sebagian besar hidup ini bergulat dengan teks-teks hukum kuno, berdebat tentang <strong>opportunity cost</strong> dalam model ekonomi paling kompleks, merangkai benang merah peradaban dari artefak yang teronggok di museum, dan merenungkan eksistensi Tuhan dari balik Kitab-Kitab Suci, merasa geram melihat kemalasan berpikir yang akut ini. Selama puluhan tahun, saya telah menyaksikan bagaimana narasi-narasi dangkal semacam ini diproduksi massal, bukan untuk mencerahkan, melainkan untuk melanggengkan ilusi, dan pada akhirnya, meninabobokan kita dalam kemiskinan intelektual.</p>
+
+    <hr>
+
+    <h2>Dekomposisi Logis: Membedah Ilusi "Oligarki" Keberuntungan</h2>
+
+    <p>Mari kita bedah satu per satu. Anda mengutip Steve Jobs? Pernahkah Anda repot-repot membuka buku <strong>"Steve Jobs"</strong> karya Walter Isaacson, atau paling tidak, membaca ulasan komprehensif tentang kehidupannya? Jobs memang DO, tapi dia tetap punya akses ke ekosistem intelektual terbaik di era 70-an, lingkungan yang dipenuhi orang-orang brilian dari Stanford dan Berkeley, di mana ide-ide radikal justru dihargai. Dia bukan anak desa yang datang tanpa bekal. Lalu Elon Musk? Mari tertawa sejenak. <strong>Elon Musk</strong> dibesarkan dalam keluarga kaya raya di Afrika Selatan, ibunya seorang model dan ahli gizi, ayahnya seorang insinyur. Dia punya modal awal—uang—yang tak terbatas untuk membiayai proyek pertamanya, sesuatu yang mustahil bagi jutaan anak muda di Indonesia, misalnya, yang bahkan untuk makan saja masih berhitung. Mark Zuckerberg? Harvard, Bung! Sebuah institusi yang sejak awal sudah memfilter individu-individu paling cemerlang. Jaringan alumni Harvard saja sudah merupakan modal sosial yang tak ternilai, sebuah <strong>patrilineal</strong> intelektual yang tidak bisa Anda dapatkan hanya dengan "kerja keras" di warung kopi.</p>
+
+    <p>Ini bukan soal IQ semata, ini soal <strong>privilese dan akses yang tidak setara</strong>. Membandingkan diri Anda dengan Steve Jobs tanpa mengakui bahwa dia tumbuh di tengah gejolak inovasi Silicon Valley, atau dengan Elon Musk tanpa memperhitungkan modal finansial keluarganya, sama saja dengan seorang atlet tanpa kaki menuduh pelari maraton profesional "malas" karena dia bisa berlari. Ini bukan adil, ini konyol!</p>
+
+    <hr>
+
+    <h2>Argumen Tandingan: Data Bicara, Jangan Buat Tuhan Murka</h2>
+
+    <p>Saya bukan benci motivasi, saya benci kebodohan yang dipromosikan atas nama motivasi. Faktanya, <strong>riset dari Standard &amp; Poor's Global Market Intelligence</strong> menunjukkan bahwa mayoritas CEO perusahaan-perusahaan Fortune 500 adalah <strong>lulusan universitas terkemuka</strong>. Data <strong>Bureau of Labor Statistics (BLS) Amerika Serikat</strong> secara konsisten menunjukkan korelasi positif antara tingkat pendidikan formal dengan pendapatan yang lebih tinggi dan tingkat pengangguran yang lebih rendah. Ini bukan opini, ini adalah statistik, angka-angka yang berbicara lebih jujur daripada dongeng motivasi picisan yang dijual di pinggir jalan.</p>
+
+    <p>Bahkan dalam khazanah keilmuan Islam, prinsip <strong>istislah</strong> (pencarian kemaslahatan umum) melalui ilmu pengetahuan adalah sesuatu yang mutlak. Kita diperintahkan untuk menuntut ilmu dari buaian hingga liang lahat, dan ini tidak hanya bermakna ilmu agama, tetapi juga ilmu dunia. Para ulama besar seperti <strong>Imam Al-Ghazali</strong> dalam karyanya <strong>Ihya' Ulumiddin</strong> menekankan pentingnya ilmu sebagai cahaya yang membimbing manusia, bukan sekadar naluri buta atau keberuntungan sesaat. Menafikan pendidikan formal sama saja dengan menafikan salah satu jalan termudah menuju kemaslahatan dan kemajuan. Apakah kita ingin kembali ke era kegelapan di mana ilmu pengetahuan dianggap tak perlu, dan keberuntungan menjadi satu-satunya dewa?</p>
+
+    <hr>
+
+    <h2>Diagnosis dari Sudut Pandang yang Tak Terduga: Ekonomi Moral dan Teologi Kegagalan</h2>
+
+    <p>Mari kita gunakan kacamata lain. Dari sudut pandang <strong>ekonomi moral</strong>, narasi "sukses tanpa sekolah" ini justru berbahaya. Ia menciptakan ilusi mobilitas sosial yang mudah, padahal realitanya, <strong>ketimpangan struktural</strong> semakin dalam. Ini adalah semacam <strong>"toxic self-help"</strong> yang menyalahkan korban: "Anda miskin? Salah sendiri tidak gigih seperti Steve Jobs!" Ini bukan saja tidak realistis, tapi juga keji secara moral. Ia mengaburkan fakta bahwa kemiskinan sistemik, diskriminasi, kurangnya akses kesehatan dan pendidikan layak, adalah rintangan nyata, bukan sekadar mental block.</p>
+
+    <p>Dari sisi teologi, narasi ini juga problematis. Jika Tuhan menganugerahkan akal dan kesempatan untuk belajar, lantas mengapa kita justru meremehkannya? Apakah kita pikir Tuhan menciptakan institusi pendidikan, para guru, dan ribuan tahun akumulasi pengetahuan hanya untuk diabaikan demi kisah satu atau dua "orang beruntung" yang kebetulan mencapai puncak? Ini adalah bentuk <strong>kufur nikmat</strong> intelektual, sebuah kemalasan yang seharusnya membuat kita malu di hadapan Sang Pencipta yang menghendaki kita untuk berpikir dan berilmu.</p>
+
+    <hr>
+
+    <h2>Kesimpulan Polemis: Bangkitlah dari Kubangan Kemalasan Berpikir!</h2>
+
+    <p>Jadi, sekali lagi, <span class="sarcasm">selamat kepada orang-orang yang terus-menerus menelan mentah-mentah kisah-kisah "sukses" tanpa melihat konteks, tanpa memeriksa data, tanpa mengaplikasikan akal sehat. Anda sangat berbakat dalam kemalasan berpikir.</span> Teruslah romantisasi <strong>survivorship bias</strong> ini. Teruslah percayai bahwa sukses adalah keajaiban yang tiba-tiba datang tanpa perlu fondasi ilmu pengetahuan, tanpa jaringan, tanpa privilese.</p>
+
+    <p>Pada akhirnya, Anda akan terus-menerus terdampar di pulau kegagalan, bukan karena Anda kurang gigih, tetapi karena Anda begitu dungu untuk tidak menyadari bahwa peta yang Anda ikuti adalah peta palsu, digambar oleh mereka yang ingin Anda tetap bodoh agar mudah dieksploitasi. Bangkitlah! Pakailah akal sehat Anda! Dunia ini tidak linear, dan tidak ada solusi instan yang cocok untuk semua orang. Berhentilah mengutip Elon Musk untuk membenarkan kemalasan Anda belajar! Pikirkan itu!</p>
+
+    `,
+          },
+        ];
+
+        // =========================================================================
+        // BAGIAN II: LOGIKA UNTUK MODE TERANG & GELAP
+        // =========================================================================
+        const themeContainer = document.getElementById("theme-container");
+        const currentTheme = localStorage.getItem("theme");
+        let isDarkMode = currentTheme !== "light";
+        const themeButton = document.createElement("button");
+        themeContainer.className = "theme-switcher";
+        themeContainer.appendChild(themeButton);
+        const applyTheme = () => {
+          if (isDarkMode) {
+            document.body.classList.add("dark-mode");
+            themeButton.textContent = "Mode Terang ☀️";
+          } else {
+            document.body.classList.remove("dark-mode");
+            themeButton.textContent = "Mode Gelap 🌙";
+          }
+        };
+        themeButton.addEventListener("click", () => {
+          isDarkMode = !isDarkMode;
+          localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+          applyTheme();
+        });
+        applyTheme();
+
+        // =========================================================================
+        // BAGIAN III: LOGIKA UNTUK MEMUAT KONTEN ARTIKEL SECARA DINAMIS
+        // =========================================================================
+        const articleContainer = document.getElementById("article-container");
+        const loadArticle = (articleId) => {
+          const article = articlesData.find((art) => art.id === articleId);
+          if (article) {
+            articleContainer.innerHTML = article.content;
+          } else {
+            articleContainer.innerHTML =
+              "<h2>Error 404: Artikel tidak ditemukan.</h2>";
+          }
+        };
+        loadArticle(
+          "Mitos-Sang-Juara:-Ketika-Kita-Begitu-Bodoh-Meromantisasi-Kebodohan-Sendiri"
+        );
+      });
+    </script>
+  </body>
+</html>
