@@ -25,20 +25,8 @@
       "nama": "SUMMARY BOOKS",
       "artikel": [
         {
-          "judul": "Novel Insight About Humans #0",
-          "url": "/artikel/summary-books/about"
-        },
-        {
-          "judul": "Ringkasan Buku 'Atomic Habits'",
-          "url": "/artikel/summary-books/atomic-habits/"
-        },
-        {
-          "judul": "Ringkasan Buku 'Sapiens'",
-          "url": "/artikel/summary-books/sapiens/"
-        },
-        {
-          "judul": "Ringkasan Buku 'The Almanack of Naval Ravikant'",
-          "url": "/artikel/summary-books/almanack-of-naval-ravikant/"
+          "judul": "The Two Gods of Leviathan oleh A.P. Martinich",
+          "url": "../artikel/Summary-Books/The-Two-Gods-of-Leviathan.html"
         }
       ]
     },
@@ -46,12 +34,8 @@
       "nama": "SCIENCE",
       "artikel": [
         {
-          "judul": "Memahami Konsep Lubang Hitam",
-          "url": "/artikel/science/memahami-lubang-hitam/"
-        },
-        {
-          "judul": "Penjelasan Sederhana tentang Entropi",
-          "url": "/artikel/science/penjelasan-entropi/"
+          "judul": "What Is Science?",
+          "url": "../artikel/Science/What-Is-Science.html"
         }
       ]
     },
@@ -59,12 +43,16 @@
       "nama": "HISTORY",
       "artikel": [
         {
+          "judul": "why history is important?",
+          "url": "../artikel/history/why-history-is-important.html"
+        },
+        {
           "judul": "Alasan Kebencian Nazi Pada Yahudi",
           "url": "../artikel/history/alasan-nazi-membenti-yahudi.html"
         },
         {
-          "judul": "Revolusi Industri dan Dampaknya",
-          "url": "/artikel/history/revolusi-industri/"
+          "judul": "Tan Malaka-Tamparan Madilog di Tengah Kemalasan Berpikir Kolektif",
+          "url": "../artikel/history/Tan-Malaka-madilog.html"
         }
       ]
     },
@@ -72,11 +60,11 @@
       "nama": "PHILOSOPHY",
       "artikel": [
         {
-          "judul": "Pengantar Filsafat Stoikisme",
+          "judul": "404 error masih kosong",
           "url": "/artikel/philosophy/pengantar-stoikisme/"
         },
         {
-          "judul": "Eksistensialisme: Kebebasan dan Tanggung Jawab",
+          "judul": "404 error masih kosong",
           "url": "/artikel/philosophy/eksistensialisme-dan-kebebasan/"
         }
       ]
