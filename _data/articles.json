@@ -1,6 +1,15 @@
 {
   "kategori": [
     {
+      "nama": "NOTES & ARTICLES RANDOM",
+      "artikel": [
+        {
+          "judul": "Berpikir dan Bernegara dari Kacamata Filsafat - F. Budi Hardiman Chronicles",
+          "url": "../artikel/NOTES & ARTICLES RANDOM/Endgame-Berpikir-dan-Bernegara-dari-Kacamata-Filsafat-FBudi-Hardiman-Chronicles.HTML"
+        }
+      ]
+    },
+    {
       "nama": "KERESAHAN",
       "artikel": [
         {
@@ -16,7 +25,7 @@
           "url": "../artikel/keresahan/01/Mitos-Sang-Juara:-Ketika-Kita-Begitu-Bodoh-Meromantisasi-Kebodohan-Sendiri.html"
         },
         {
-          "judul": "Hirarki Ilmu Pengetahua",
+          "judul": "Hirarki Ilmu Pengetahuan",
           "url": "../artikel/keresahan/01/Hirarki-ilmu-pengetahuan.html"
         }
       ]
