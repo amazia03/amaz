@@ -5,7 +5,11 @@
       "artikel": [
         {
           "judul": "Berpikir dan Bernegara dari Kacamata Filsafat - F. Budi Hardiman Chronicles",
-          "url": "../artikel/NOTES & ARTICLES RANDOM/Endgame-Berpikir-dan-Bernegara-dari-Kacamata-Filsafat-FBudi-Hardiman-Chronicles.HTML"
+          "url": "../artikel/NOTES & ARTICLES RANDOM/Endgame-Berpikir-dan-Bernegara-dari-Kacamata-Filsafat-FBudi-Hardiman-Chronicles.html"
+        },
+        {
+          "judul": "Tread-Kisah Tragis dan Jasa Besar Alan Turing",
+          "url": "../artikel/NOTES & ARTICLES RANDOM/tread-alanturing&lgbt-byryuhasan.html"
         }
       ]
     },
@@ -13,8 +17,8 @@
       "nama": "KERESAHAN",
       "artikel": [
         {
-          "judul": "About Humans",
-          "url": "../artikel/keresahan/01/about-humans.html"
+          "judul": "Eksplorasi Mendalam Konsep 'Roh', 'Jiwa', dan 'Pikiran'",
+          "url": "../artikel/keresahan/01/Eksplorasi-Mendalam-Konsep-'Roh'-'Jiwa',-dan-Pikiran'.html"
         },
         {
           "judul": "Fenomena Brain Root",
